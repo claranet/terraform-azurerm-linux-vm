@@ -1,7 +1,8 @@
 resource "azurerm_virtual_machine" "vm" {
-  name                  = local.vm_name
-  location              = var.location
-  resource_group_name   = var.resource_group_name
+  name                = local.vm_name
+  location            = var.location
+  resource_group_name = var.resource_group_name
+
   network_interface_ids = [azurerm_network_interface.nic.id]
   vm_size               = var.vm_size
 
@@ -34,16 +35,14 @@ resource "azurerm_virtual_machine" "vm" {
   os_profile {
     computer_name  = local.vm_name
     admin_username = var.admin_username
-    admin_password = var.admin_password
-    custom_data    = local.custom_data_content
   }
 
   os_profile_linux_config {
     disable_password_authentication = true
 
     ssh_keys {
-      key_data = var.public_key
-      path     = "/home/claranet/.ssh/authorized_keys"
+      key_data = var.ssh_public_key
+      path     = format("/home/%s/.ssh/authorized_keys", var.admin_username)
     }
   }
 }

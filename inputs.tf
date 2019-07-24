@@ -38,24 +38,20 @@ variable "subnet_id" {
   type        = string
 }
 
-// =========== CONNEXION SSH
-variable "public_key" {
-  description = "Public key"
+### SSH Connection inputs
+variable "ssh_public_key" {
+  description = "SSH public key"
+  type        = string
 }
 
-// =========== VM
+### VM inputs
 variable "admin_username" {
   description = "Username for Virtual Machine administrator account"
   type        = string
 }
 
-variable "admin_password" {
-  description = "Password for Virtual Machine administrator account"
-  type        = string
-}
-
 variable "vm_size" {
-  description = "Size (SKU) of the Virtual Machin to create."
+  description = "Size (SKU) of the Virtual Machine to create."
   type        = string
 }
 
@@ -71,7 +67,12 @@ variable "availability_set_id" {
 }
 
 variable "diagnostics_storage_account_name" {
-  description = "Storage account name to store vm boot diagnostic"
+  description = "Name of the Storage Account in which store vm diagnostics"
+  type        = string
+}
+
+variable "diagnostics_storage_account_key" {
+  description = "Access key of the Storage Account in which store vm diagnostics"
   type        = string
 }
 

@@ -2,6 +2,17 @@
 
 This module creates a [Linux Virtual Machine](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/).
 
+# Requirements
+* [AzureRM Terraform provider](https://www.terraform.io/docs/providers/azurerm/) >= 1.31
+* [Terraform](https://www.terraform.io/downloads.html) >= 0.12
+
+## Terraform version compatibility
+ 
+| Module version | Terraform version |
+|----------------|-------------------|
+| >= 2.x.x       | 0.12.x            |
+| < 2.x.x        | 0.11.x            |
+
 ## Usage
 
 ```hcl
@@ -45,11 +56,11 @@ module "network-security-group" {
 }
 
 module "azure-network-subnet" {
-  source = git::ssh://git@git.fr.clara.net/claranet/cloudnative/projects/cloud/azure/terraform/modules/subnet.git?ref=vX.X.X"
+  source = "git::ssh://git@git.fr.clara.net/claranet/cloudnative/projects/cloud/azure/terraform/modules/subnet.git?ref=vX.X.X"
 
-  environment         = var.environment
-  location_short      = module.azure-region.location_short
-  client_name         = var.client_name
+  environment     = var.environment
+  location_short  = module.azure-region.location_short
+  client_name     = var.client_name
   stack			      = var.stack
 
   resource_group_name  = module.rg.resource_group_name
@@ -99,7 +110,6 @@ module "vm" {
   diagnostics_storage_account_name = data.terraform_remote_state.run.outputs.logs_storage_account_name
   vm_size                          = "Standard_B2s"
   admin_username                   = var.vm_admin_username
-  admin_password                   = var.vm_admin_password
   public_key                       = var.public_key
 
   vm_image = {
@@ -115,7 +125,6 @@ module "vm" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| admin\_password | Password for Virtual Machine administrator account | string | n/a | yes |
 | admin\_username | Username for Virtual Machine administrator account | string | n/a | yes |
 | availability\_set\_id | Id of the availability set in which host the Virtual Machine. | string | n/a | yes |
 | certificate\_validity\_in\_months | The created certificate validity in months | string | `"48"` | no |
