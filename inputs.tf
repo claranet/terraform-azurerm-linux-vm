@@ -44,6 +44,19 @@ variable "ssh_public_key" {
   type        = string
 }
 
+### Network inputs
+variable "custom_public_ip_name" {
+  description = "Custom name for public IP. Should be suffixed by \"-pubip\". Generated if not set."
+  type        = string
+  default     = null
+}
+
+variable "custom_nic_name" {
+  description = "Custom name for the NIC interface. Should be suffixed by \"-nic\". Generated if not set."
+  type        = string
+  default     = null
+}
+
 ### VM inputs
 variable "admin_username" {
   description = "Username for Virtual Machine administrator account"

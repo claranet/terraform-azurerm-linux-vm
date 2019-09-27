@@ -1,5 +1,5 @@
 resource "azurerm_public_ip" "public_ip" {
-  name                = "${local.vm_name}-pubip"
+  name                = coalesce(var.custom_public_ip_name, "${local.vm_name}-pubip")
   location            = var.location
   resource_group_name = var.resource_group_name
   allocation_method   = "Static"
@@ -9,7 +9,7 @@ resource "azurerm_public_ip" "public_ip" {
 }
 
 resource "azurerm_network_interface" "nic" {
-  name                = "${local.vm_name}-nic"
+  name                = coalesce(var.custom_nic_name, "${local.vm_name}-nic")
   location            = var.location
   resource_group_name = var.resource_group_name
 
