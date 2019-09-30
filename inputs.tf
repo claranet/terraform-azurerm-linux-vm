@@ -52,6 +52,12 @@ variable "custom_nic_name" {
   default     = null
 }
 
+variable "custom_ipconfig_name" {
+  description = "Custom name for the IP config of the NIC. Should be suffixed by \"-nic-ipconfig\". Generated if not set."
+  type        = string
+  default     = null
+}
+
 ### VM inputs
 variable "admin_username" {
   description = "Username for Virtual Machine administrator account"

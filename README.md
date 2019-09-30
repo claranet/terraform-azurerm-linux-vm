@@ -114,7 +114,10 @@ module "vm" {
 | certificate\_validity\_in\_months | The created certificate validity in months | string | `"48"` | no |
 | client\_name | Client name/account used in naming | string | n/a | yes |
 | custom\_dns\_label | The DNS label to use for public access. VM name if not set. DNS will be <label>.westeurope.cloudapp.azure.com | string | `""` | no |
+| custom\_ipconfig\_name | Custom name for the IP config of the NIC. Should be suffixed by \"-nic-ipconfig\". Generated if not set. | string | null | no |
 | custom\_name | Custom name for the Virtual Machine. Should be suffixed by "-vm". Generated if not set. | string | `""` | no |
+| custom\_nic\_name | Custom name for the NIC interface. Should be suffixed by \"-nic\". Generated if not set. | string | null | no |
+| custom\_public\_ip\_name | Custom name for public IP. Should be suffixed by \"-pubip\". Generated if not set. | string | null | no |
 | delete\_data\_disks\_on\_termination | Should the Data Disks (either the Managed Disks / VHD Blobs) be deleted when the Virtual Machine is destroyed? | string | `"false"` | no |
 | delete\_os\_disk\_on\_termination | Should the OS Disk (either the Managed Disk / VHD Blob) be deleted when the Virtual Machine is destroyed? | string | `"false"` | no |
 | diagnostics\_storage\_account\_name | Storage account name to store vm boot diagnostic | string | n/a | yes |

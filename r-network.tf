@@ -14,7 +14,7 @@ resource "azurerm_network_interface" "nic" {
   resource_group_name = var.resource_group_name
 
   ip_configuration {
-    name                          = "${local.vm_name}-nic-ipconfig"
+    name                          = coalesce(var.custom_ipconfig_name, "${local.vm_name}-nic-ipconfig")
     subnet_id                     = var.subnet_id
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = azurerm_public_ip.public_ip.id
