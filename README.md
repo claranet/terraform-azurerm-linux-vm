@@ -71,22 +71,6 @@ module "azure-network-subnet" {
   network_security_group_ids   = module.network-security-group.network_security_group_id
 }
 
-module "key_vault" {
-  source = "git::ssh://git@git.fr.clara.net/claranet/cloudnative/projects/cloud/azure/terraform/modules/keyvault.git?ref=vX.X.X"
-
-  client_name         = var.client_name
-  environment         = var.environment
-  location            = module.azure-region.location
-  location_short      = module.azure-region.location_short
-  resource_group_name = module.rg.resource_group_name
-  stack               = var.stack
-
-  # Mandatory for use with VM deployment
-  enabled_for_deployment = "true"
-
-  admin_objects_ids = local.keyvault_admin_objects_ids
-}
-
 resource "azurerm_availability_set" "vm_avset" {
   name                = "${var.stack}-${var.client_name}-${module.az-region.location_short}-${var.environment}-as"
   location            = module.az-region.location
@@ -104,13 +88,13 @@ module "vm" {
   stack               = var.stack
   resource_group_name = module.rg.resource_group_name
 
-  key_vault_id                     = module.key_vault.key_vault_id
   subnet_id                        = element(module.azure-network-subnet.subnet_ids, 0)
   availability_set_id              = azurerm_availability_set.vm_avset.id
   diagnostics_storage_account_name = data.terraform_remote_state.run.outputs.logs_storage_account_name
   vm_size                          = "Standard_B2s"
+  custom_name                      = "app-${var.stack}-${var.client_name}-${module.azure-region.location_short}-${var.environment}-vm"
   admin_username                   = var.vm_admin_username
-  public_key                       = var.public_key
+  ssh_public_key                   = var.public_key
 
   vm_image = {
     publisher = "Debian"
@@ -136,10 +120,9 @@ module "vm" {
 | diagnostics\_storage\_account\_name | Storage account name to store vm boot diagnostic | string | n/a | yes |
 | environment | Project environment | string | n/a | yes |
 | extra\_tags | Extra tags to set on each created resource. | map | `<map>` | no |
-| key\_vault\_id | Id of the Azure Key Vault to use for VM certificate | string | n/a | yes |
 | location | Azure location. | string | n/a | yes |
 | location\_short | Short string for Azure location. | string | n/a | yes |
-| public\_key | Public key | string | n/a | yes |
+| ssh_public\_key | Public key | string | n/a | yes |
 | resource\_group\_name | Resource group name | string | n/a | yes |
 | stack | Project stack name | string | n/a | yes |
 | subnet\_id | Id of the Subnet in which create the Virtual Machine | string | n/a | yes |

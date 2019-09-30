@@ -28,11 +28,6 @@ variable "resource_group_name" {
   type        = string
 }
 
-variable "key_vault_id" {
-  description = "Id of the Azure Key Vault to use for VM certificate"
-  type        = string
-}
-
 variable "subnet_id" {
   description = "Id of the Subnet in which create the Virtual Machine"
   type        = string
