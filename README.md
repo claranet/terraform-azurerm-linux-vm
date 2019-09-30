@@ -125,8 +125,8 @@ module "vm" {
 | extra\_tags | Extra tags to set on each created resource. | map | `<map>` | no |
 | location | Azure location. | string | n/a | yes |
 | location\_short | Short string for Azure location. | string | n/a | yes |
-| ssh_public\_key | Public key | string | n/a | yes |
 | resource\_group\_name | Resource group name | string | n/a | yes |
+| ssh_public\_key | Public key | string | n/a | yes |
 | stack | Project stack name | string | n/a | yes |
 | subnet\_id | Id of the Subnet in which create the Virtual Machine | string | n/a | yes |
 | vm\_image | Virtual Machine source image information. See https://www.terraform.io/docs/providers/azurerm/r/virtual\_machine.html#storage\_image\_reference | map | `<map>` | no |
