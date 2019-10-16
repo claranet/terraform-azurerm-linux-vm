@@ -2,9 +2,8 @@
 
 This module creates a [Linux Virtual Machine](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/).
 
-# Requirements
+## Requirements
 * [AzureRM Terraform provider](https://www.terraform.io/docs/providers/azurerm/) >= 1.31
-* [Terraform](https://www.terraform.io/downloads.html) >= 0.12
 
 ## Terraform version compatibility
  
@@ -16,7 +15,7 @@ This module creates a [Linux Virtual Machine](https://docs.microsoft.com/en-us/a
 ## Usage
 
 ```hcl
-module "az-region" {
+module "azure-region" {
   source = "git::ssh://git@git.fr.clara.net/claranet/cloudnative/projects/cloud/azure/terraform/modules/regions.git?ref=vX.X.X"
 
   azure_region = var.azure_region
@@ -25,7 +24,7 @@ module "az-region" {
 module "rg" {
   source = "git::ssh://git@git.fr.clara.net/claranet/cloudnative/projects/cloud/azure/terraform/modules/rg.git?ref=vX.X.X"
 
-  location    = module.az-region.location
+  location    = module.azure-region.location
   client_name = var.client_name
   environment = var.environment
   stack       = var.stack
@@ -73,7 +72,7 @@ module "azure-network-subnet" {
 
 resource "azurerm_availability_set" "vm_avset" {
   name                = "${var.stack}-${var.client_name}-${module.az-region.location_short}-${var.environment}-as"
-  location            = module.az-region.location
+  location            = module.azure-region.location
   resource_group_name = module.rg.resource_group_name
   managed             = "true"
 }
@@ -143,6 +142,6 @@ module "vm" {
 
 ## Related documentation
 
-Terraform resource documentation: [https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html]
+Terraform resource documentation: [www.terraform.io/docs/providers/azurerm/r/virtual_machine.html](https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html)
 
 Microsoft Azure documentation: [https://docs.microsoft.com/en-us/azure/virtual-machines/linux/]
