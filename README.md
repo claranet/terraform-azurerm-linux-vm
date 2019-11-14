@@ -113,14 +113,6 @@ module "vm" {
   stack               = var.stack
   resource_group_name = module.rg.resource_group_name
 
-<<<<<<< HEAD
-  subnet_id                        = element(module.azure-network-subnet.subnet_ids, 0)
-  diagnostics_storage_account_name = module.run-common.logs_storage_account_name
-  vm_size                          = "Standard_B2s"
-  custom_name                      = "app-${var.stack}-${var.client_name}-${module.azure-region.location_short}-${var.environment}-vm"
-  admin_username                   = var.vm_admin_username
-  ssh_public_key                   = var.public_key
-=======
   subnet_id                             = element(module.azure-network-subnet.subnet_ids, 0)
   availability_set_id                   = azurerm_availability_set.vm_avset.id
   diagnostics_storage_account_name      = data.terraform_remote_state.run.outputs.logs_storage_account_name
@@ -129,7 +121,6 @@ module "vm" {
   custom_name                           = "app-${var.stack}-${var.client_name}-${module.azure-region.location_short}-${var.environment}-vm"
   admin_username                        = var.vm_admin_username
   ssh_public_key                        = var.public_key
->>>>>>> AZ-108: Enable diagnostics for linux-vm
 
   availability_set_id              = azurerm_availability_set.vm_avset.id
   # or use Availability Zone

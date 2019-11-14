@@ -1,5 +1,6 @@
 module "vm-logs" {
-  source = "git::ssh://git@git.fr.clara.net/claranet/cloudnative/projects/cloud/azure/terraform/modules/vm-logs.git?ref=v2.1.0"
+  source  = "claranet/vm-logs/azurerm"
+  version = "2.1.0"
 
   location       = var.location
   location_short = var.location_short
