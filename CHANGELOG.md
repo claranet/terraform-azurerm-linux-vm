@@ -1,3 +1,8 @@
+# v2.1.0 - Unreleased
+
+Added
+  * AZ-167: Allow to change IP sku and attach to a Load Balancer or Application Gateway
+
 # v2.0.2 - 2019-11-22
 
 Changed
