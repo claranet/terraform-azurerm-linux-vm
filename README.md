@@ -41,7 +41,7 @@ module "rg" {
 module "azure-network-vnet" {
   source  = "claranet/vnet/azurerm"
   version = "x.x.x"
-    
+
   environment      = var.environment
   location         = module.azure-region.location
   location_short   = module.azure-region.location_short
@@ -71,7 +71,7 @@ module "azure-network-subnet" {
   environment     = var.environment
   location_short  = module.azure-region.location_short
   client_name     = var.client_name
-  stack			      = var.stack
+  stack           = var.stack
 
   resource_group_name  = module.rg.resource_group_name
   virtual_network_name = module.azure-network-vnet.virtual_network_nam
@@ -135,6 +135,9 @@ module "vm" {
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | admin\_username | Username for Virtual Machine administrator account | string | n/a | yes |
+| application\_gateway\_backend\_pool\_id | Id of the Application Gateway Backend Pool to attach the VM. | string | `"null"` | no |
+| attach\_application\_gateway | True to attach this VM to an Application Gateway | bool | `"false"` | no |
+| attach\_load\_balancer | True to attach this VM to a Load Balancer | bool | `"false"` | no |
 | availability\_set\_id | Id of the availability set in which host the Virtual Machine. | string | n/a | yes |
 | certificate\_validity\_in\_months | The created certificate validity in months | string | `"48"` | no |
 | client\_name | Client name/account used in naming | string | n/a | yes |
@@ -148,8 +151,10 @@ module "vm" {
 | diagnostics\_storage\_account\_name | Name of the Storage Account in which store vm diagnostics | string | n/a | yes |
 | environment | Project environment | string | n/a | yes |
 | extra\_tags | Extra tags to set on each created resource. | map(string) | `{}` | no |
+| load\_balancer\_backend\_pool\_id | Id of the Load Balancer Backend Pool to attach the VM. | string | `"null"` | no |
 | location | Azure location. | string | n/a | yes |
 | location\_short | Short string for Azure location. | string | n/a | yes |
+| public\_ip\_sku | Sku for the public IP attached to the VM. Can be `null` if no public IP needed. | string | `"Standard"` | no |
 | resource\_group\_name | Resource group name | string | n/a | yes |
 | ssh\_public\_key | SSH public key | string | n/a | yes |
 | stack | Project stack name | string | n/a | yes |
@@ -163,7 +168,10 @@ module "vm" {
 |------|-------------|
 | vm\_id | ID of the Virtual Machine |
 | vm\_name | Name of the Virtual Machine |
+| vm\_nic\_ip\_configuration\_name | Name of the IP Configuration for the Network Interface Configuration attached to the Virtual Machine |
+| vm\_nic\_name | Name of the Network Interface Configuration attached to the Virtual Machine |
 | vm\_private\_ip\_address | Private IP address of the Virtual Machine |
+| vm\_public\_domain\_name\_label | Public DNS of the Virtual machine |
 | vm\_public\_ip\_address | Public IP address of the Virtual Machine |
 
 ## Related documentation
