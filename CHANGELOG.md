@@ -1,3 +1,8 @@
+# v2.2.0 - Unreleased
+
+Added
+  * AZ-174: Add Availability Zone option 
+
 # v2.1.0 - 2020-01-07
 
 Added

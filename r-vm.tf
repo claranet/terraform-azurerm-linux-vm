@@ -18,7 +18,10 @@ resource "azurerm_virtual_machine" "vm" {
     sku       = lookup(var.vm_image, "sku", null)
     version   = lookup(var.vm_image, "version", null)
   }
+
   availability_set_id = var.availability_set_id
+
+  zones = var.zone_id == null ? null : [var.zone_id]
 
   boot_diagnostics {
     enabled     = true
