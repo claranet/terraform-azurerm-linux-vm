@@ -113,12 +113,13 @@ module "vm" {
   stack               = var.stack
   resource_group_name = module.rg.resource_group_name
 
-  subnet_id                        = element(module.azure-network-subnet.subnet_ids, 0)
-  diagnostics_storage_account_name = module.run-common.logs_storage_account_name
-  vm_size                          = "Standard_B2s"
-  custom_name                      = "app-${var.stack}-${var.client_name}-${module.azure-region.location_short}-${var.environment}-vm"
-  admin_username                   = var.vm_admin_username
-  ssh_public_key                   = var.public_key
+  subnet_id                             = element(module.azure-network-subnet.subnet_ids, 0)
+  diagnostics_storage_account_name      = data.terraform_remote_state.run.outputs.logs_storage_account_name
+  diagnostics_storage_account_sas_token = lookup(data.terraform_remote_state.run.outputs.logs_storage_account_sas_token, "sastoken")
+  vm_size                               = "Standard_B2s"
+  custom_name                           = "app-${var.stack}-${var.client_name}-${module.azure-region.location_short}-${var.environment}-vm"
+  admin_username                        = var.vm_admin_username
+  ssh_public_key                        = var.public_key
 
   availability_set_id              = azurerm_availability_set.vm_avset.id
   # or use Availability Zone
@@ -152,6 +153,7 @@ module "vm" {
 | delete\_data\_disks\_on\_termination | Should the Data Disks (either the Managed Disks / VHD Blobs) be deleted when the Virtual Machine is destroyed? | `string` | `"false"` | no |
 | delete\_os\_disk\_on\_termination | Should the OS Disk (either the Managed Disk / VHD Blob) be deleted when the Virtual Machine is destroyed? | `string` | `"false"` | no |
 | diagnostics\_storage\_account\_name | Name of the Storage Account in which store vm diagnostics | `string` | n/a | yes |
+| diagnostics\_storage\_account\_sas\_token | SAS token of the Storage Account in which store vm diagnostics | `string` | n/a | yes |
 | environment | Project environment | `string` | n/a | yes |
 | extra\_tags | Extra tags to set on each created resource. | `map(string)` | `{}` | no |
 | load\_balancer\_backend\_pool\_id | Id of the Load Balancer Backend Pool to attach the VM. | `string` | `"null"` | no |

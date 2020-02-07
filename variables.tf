@@ -92,6 +92,11 @@ variable "diagnostics_storage_account_name" {
   type        = string
 }
 
+variable "diagnostics_storage_account_sas_token" {
+  description = "SAS token of the Storage Account in which store vm diagnostics"
+  type        = string
+}
+
 variable "vm_image" {
   description = "Virtual Machine source image information. See https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html#storage_image_reference"
   type        = map(string)
