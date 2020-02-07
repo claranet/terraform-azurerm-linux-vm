@@ -114,7 +114,6 @@ module "vm" {
   resource_group_name = module.rg.resource_group_name
 
   subnet_id                             = element(module.azure-network-subnet.subnet_ids, 0)
-  availability_set_id                   = azurerm_availability_set.vm_avset.id
   diagnostics_storage_account_name      = data.terraform_remote_state.run.outputs.logs_storage_account_name
   diagnostics_storage_account_sas_token = lookup(data.terraform_remote_state.run.outputs.logs_storage_account_sas_token, "sastoken")
   vm_size                               = "Standard_B2s"
@@ -140,24 +139,24 @@ module "vm" {
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:-----:|
 | admin\_username | Username for Virtual Machine administrator account | `string` | n/a | yes |
-| application\_gateway\_backend\_pool\_id | Id of the Application Gateway Backend Pool to attach the VM. | `string` | n/a | yes |
+| application\_gateway\_backend\_pool\_id | Id of the Application Gateway Backend Pool to attach the VM. | `string` | `"null"` | no |
 | attach\_application\_gateway | True to attach this VM to an Application Gateway | `bool` | `false` | no |
 | attach\_load\_balancer | True to attach this VM to a Load Balancer | `bool` | `false` | no |
-| availability\_set\_id | Id of the availability set in which host the Virtual Machine. | `string` | n/a | yes |
+| availability\_set\_id | Id of the availability set in which host the Virtual Machine. | `string` | `"null"` | no |
 | certificate\_validity\_in\_months | The created certificate validity in months | `string` | `"48"` | no |
 | client\_name | Client name/account used in naming | `string` | n/a | yes |
 | custom\_dns\_label | The DNS label to use for public access. VM name if not set. DNS will be <label>.westeurope.cloudapp.azure.com | `string` | `""` | no |
-| custom\_ipconfig\_name | Custom name for the IP config of the NIC. Should be suffixed by "-nic-ipconfig". Generated if not set. | `string` | n/a | yes |
+| custom\_ipconfig\_name | Custom name for the IP config of the NIC. Should be suffixed by "-nic-ipconfig". Generated if not set. | `string` | `"null"` | no |
 | custom\_name | Custom name for the Virtual Machine. Should be suffixed by "-vm". Generated if not set. | `string` | `""` | no |
-| custom\_nic\_name | Custom name for the NIC interface. Should be suffixed by "-nic". Generated if not set. | `string` | n/a | yes |
-| custom\_public\_ip\_name | Custom name for public IP. Should be suffixed by "-pubip". Generated if not set. | `string` | n/a | yes |
+| custom\_nic\_name | Custom name for the NIC interface. Should be suffixed by "-nic". Generated if not set. | `string` | `"null"` | no |
+| custom\_public\_ip\_name | Custom name for public IP. Should be suffixed by "-pubip". Generated if not set. | `string` | `"null"` | no |
 | delete\_data\_disks\_on\_termination | Should the Data Disks (either the Managed Disks / VHD Blobs) be deleted when the Virtual Machine is destroyed? | `string` | `"false"` | no |
 | delete\_os\_disk\_on\_termination | Should the OS Disk (either the Managed Disk / VHD Blob) be deleted when the Virtual Machine is destroyed? | `string` | `"false"` | no |
 | diagnostics\_storage\_account\_name | Name of the Storage Account in which store vm diagnostics | `string` | n/a | yes |
 | diagnostics\_storage\_account\_sas\_token | SAS token of the Storage Account in which store vm diagnostics | `string` | n/a | yes |
 | environment | Project environment | `string` | n/a | yes |
 | extra\_tags | Extra tags to set on each created resource. | `map(string)` | `{}` | no |
-| load\_balancer\_backend\_pool\_id | Id of the Load Balancer Backend Pool to attach the VM. | `string` | n/a | yes |
+| load\_balancer\_backend\_pool\_id | Id of the Load Balancer Backend Pool to attach the VM. | `string` | `"null"` | no |
 | location | Azure location. | `string` | n/a | yes |
 | location\_short | Short string for Azure location. | `string` | n/a | yes |
 | public\_ip\_sku | Sku for the public IP attached to the VM. Can be `null` if no public IP needed. | `string` | `"Standard"` | no |
@@ -167,7 +166,7 @@ module "vm" {
 | subnet\_id | Id of the Subnet in which create the Virtual Machine | `string` | n/a | yes |
 | vm\_image | Virtual Machine source image information. See https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html#storage_image_reference | `map(string)` | <pre>{<br>  "offer": "debian-10",<br>  "publisher": "Debian",<br>  "sku": "10",<br>  "version": "latest"<br>}<br></pre> | no |
 | vm\_size | Size (SKU) of the Virtual Machine to create. | `string` | n/a | yes |
-| zone\_id | Index of the Availability Zone which the Virtual Machine should be allocated in. | `number` | n/a | yes |
+| zone\_id | Index of the Availability Zone which the Virtual Machine should be allocated in. | `number` | `"null"` | no |
 
 ## Outputs
 
