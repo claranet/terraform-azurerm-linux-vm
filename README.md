@@ -4,6 +4,8 @@
 
 This module creates a [Linux Virtual Machine](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/).
 
+Following tags are automatically set with default values: `env`, `stack`, `os_family`, `os_distribution`, `os_version`, `patch_management`
+
 ## Requirements
 * [AzureRM Terraform provider](https://www.terraform.io/docs/providers/azurerm/) >= 1.31
 

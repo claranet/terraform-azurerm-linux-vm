@@ -4,6 +4,7 @@ Added
   * AZ-174: Add Availability Zone option 
   * AZ-173: Allow to configure disk size and type
   * AZ-108: Linux-VM enable diagnostics
+  * AZ-180: Additional default tags
 
 # v2.1.0 - 2020-01-07
 
