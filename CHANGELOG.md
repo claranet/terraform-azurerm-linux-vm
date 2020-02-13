@@ -2,6 +2,7 @@
 
 Added
   * AZ-174: Add Availability Zone option 
+  * AZ-173: Allow to configure disk size and type
 
 # v2.1.0 - 2020-01-07
 

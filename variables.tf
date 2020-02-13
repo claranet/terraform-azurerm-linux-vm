@@ -111,14 +111,14 @@ variable "vm_image" {
 
 variable "delete_os_disk_on_termination" {
   description = "Should the OS Disk (either the Managed Disk / VHD Blob) be deleted when the Virtual Machine is destroyed?"
-  type        = string
-  default     = "false"
+  type        = bool
+  default     = false
 }
 
 variable "delete_data_disks_on_termination" {
   description = "Should the Data Disks (either the Managed Disks / VHD Blobs) be deleted when the Virtual Machine is destroyed?"
-  type        = string
-  default     = "false"
+  type        = bool
+  default     = false
 }
 
 variable "extra_tags" {
@@ -168,3 +168,16 @@ variable "application_gateway_backend_pool_id" {
   type        = string
   default     = null
 }
+
+variable "os_disk_type" {
+  description = "Specifies the type of managed disk to create (Standard_LRS, StandardSSD_LRS, Premium_LRS)"
+  type        = string
+  default     = "Standard_LRS"
+}
+
+variable "os_disk_size_gb" {
+  description = "Specifies the size of the OS disk in gigabytes"
+  type        = string
+  default     = null
+}
+
