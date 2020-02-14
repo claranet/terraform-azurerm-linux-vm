@@ -19,5 +19,6 @@ module "vm-logs" {
   tags = {
     environment = var.environment
     stack       = var.stack
+    vm_name     = azurerm_virtual_machine.vm.name
   }
 }
