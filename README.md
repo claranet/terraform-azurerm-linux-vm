@@ -7,7 +7,7 @@ This module creates a [Linux Virtual Machine](https://docs.microsoft.com/en-us/a
 Following tags are automatically set with default values: `env`, `stack`, `os_family`, `os_distribution`, `os_version`.
 
 ## Requirements
-* [AzureRM Terraform provider](https://www.terraform.io/docs/providers/azurerm/) >= 1.31
+* [AzureRM Terraform provider](https://www.terraform.io/docs/providers/azurerm/) >= 1.44.0 (beta resources)
 
 ## Terraform version compatibility
  
@@ -186,8 +186,6 @@ module "vm" {
 | custom\_name | Custom name for the Virtual Machine. Should be suffixed by "-vm". Generated if not set. | `string` | `""` | no |
 | custom\_nic\_name | Custom name for the NIC interface. Should be suffixed by "-nic". Generated if not set. | `string` | `null` | no |
 | custom\_public\_ip\_name | Custom name for public IP. Should be suffixed by "-pubip". Generated if not set. | `string` | `null` | no |
-| delete\_data\_disks\_on\_termination | Should the Data Disks (either the Managed Disks / VHD Blobs) be deleted when the Virtual Machine is destroyed? | `bool` | `false` | no |
-| delete\_os\_disk\_on\_termination | Should the OS Disk (either the Managed Disk / VHD Blob) be deleted when the Virtual Machine is destroyed? | `bool` | `false` | no |
 | diagnostics\_storage\_account\_name | Name of the Storage Account in which store vm diagnostics | `string` | n/a | yes |
 | diagnostics\_storage\_account\_sas\_token | SAS token of the Storage Account in which store vm diagnostics | `string` | n/a | yes |
 | environment | Project environment | `string` | n/a | yes |
@@ -198,16 +196,18 @@ module "vm" {
 | nic\_enable\_accelerated\_networking | Should Accelerated Networking be enabled? Defaults to `false`. | `bool` | `false` | no |
 | nic\_nsg\_id | NSG ID to associate on the Network Interface. No association if null. | `string` | `null` | no |
 | os\_disk\_size\_gb | Specifies the size of the OS disk in gigabytes | `string` | `null` | no |
+| os\_disk\_storage\_account\_type | The Type of Storage Account which should back this the Internal OS Disk. (Standard\_LRS, StandardSSD\_LRS and Premium\_LRS) | `string` | `"Standard_LRS"` | no |
 | os\_disk\_type | Specifies the type of managed disk to create (Standard\_LRS, StandardSSD\_LRS, Premium\_LRS) | `string` | `"Standard_LRS"` | no |
 | public\_ip\_sku | Sku for the public IP attached to the VM. Can be `null` if no public IP needed. | `string` | `"Standard"` | no |
 | resource\_group\_name | Resource group name | `string` | n/a | yes |
 | ssh\_public\_key | SSH public key | `string` | n/a | yes |
 | stack | Project stack name | `string` | n/a | yes |
+| static\_private\_ip | Static private IP. Private IP is dynamic if not set. | `string` | `null` | no |
 | storage\_data\_disk\_config | Map to configure data storage disk. (Managed/Unmanaged, size...) | `map(map(string))` | `{}` | no |
 | storage\_os\_disk\_config | Map to configure OS storage disk. (Managed/Unmanaged, size...) | `map(string)` | `{}` | no |
-| static\_private\_ip | Static private IP. Private IP is dynamic if not set. | `string` | `null` | no |
 | subnet\_id | Id of the Subnet in which create the Virtual Machine | `string` | n/a | yes |
-| vm\_image | Virtual Machine source image information. See https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html#storage_image_reference | `map(string)` | <pre>{<br>  "offer": "debian-10",<br>  "publisher": "Debian",<br>  "sku": "10",<br>  "version": "latest"<br>}</pre> | no |
+| vm\_image | Virtual Machine source image information. See https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html#storage_image_reference. This variable cannot be used if `vm_image_id` is already defined. | `map(string)` | <pre>{<br>  "offer": "debian-10",<br>  "publisher": "Debian",<br>  "sku": "10",<br>  "version": "latest"<br>}</pre> | no |
+| vm\_image\_id | The ID of the Image which this Virtual Machine should be created from. This variable cannot be used if `vm_image` is already defined. | `string` | `null` | no |
 | vm\_size | Size (SKU) of the Virtual Machine to create. | `string` | n/a | yes |
 | zone\_id | Index of the Availability Zone which the Virtual Machine should be allocated in. | `number` | `null` | no |
 

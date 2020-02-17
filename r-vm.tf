@@ -1,18 +1,16 @@
-resource "azurerm_virtual_machine" "vm" {
+resource "azurerm_linux_virtual_machine" "vm" {
   name                = local.vm_name
   location            = var.location
   resource_group_name = var.resource_group_name
 
   network_interface_ids = [azurerm_network_interface.nic.id]
-  vm_size               = var.vm_size
+  size                  = var.vm_size
 
   tags = merge(local.default_tags, local.default_vm_tags, var.extra_tags)
 
-  delete_os_disk_on_termination    = var.delete_os_disk_on_termination
-  delete_data_disks_on_termination = var.delete_data_disks_on_termination
+  source_image_id = var.vm_image_id
 
-  storage_image_reference {
-    id        = lookup(var.vm_image, "id", null)
+  source_image_reference {
     offer     = lookup(var.vm_image, "offer", null)
     publisher = lookup(var.vm_image, "publisher", null)
     sku       = lookup(var.vm_image, "sku", null)
@@ -21,21 +19,10 @@ resource "azurerm_virtual_machine" "vm" {
 
   availability_set_id = var.availability_set_id
 
-  zones = var.zone_id == null ? null : [var.zone_id]
+  zone = var.zone_id == null ? null : var.zone_id
 
   boot_diagnostics {
-    enabled     = true
-    storage_uri = "https://${var.diagnostics_storage_account_name}.blob.core.windows.net"
-  }
-
-  storage_os_disk {
-    name              = lookup(var.storage_os_disk_config, "name", "${local.vm_name}-osdisk")
-    caching           = lookup(var.storage_os_disk_config, "caching", "ReadWrite")
-    create_option     = lookup(var.storage_os_disk_config, "create_option", "FromImage")
-    managed_disk_type = lookup(var.storage_os_disk_config, "managed_disk_type", lookup(var.storage_os_disk_config, "vhd_uri", null) == null ? "Standard_LRS" : null)
-    vhd_uri           = lookup(var.storage_os_disk_config, "vhd_uri", null)
-    os_type           = lookup(var.storage_os_disk_config, "os_type", null)
-    disk_size_gb      = lookup(var.storage_os_disk_config, "disk_size_gb", null)
+    storage_account_uri = "https://${var.diagnostics_storage_account_name}.blob.core.windows.net"
   }
 
   dynamic "storage_data_disk" {
@@ -50,18 +37,23 @@ resource "azurerm_virtual_machine" "vm" {
     }
   }
 
-  os_profile {
-    computer_name  = local.vm_name
-    admin_username = var.admin_username
-    custom_data    = var.custom_data
+  os_disk {
+    name              = lookup(var.storage_os_disk_config, "name", "${local.vm_name}-osdisk")
+    caching           = lookup(var.storage_os_disk_config, "caching", "ReadWrite")
+    create_option     = lookup(var.storage_os_disk_config, "create_option", "FromImage")
+    managed_disk_type = lookup(var.storage_os_disk_config, "managed_disk_type", lookup(var.storage_os_disk_config, "vhd_uri", null) == null ? "Standard_LRS" : null)
+    vhd_uri           = lookup(var.storage_os_disk_config, "vhd_uri", null)
+    os_type           = lookup(var.storage_os_disk_config, "os_type", null)
+    disk_size_gb      = lookup(var.storage_os_disk_config, "disk_size_gb", null)
   }
 
-  os_profile_linux_config {
-    disable_password_authentication = true
+  computer_name  = local.vm_name
+  admin_username = var.admin_username
 
-    ssh_keys {
-      key_data = var.ssh_public_key
-      path     = format("/home/%s/.ssh/authorized_keys", var.admin_username)
-    }
+  disable_password_authentication = true
+
+  admin_ssh_key {
+    public_key = var.ssh_public_key
+    username   = var.admin_username
   }
 }

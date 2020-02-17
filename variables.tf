@@ -122,7 +122,7 @@ variable "diagnostics_storage_account_sas_token" {
 }
 
 variable "vm_image" {
-  description = "Virtual Machine source image information. See https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html#storage_image_reference"
+  description = "Virtual Machine source image information. See https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html#storage_image_reference. This variable cannot be used if `vm_image_id` is already defined."
   type        = map(string)
 
   default = {
@@ -145,16 +145,10 @@ variable "storage_data_disk_config" {
   default     = {}
 }
 
-variable "delete_os_disk_on_termination" {
-  description = "Should the OS Disk (either the Managed Disk / VHD Blob) be deleted when the Virtual Machine is destroyed?"
-  type        = bool
-  default     = false
-}
-
-variable "delete_data_disks_on_termination" {
-  description = "Should the Data Disks (either the Managed Disks / VHD Blobs) be deleted when the Virtual Machine is destroyed?"
-  type        = bool
-  default     = false
+variable "vm_image_id" {
+  description = "The ID of the Image which this Virtual Machine should be created from. This variable cannot be used if `vm_image` is already defined."
+  type        = string
+  default     = null
 }
 
 variable "extra_tags" {
@@ -217,3 +211,8 @@ variable "os_disk_size_gb" {
   default     = null
 }
 
+variable "os_disk_storage_account_type" {
+  description = "The Type of Storage Account which should back this the Internal OS Disk. (Standard_LRS, StandardSSD_LRS and Premium_LRS)"
+  type        = string
+  default     = "Standard_LRS"
+}

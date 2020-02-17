@@ -1,3 +1,8 @@
+# v3.x.x - Unreleased
+
+Breaking
+  * AZ-189: Upgrading module to be compliant to AzureRM 2.0
+
 # v2.4.0 - 2020-07-22
 
 Changed

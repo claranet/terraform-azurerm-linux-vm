@@ -1,11 +1,11 @@
 output "vm_id" {
   description = "ID of the Virtual Machine"
-  value       = azurerm_virtual_machine.vm.id
+  value       = azurerm_linux_virtual_machine.vm.id
 }
 
 output "vm_name" {
   description = "Name of the Virtual Machine"
-  value       = azurerm_virtual_machine.vm.name
+  value       = azurerm_linux_virtual_machine.vm.name
 }
 
 output "vm_public_ip_address" {
