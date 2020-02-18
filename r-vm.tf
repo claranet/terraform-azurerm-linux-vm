@@ -19,7 +19,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
 
   availability_set_id = var.availability_set_id
 
-  zone = var.zone_id == null ? null : var.zone_id
+  zone = var.zone_id
 
   boot_diagnostics {
     storage_account_uri = "https://${var.diagnostics_storage_account_name}.blob.core.windows.net"
