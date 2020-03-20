@@ -3,6 +3,9 @@
 Fixed
   * AZ-180: Apply OS tags only on VM resource
 
+Added
+  * AZ-214: Support for custom_data parameter in os_profile block
+
 # v2.2.0 - 2020-02-14
 
 Added
