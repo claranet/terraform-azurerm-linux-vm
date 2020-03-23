@@ -1,6 +1,6 @@
 module "vm-logs" {
   source  = "claranet/vm-logs/azurerm"
-  version = "2.0.1"
+  version = "2.2.0"
 
   location       = var.location
   location_short = var.location_short
