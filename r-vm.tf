@@ -39,6 +39,7 @@ resource "azurerm_virtual_machine" "vm" {
   os_profile {
     computer_name  = local.vm_name
     admin_username = var.admin_username
+    custom_data    = var.custom_data
   }
 
   os_profile_linux_config {

@@ -156,7 +156,7 @@ module "vm" {
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:-----:|
+|------|-------------|------|---------|:--------:|
 | admin\_username | Username for Virtual Machine administrator account | `string` | n/a | yes |
 | application\_gateway\_backend\_pool\_id | Id of the Application Gateway Backend Pool to attach the VM. | `string` | `null` | no |
 | attach\_application\_gateway | True to attach this VM to an Application Gateway | `bool` | `false` | no |
@@ -164,6 +164,7 @@ module "vm" {
 | availability\_set\_id | Id of the availability set in which host the Virtual Machine. | `string` | `null` | no |
 | certificate\_validity\_in\_months | The created certificate validity in months | `string` | `"48"` | no |
 | client\_name | Client name/account used in naming | `string` | n/a | yes |
+| custom\_data | Custom data. See https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html#os_profile block | `any` | `null` | no |
 | custom\_dns\_label | The DNS label to use for public access. VM name if not set. DNS will be <label>.westeurope.cloudapp.azure.com | `string` | `""` | no |
 | custom\_ipconfig\_name | Custom name for the IP config of the NIC. Should be suffixed by "-nic-ipconfig". Generated if not set. | `string` | `null` | no |
 | custom\_name | Custom name for the Virtual Machine. Should be suffixed by "-vm". Generated if not set. | `string` | `""` | no |

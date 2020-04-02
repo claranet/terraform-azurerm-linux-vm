@@ -64,6 +64,12 @@ variable "admin_username" {
   type        = string
 }
 
+variable "custom_data" {
+  description = "Custom data. See https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html#os_profile block"
+  type        = any
+  default     = null
+}
+
 variable "vm_size" {
   description = "Size (SKU) of the Virtual Machine to create."
   type        = string
