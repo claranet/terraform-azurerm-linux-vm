@@ -6,15 +6,13 @@ This module creates a [Linux Virtual Machine](https://docs.microsoft.com/en-us/a
 
 Following tags are automatically set with default values: `env`, `stack`, `os_family`, `os_distribution`, `os_version`.
 
-## Requirements
-* [AzureRM Terraform provider](https://www.terraform.io/docs/providers/azurerm/) >= 1.44.0 (beta resources)
+## Version compatibility
 
-## Terraform version compatibility
- 
-| Module version | Terraform version |
-|----------------|-------------------|
-| >= 2.x.x       | 0.12.x            |
-| < 2.x.x        | 0.11.x            |
+| Module version    | Terraform version | AzureRM version |
+|-------------------|-------------------|-----------------|
+| >= 3.x.x          | 0.12.x            | >= 2.0          |
+| >= 2.x.x, < 3.x.x | 0.12.x            | <  2.0          |
+| <  2.x.x          | 0.11.x            | <  2.0          |
 
 ## Usage
 
