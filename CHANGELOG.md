@@ -5,6 +5,7 @@ Fixed
 
 Added
   * AZ-214: Support for custom_data parameter in os_profile block
+  * AZ-222: Option to activate `enable_accelerated_networking` on NIC resource
 
 # v2.2.0 - 2020-02-14
 
