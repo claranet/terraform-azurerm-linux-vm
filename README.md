@@ -150,6 +150,22 @@ module "vm" {
     sku       = "10"
     version   = "latest"
   }
+
+  # Use unmanaged disk if needed
+  # If those blocks are not defined, it will use managed_disks
+  storage_os_disk_config = {
+    vhd_uri      = "https://${module.storage_account.name}.blob.core.windows.net/${azurerm_storage_container.disks.name}/${local.vm_name}-osdisk.vhd"
+    disk_size_gb = "150" # At least 127 Gb
+    os_type      = "Linux"
+  }
+
+  storage_data_disk_config = {
+    0 = { # Used to define lun parameter
+      vhd_uri      = "https://${module.storage_account.name}.blob.core.windows.net/${azurerm_storage_container.disks.name}/${local.vm_name}-datadisk0.vhd"
+      disk_size_gb = "500"
+    }
+  }
+
 }
 ```
 
@@ -186,8 +202,11 @@ module "vm" {
 | resource\_group\_name | Resource group name | `string` | n/a | yes |
 | ssh\_public\_key | SSH public key | `string` | n/a | yes |
 | stack | Project stack name | `string` | n/a | yes |
+| storage\_data\_disk\_config | Map to configure data storage disk. (Managed/Unmanaged, size...) | `map(map(string))` | `{}` | no |
+| storage\_os\_disk\_config | Map to configure OS storage disk. (Managed/Unmanaged, size...) | `map(string)` | `{}` | no |
 | subnet\_id | Id of the Subnet in which create the Virtual Machine | `string` | n/a | yes |
-| vm\_image | Virtual Machine source image information. See https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html#storage_image_reference | `map(string)` | <pre>{<br>  "offer": "debian-10",<br>  "publisher": "Debian",<br>  "sku": "10",<br>  "version": "latest"<br>}</pre> | no |
+| vm\_image | Virtual Machine source image information. See https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html#storage_image_reference | `map(string)` | <pre>{<br>  "offer": "debian-10",<br>  "publisher": "Debian",<br>  "sku": "10",<br>  "version": 
+"latest"<br>}</pre> | no |
 | vm\_size | Size (SKU) of the Virtual Machine to create. | `string` | n/a | yes |
 | zone\_id | Index of the Availability Zone which the Virtual Machine should be allocated in. | `number` | `null` | no |
 
