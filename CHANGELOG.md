@@ -1,4 +1,4 @@
-# Unreleased
+# v2.3.0 - 2020-07-03
 
 Fixed
   * AZ-180: Apply OS tags only on VM resource
