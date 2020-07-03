@@ -215,6 +215,7 @@ module "vm" {
 |------|-------------|
 | vm\_id | ID of the Virtual Machine |
 | vm\_name | Name of the Virtual Machine |
+| vm\_nic\_id | ID of the Network Interface Configuration attached to the Virtual Machine |
 | vm\_nic\_ip\_configuration\_name | Name of the IP Configuration for the Network Interface Configuration attached to the Virtual Machine |
 | vm\_nic\_name | Name of the Network Interface Configuration attached to the Virtual Machine |
 | vm\_private\_ip\_address | Private IP address of the Virtual Machine |
