@@ -196,6 +196,7 @@ module "vm" {
 | location | Azure location. | `string` | n/a | yes |
 | location\_short | Short string for Azure location. | `string` | n/a | yes |
 | nic\_enable\_accelerated\_networking | Should Accelerated Networking be enabled? Defaults to `false`. | `bool` | `false` | no |
+| nic\_nsg\_id | NSG ID to associate on the Network Interface. No association if null. | `string` | `null` | no |
 | os\_disk\_size\_gb | Specifies the size of the OS disk in gigabytes | `string` | `null` | no |
 | os\_disk\_type | Specifies the type of managed disk to create (Standard\_LRS, StandardSSD\_LRS, Premium\_LRS) | `string` | `"Standard_LRS"` | no |
 | public\_ip\_sku | Sku for the public IP attached to the VM. Can be `null` if no public IP needed. | `string` | `"Standard"` | no |

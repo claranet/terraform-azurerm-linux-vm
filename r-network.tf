@@ -18,6 +18,8 @@ resource "azurerm_network_interface" "nic" {
 
   enable_accelerated_networking = var.nic_enable_accelerated_networking
 
+  network_security_group_id = var.nic_nsg_id
+
   ip_configuration {
     name                          = coalesce(var.custom_ipconfig_name, "${local.vm_name}-nic-ipconfig")
     subnet_id                     = var.subnet_id
