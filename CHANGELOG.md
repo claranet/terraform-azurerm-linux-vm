@@ -5,6 +5,9 @@ Changed
 
 Added
   * AZ-210: Enable unmanaged disk configuration
+  * AZ-234: Add option to force Static private IP
+  * AZ-234: Add option to assoc Network Security Group to the NIC
+  * AZ-234: Output NIC ID
 
 # v2.3.0 - 2020-07-03
 
