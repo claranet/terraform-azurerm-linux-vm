@@ -9,6 +9,9 @@ Added
   * AZ-234: Add option to assoc Network Security Group to the NIC
   * AZ-234: Output NIC ID
 
+Fixed
+  * AZ-167: Fix NIC configuration name
+
 # v2.3.0 - 2020-07-03
 
 Fixed

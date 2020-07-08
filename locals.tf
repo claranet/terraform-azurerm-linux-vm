@@ -11,5 +11,5 @@ locals {
 
   vm_name = coalesce(var.custom_name, format("%s-%s-%s-%s-vm", var.stack, var.client_name, var.location_short, var.environment))
 
-  ip_configuration_name = "configuration"
+  ip_configuration_name = coalesce(var.custom_ipconfig_name, "${local.vm_name}-nic-ipconfig")
 }
