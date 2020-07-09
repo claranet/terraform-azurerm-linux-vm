@@ -205,8 +205,7 @@ module "vm" {
 | storage\_data\_disk\_config | Map to configure data storage disk. (Managed/Unmanaged, size...) | `map(map(string))` | `{}` | no |
 | storage\_os\_disk\_config | Map to configure OS storage disk. (Managed/Unmanaged, size...) | `map(string)` | `{}` | no |
 | subnet\_id | Id of the Subnet in which create the Virtual Machine | `string` | n/a | yes |
-| vm\_image | Virtual Machine source image information. See https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html#storage_image_reference | `map(string)` | <pre>{<br>  "offer": "debian-10",<br>  "publisher": "Debian",<br>  "sku": "10",<br>  "version": 
-"latest"<br>}</pre> | no |
+| vm\_image | Virtual Machine source image information. See https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html#storage_image_reference | `map(string)` | <pre>{<br>  "offer": "debian-10",<br>  "publisher": "Debian",<br>  "sku": "10",<br>  "version": "latest"<br>}</pre> | no |
 | vm\_size | Size (SKU) of the Virtual Machine to create. | `string` | n/a | yes |
 | zone\_id | Index of the Availability Zone which the Virtual Machine should be allocated in. | `number` | `null` | no |
 
