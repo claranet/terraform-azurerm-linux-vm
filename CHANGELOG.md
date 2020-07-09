@@ -1,5 +1,8 @@
 # v2.4.0 - unreleased
 
+Changed
+  * AZ-223: Upgrade version of vm-logs module
+
 Added
   * AZ-210: Enable unmanaged disk configuration
 
@@ -8,9 +11,6 @@ Added
 Fixed
   * AZ-180: Apply OS tags only on VM resource
   
-Changed
-  * AZ-223: Upgrade version of vm-logs module
-
 Added
   * AZ-214: Support for custom_data parameter in os_profile block
   * AZ-222: Option to activate `enable_accelerated_networking` on NIC resource
