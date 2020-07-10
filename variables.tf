@@ -133,14 +133,8 @@ variable "vm_image" {
   }
 }
 
-variable "storage_os_disk_config" {
-  description = "Map to configure OS storage disk. (Managed/Unmanaged, size...)"
-  type        = map(string)
-  default     = {}
-}
-
 variable "storage_data_disk_config" {
-  description = "Map to configure data storage disk. (Managed/Unmanaged, size...)"
+  description = "Map to configure data storage disk."
   type        = map(map(string))
   default     = {}
 }

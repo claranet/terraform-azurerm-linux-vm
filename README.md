@@ -149,18 +149,12 @@ module "vm" {
     version   = "latest"
   }
 
-  # Use unmanaged disk if needed
-  # If those blocks are not defined, it will use managed_disks
-  storage_os_disk_config = {
-    vhd_uri      = "https://${module.storage_account.name}.blob.core.windows.net/${azurerm_storage_container.disks.name}/${local.vm_name}-osdisk.vhd"
-    disk_size_gb = "150" # At least 127 Gb
-    os_type      = "Linux"
-  }
-
   storage_data_disk_config = {
     0 = { # Used to define lun parameter
-      vhd_uri      = "https://${module.storage_account.name}.blob.core.windows.net/${azurerm_storage_container.disks.name}/${local.vm_name}-datadisk0.vhd"
       disk_size_gb = "500"
+    }
+    10 = { # Used to define lun parameter
+      disk_size_gb = "800"
     }
   }
 
@@ -201,8 +195,7 @@ module "vm" {
 | ssh\_public\_key | SSH public key | `string` | n/a | yes |
 | stack | Project stack name | `string` | n/a | yes |
 | static\_private\_ip | Static private IP. Private IP is dynamic if not set. | `string` | `null` | no |
-| storage\_data\_disk\_config | Map to configure data storage disk. (Managed/Unmanaged, size...) | `map(map(string))` | `{}` | no |
-| storage\_os\_disk\_config | Map to configure OS storage disk. (Managed/Unmanaged, size...) | `map(string)` | `{}` | no |
+| storage\_data\_disk\_config | Map to configure data storage disk. | `map(map(string))` | `{}` | no |
 | subnet\_id | Id of the Subnet in which create the Virtual Machine | `string` | n/a | yes |
 | vm\_image | Virtual Machine source image information. See https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html#storage_image_reference. This variable cannot be used if `vm_image_id` is already defined. | `map(string)` | <pre>{<br>  "offer": "debian-10",<br>  "publisher": "Debian",<br>  "sku": "10",<br>  "version": "latest"<br>}</pre> | no |
 | vm\_image\_id | The ID of the Image which this Virtual Machine should be created from. This variable cannot be used if `vm_image` is already defined. | `string` | `null` | no |

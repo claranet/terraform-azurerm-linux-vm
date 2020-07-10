@@ -25,26 +25,11 @@ resource "azurerm_linux_virtual_machine" "vm" {
     storage_account_uri = "https://${var.diagnostics_storage_account_name}.blob.core.windows.net"
   }
 
-  dynamic "storage_data_disk" {
-    for_each = var.storage_data_disk_config
-    content {
-      name              = lookup(storage_data_disk.value, "name", "${local.vm_name}-datadisk${storage_data_disk.key}")
-      create_option     = lookup(storage_data_disk.value, "create_option", "Empty")
-      managed_disk_type = lookup(storage_data_disk.value, "managed_disk_type", lookup(storage_data_disk.value, "vhd_uri", null) == null ? "Standard_LRS" : null)
-      vhd_uri           = lookup(storage_data_disk.value, "vhd_uri", null)
-      disk_size_gb      = lookup(storage_data_disk.value, "disk_size_gb", null)
-      lun               = lookup(storage_data_disk.value, "lun", storage_data_disk.key)
-    }
-  }
-
   os_disk {
-    name              = lookup(var.storage_os_disk_config, "name", "${local.vm_name}-osdisk")
-    caching           = lookup(var.storage_os_disk_config, "caching", "ReadWrite")
-    create_option     = lookup(var.storage_os_disk_config, "create_option", "FromImage")
-    managed_disk_type = lookup(var.storage_os_disk_config, "managed_disk_type", lookup(var.storage_os_disk_config, "vhd_uri", null) == null ? "Standard_LRS" : null)
-    vhd_uri           = lookup(var.storage_os_disk_config, "vhd_uri", null)
-    os_type           = lookup(var.storage_os_disk_config, "os_type", null)
-    disk_size_gb      = lookup(var.storage_os_disk_config, "disk_size_gb", null)
+    name                 = "${local.vm_name}-osdisk"
+    caching              = "ReadWrite"
+    storage_account_type = var.os_disk_storage_account_type
+    disk_size_gb         = var.os_disk_size_gb
   }
 
   computer_name  = local.vm_name
@@ -56,4 +41,31 @@ resource "azurerm_linux_virtual_machine" "vm" {
     public_key = var.ssh_public_key
     username   = var.admin_username
   }
+}
+
+resource "azurerm_managed_disk" "disk" {
+  for_each = var.storage_data_disk_config
+
+  location            = var.location
+  resource_group_name = var.resource_group_name
+
+  name = lookup(each.value, "name", "${local.vm_name}-datadisk${each.key}")
+
+  zones                = [var.zone_id]
+  storage_account_type = lookup(each.value, "storage_account_type", "Standard_LRS")
+
+  create_option = lookup(each.value, "create_option", "Empty")
+  disk_size_gb  = lookup(each.value, "disk_size_gb", null)
+
+  tags = merge(local.default_tags, local.default_vm_tags, var.extra_tags)
+}
+
+resource "azurerm_virtual_machine_data_disk_attachment" "disk-attach" {
+  for_each = var.storage_data_disk_config
+
+  managed_disk_id    = azurerm_managed_disk.disk[each.key].id
+  virtual_machine_id = azurerm_linux_virtual_machine.vm.id
+
+  lun     = lookup(each.value, "lun", each.key)
+  caching = lookup(each.value, "caching", "ReadWrite")
 }
