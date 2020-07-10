@@ -210,3 +210,9 @@ variable "os_disk_storage_account_type" {
   type        = string
   default     = "Standard_LRS"
 }
+
+variable "os_disk_caching" {
+  description = "Specifies the caching requirements for the OS Disk"
+  type        = string
+  default     = "ReadWrite"
+}
