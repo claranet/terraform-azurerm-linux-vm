@@ -58,6 +58,18 @@ variable "nic_enable_accelerated_networking" {
   default     = false
 }
 
+variable "nic_nsg_id" {
+  description = "NSG ID to associate on the Network Interface. No association if null."
+  type        = string
+  default     = null
+}
+
+variable "static_private_ip" {
+  description = "Static private IP. Private IP is dynamic if not set."
+  type        = string
+  default     = null
+}
+
 variable "custom_ipconfig_name" {
   description = "Custom name for the IP config of the NIC. Should be suffixed by \"-nic-ipconfig\". Generated if not set."
   type        = string

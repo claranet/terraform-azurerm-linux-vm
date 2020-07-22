@@ -196,6 +196,7 @@ module "vm" {
 | location | Azure location. | `string` | n/a | yes |
 | location\_short | Short string for Azure location. | `string` | n/a | yes |
 | nic\_enable\_accelerated\_networking | Should Accelerated Networking be enabled? Defaults to `false`. | `bool` | `false` | no |
+| nic\_nsg\_id | NSG ID to associate on the Network Interface. No association if null. | `string` | `null` | no |
 | os\_disk\_size\_gb | Specifies the size of the OS disk in gigabytes | `string` | `null` | no |
 | os\_disk\_type | Specifies the type of managed disk to create (Standard\_LRS, StandardSSD\_LRS, Premium\_LRS) | `string` | `"Standard_LRS"` | no |
 | public\_ip\_sku | Sku for the public IP attached to the VM. Can be `null` if no public IP needed. | `string` | `"Standard"` | no |
@@ -204,6 +205,7 @@ module "vm" {
 | stack | Project stack name | `string` | n/a | yes |
 | storage\_data\_disk\_config | Map to configure data storage disk. (Managed/Unmanaged, size...) | `map(map(string))` | `{}` | no |
 | storage\_os\_disk\_config | Map to configure OS storage disk. (Managed/Unmanaged, size...) | `map(string)` | `{}` | no |
+| static\_private\_ip | Static private IP. Private IP is dynamic if not set. | `string` | `null` | no |
 | subnet\_id | Id of the Subnet in which create the Virtual Machine | `string` | n/a | yes |
 | vm\_image | Virtual Machine source image information. See https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html#storage_image_reference | `map(string)` | <pre>{<br>  "offer": "debian-10",<br>  "publisher": "Debian",<br>  "sku": "10",<br>  "version": "latest"<br>}</pre> | no |
 | vm\_size | Size (SKU) of the Virtual Machine to create. | `string` | n/a | yes |
@@ -215,6 +217,7 @@ module "vm" {
 |------|-------------|
 | vm\_id | ID of the Virtual Machine |
 | vm\_name | Name of the Virtual Machine |
+| vm\_nic\_id | ID of the Network Interface Configuration attached to the Virtual Machine |
 | vm\_nic\_ip\_configuration\_name | Name of the IP Configuration for the Network Interface Configuration attached to the Virtual Machine |
 | vm\_nic\_name | Name of the Network Interface Configuration attached to the Virtual Machine |
 | vm\_private\_ip\_address | Private IP address of the Virtual Machine |

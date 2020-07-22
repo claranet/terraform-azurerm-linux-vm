@@ -18,10 +18,13 @@ resource "azurerm_network_interface" "nic" {
 
   enable_accelerated_networking = var.nic_enable_accelerated_networking
 
+  network_security_group_id = var.nic_nsg_id
+
   ip_configuration {
-    name                          = coalesce(var.custom_ipconfig_name, "${local.vm_name}-nic-ipconfig")
+    name                          = local.ip_configuration_name
     subnet_id                     = var.subnet_id
-    private_ip_address_allocation = "Dynamic"
+    private_ip_address_allocation = var.static_private_ip == null ? "Dynamic" : "Static"
+    private_ip_address            = var.static_private_ip
     public_ip_address_id          = var.public_ip_sku == null ? null : join("", azurerm_public_ip.public_ip.*.id)
   }
 
