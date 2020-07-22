@@ -1,4 +1,4 @@
-# v2.4.0 - unreleased
+# v2.4.0 - 2020-07-22
 
 Changed
   * AZ-223: Upgrade version of vm-logs module
@@ -18,7 +18,7 @@ Fixed
   * AZ-180: Apply OS tags only on VM resource
   
 Added
-  * AZ-214: Support for custom_data parameter in os_profile block
+  * AZ-214: Support for `custom_data` parameter in `os_profile` block
   * AZ-222: Option to activate `enable_accelerated_networking` on NIC resource
 
 # v2.2.0 - 2020-02-14
