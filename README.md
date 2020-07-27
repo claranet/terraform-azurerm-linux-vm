@@ -150,11 +150,16 @@ module "vm" {
   }
 
   storage_data_disk_config = {
-    0 = { # Used to define lun parameter
-      disk_size_gb = "500"
+    appli_data_disk = {
+      disk_size_gb         = 512
+      lun                  = 0
+      storage_account_type = "Standard_LRS"
     }
-    10 = { # Used to define lun parameter
-      disk_size_gb = "800"
+    logs_disk = {
+      # Used to define Logical Unit Number (LUN) parameter
+      lun          = 10
+      disk_size_gb = 64
+      caching      = "ReadWrite"
     }
   }
 
