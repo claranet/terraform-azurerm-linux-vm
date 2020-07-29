@@ -1,7 +1,7 @@
-# v3.x.x - Unreleased
+# v3.0.0 - 2020-07-29
 
 Breaking
-  * AZ-189: Upgrading module to be compliant to AzureRM 2.0
+  * AZ-189: Upgrading module to be compliant to AzureRM 2.0+. It now uses `azurerm_linux_virtual_machine` terraform resource
 
 # v2.4.0 - 2020-07-22
 
