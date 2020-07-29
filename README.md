@@ -6,15 +6,13 @@ This module creates a [Linux Virtual Machine](https://docs.microsoft.com/en-us/a
 
 Following tags are automatically set with default values: `env`, `stack`, `os_family`, `os_distribution`, `os_version`.
 
-## Requirements
-* [AzureRM Terraform provider](https://www.terraform.io/docs/providers/azurerm/) >= 1.31
+## Version compatibility
 
-## Terraform version compatibility
- 
-| Module version | Terraform version |
-|----------------|-------------------|
-| >= 2.x.x       | 0.12.x            |
-| < 2.x.x        | 0.11.x            |
+| Module version    | Terraform version | AzureRM version |
+|-------------------|-------------------|-----------------|
+| >= 3.x.x          | 0.12.x            | >= 2.0          |
+| >= 2.x.x, < 3.x.x | 0.12.x            | <  2.0          |
+| <  2.x.x          | 0.11.x            | <  2.0          |
 
 ## Usage
 
@@ -151,18 +149,17 @@ module "vm" {
     version   = "latest"
   }
 
-  # Use unmanaged disk if needed
-  # If those blocks are not defined, it will use managed_disks
-  storage_os_disk_config = {
-    vhd_uri      = "https://${module.storage_account.name}.blob.core.windows.net/${azurerm_storage_container.disks.name}/${local.vm_name}-osdisk.vhd"
-    disk_size_gb = "150" # At least 127 Gb
-    os_type      = "Linux"
-  }
-
   storage_data_disk_config = {
-    0 = { # Used to define lun parameter
-      vhd_uri      = "https://${module.storage_account.name}.blob.core.windows.net/${azurerm_storage_container.disks.name}/${local.vm_name}-datadisk0.vhd"
-      disk_size_gb = "500"
+    appli_data_disk = {
+      disk_size_gb         = 512
+      lun                  = 0
+      storage_account_type = "Standard_LRS"
+    }
+    logs_disk = {
+      # Used to define Logical Unit Number (LUN) parameter
+      lun          = 10
+      disk_size_gb = 64
+      caching      = "ReadWrite"
     }
   }
 
@@ -186,8 +183,6 @@ module "vm" {
 | custom\_name | Custom name for the Virtual Machine. Should be suffixed by "-vm". Generated if not set. | `string` | `""` | no |
 | custom\_nic\_name | Custom name for the NIC interface. Should be suffixed by "-nic". Generated if not set. | `string` | `null` | no |
 | custom\_public\_ip\_name | Custom name for public IP. Should be suffixed by "-pubip". Generated if not set. | `string` | `null` | no |
-| delete\_data\_disks\_on\_termination | Should the Data Disks (either the Managed Disks / VHD Blobs) be deleted when the Virtual Machine is destroyed? | `bool` | `false` | no |
-| delete\_os\_disk\_on\_termination | Should the OS Disk (either the Managed Disk / VHD Blob) be deleted when the Virtual Machine is destroyed? | `bool` | `false` | no |
 | diagnostics\_storage\_account\_name | Name of the Storage Account in which store vm diagnostics | `string` | n/a | yes |
 | diagnostics\_storage\_account\_sas\_token | SAS token of the Storage Account in which store vm diagnostics | `string` | n/a | yes |
 | environment | Project environment | `string` | n/a | yes |
@@ -197,17 +192,19 @@ module "vm" {
 | location\_short | Short string for Azure location. | `string` | n/a | yes |
 | nic\_enable\_accelerated\_networking | Should Accelerated Networking be enabled? Defaults to `false`. | `bool` | `false` | no |
 | nic\_nsg\_id | NSG ID to associate on the Network Interface. No association if null. | `string` | `null` | no |
+| os\_disk\_caching | Specifies the caching requirements for the OS Disk | `string` | `"ReadWrite"` | no |
 | os\_disk\_size\_gb | Specifies the size of the OS disk in gigabytes | `string` | `null` | no |
+| os\_disk\_storage\_account\_type | The Type of Storage Account which should back this the Internal OS Disk. (Standard\_LRS, StandardSSD\_LRS and Premium\_LRS) | `string` | `"Standard_LRS"` | no |
 | os\_disk\_type | Specifies the type of managed disk to create (Standard\_LRS, StandardSSD\_LRS, Premium\_LRS) | `string` | `"Standard_LRS"` | no |
 | public\_ip\_sku | Sku for the public IP attached to the VM. Can be `null` if no public IP needed. | `string` | `"Standard"` | no |
 | resource\_group\_name | Resource group name | `string` | n/a | yes |
 | ssh\_public\_key | SSH public key | `string` | n/a | yes |
 | stack | Project stack name | `string` | n/a | yes |
-| storage\_data\_disk\_config | Map to configure data storage disk. (Managed/Unmanaged, size...) | `map(map(string))` | `{}` | no |
-| storage\_os\_disk\_config | Map to configure OS storage disk. (Managed/Unmanaged, size...) | `map(string)` | `{}` | no |
 | static\_private\_ip | Static private IP. Private IP is dynamic if not set. | `string` | `null` | no |
+| storage\_data\_disk\_config | Map to configure data storage disk. | `map(map(string))` | `{}` | no |
 | subnet\_id | Id of the Subnet in which create the Virtual Machine | `string` | n/a | yes |
-| vm\_image | Virtual Machine source image information. See https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html#storage_image_reference | `map(string)` | <pre>{<br>  "offer": "debian-10",<br>  "publisher": "Debian",<br>  "sku": "10",<br>  "version": "latest"<br>}</pre> | no |
+| vm\_image | Virtual Machine source image information. See https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html#storage_image_reference. This variable cannot be used if `vm_image_id` is already defined. | `map(string)` | <pre>{<br>  "offer": "debian-10",<br>  "publisher": "Debian",<br>  "sku": "10",<br>  "version": "latest"<br>}</pre> | no |
+| vm\_image\_id | The ID of the Image which this Virtual Machine should be created from. This variable cannot be used if `vm_image` is already defined. | `string` | `null` | no |
 | vm\_size | Size (SKU) of the Virtual Machine to create. | `string` | n/a | yes |
 | zone\_id | Index of the Availability Zone which the Virtual Machine should be allocated in. | `number` | `null` | no |
 
@@ -223,6 +220,7 @@ module "vm" {
 | vm\_private\_ip\_address | Private IP address of the Virtual Machine |
 | vm\_public\_domain\_name\_label | Public DNS of the Virtual machine |
 | vm\_public\_ip\_address | Public IP address of the Virtual Machine |
+| vm\_public\_ip\_id | Public IP ID of the Virtual Machine |
 
 ## Related documentation
 
