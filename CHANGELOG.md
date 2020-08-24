@@ -1,4 +1,4 @@
-# v3.0.1 - unreleased
+# v3.0.1 - 2020-08-24
 
 Fixed
   * AZ-257: Fix unused `custom_data` variable
