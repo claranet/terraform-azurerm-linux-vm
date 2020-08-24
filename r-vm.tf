@@ -35,12 +35,15 @@ resource "azurerm_linux_virtual_machine" "vm" {
   computer_name  = local.vm_name
   admin_username = var.admin_username
 
+  custom_data = var.custom_data
+
   disable_password_authentication = true
 
   admin_ssh_key {
     public_key = var.ssh_public_key
     username   = var.admin_username
   }
+
 }
 
 resource "azurerm_managed_disk" "disk" {
