@@ -39,6 +39,13 @@ variable "ssh_public_key" {
   type        = string
 }
 
+### Password authentication
+variable "disable_password_authentication" {
+  description = "Disable password authentication. Default value is set to `true`."
+  type        = bool
+  default     = true
+}
+
 ### Network inputs
 variable "custom_public_ip_name" {
   description = "Custom name for public IP. Should be suffixed by \"-pubip\". Generated if not set."
