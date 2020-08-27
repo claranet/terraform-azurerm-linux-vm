@@ -170,6 +170,7 @@ module "vm" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| admin\_password | Password for the administrator account of the virtual machine. | `string` | `null` | no |
 | admin\_username | Username for Virtual Machine administrator account | `string` | n/a | yes |
 | application\_gateway\_backend\_pool\_id | Id of the Application Gateway Backend Pool to attach the VM. | `string` | `null` | no |
 | attach\_application\_gateway | True to attach this VM to an Application Gateway | `bool` | `false` | no |
@@ -185,7 +186,6 @@ module "vm" {
 | custom\_public\_ip\_name | Custom name for public IP. Should be suffixed by "-pubip". Generated if not set. | `string` | `null` | no |
 | diagnostics\_storage\_account\_name | Name of the Storage Account in which store vm diagnostics | `string` | n/a | yes |
 | diagnostics\_storage\_account\_sas\_token | SAS token of the Storage Account in which store vm diagnostics | `string` | n/a | yes |
-| disable\_password\_authentication | Disable password authentication. Default value is set to `true`. | `bool` | `true` | no |
 | environment | Project environment | `string` | n/a | yes |
 | extra\_tags | Extra tags to set on each created resource. | `map(string)` | `{}` | no |
 | load\_balancer\_backend\_pool\_id | Id of the Load Balancer Backend Pool to attach the VM. | `string` | `null` | no |
@@ -199,7 +199,7 @@ module "vm" {
 | os\_disk\_type | Specifies the type of managed disk to create (Standard\_LRS, StandardSSD\_LRS, Premium\_LRS) | `string` | `"Standard_LRS"` | no |
 | public\_ip\_sku | Sku for the public IP attached to the VM. Can be `null` if no public IP needed. | `string` | `"Standard"` | no |
 | resource\_group\_name | Resource group name | `string` | n/a | yes |
-| ssh\_public\_key | SSH public key | `string` | n/a | yes |
+| ssh\_public\_key | SSH public key | `string` | `null` | no |
 | stack | Project stack name | `string` | n/a | yes |
 | static\_private\_ip | Static private IP. Private IP is dynamic if not set. | `string` | `null` | no |
 | storage\_data\_disk\_config | Map to configure data storage disk. | `map(map(string))` | `{}` | no |
