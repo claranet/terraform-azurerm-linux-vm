@@ -37,6 +37,14 @@ variable "subnet_id" {
 variable "ssh_public_key" {
   description = "SSH public key"
   type        = string
+  default     = null
+}
+
+### Password authentication
+variable "admin_password" {
+  description = "Password for the administrator account of the virtual machine."
+  type        = string
+  default     = null
 }
 
 ### Network inputs

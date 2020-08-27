@@ -1,3 +1,8 @@
+# v3.1.0 - Unreleased
+
+Added
+  * AZ-261: Add ability to set password authentication 
+
 # v3.0.1 - 2020-08-24
 
 Fixed

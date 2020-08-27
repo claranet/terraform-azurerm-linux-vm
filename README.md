@@ -170,6 +170,7 @@ module "vm" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| admin\_password | Password for the administrator account of the virtual machine. | `string` | `null` | no |
 | admin\_username | Username for Virtual Machine administrator account | `string` | n/a | yes |
 | application\_gateway\_backend\_pool\_id | Id of the Application Gateway Backend Pool to attach the VM. | `string` | `null` | no |
 | attach\_application\_gateway | True to attach this VM to an Application Gateway | `bool` | `false` | no |
@@ -198,7 +199,7 @@ module "vm" {
 | os\_disk\_type | Specifies the type of managed disk to create (Standard\_LRS, StandardSSD\_LRS, Premium\_LRS) | `string` | `"Standard_LRS"` | no |
 | public\_ip\_sku | Sku for the public IP attached to the VM. Can be `null` if no public IP needed. | `string` | `"Standard"` | no |
 | resource\_group\_name | Resource group name | `string` | n/a | yes |
-| ssh\_public\_key | SSH public key | `string` | n/a | yes |
+| ssh\_public\_key | SSH public key | `string` | `null` | no |
 | stack | Project stack name | `string` | n/a | yes |
 | static\_private\_ip | Static private IP. Private IP is dynamic if not set. | `string` | `null` | no |
 | storage\_data\_disk\_config | Map to configure data storage disk. | `map(map(string))` | `{}` | no |

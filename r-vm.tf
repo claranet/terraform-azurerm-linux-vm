@@ -34,14 +34,18 @@ resource "azurerm_linux_virtual_machine" "vm" {
 
   computer_name  = local.vm_name
   admin_username = var.admin_username
+  admin_password = var.admin_password
 
   custom_data = var.custom_data
 
-  disable_password_authentication = true
+  disable_password_authentication = var.admin_password != null ? false : true
 
-  admin_ssh_key {
-    public_key = var.ssh_public_key
-    username   = var.admin_username
+  dynamic "admin_ssh_key" {
+    for_each = var.ssh_public_key != null ? ["fake"] : []
+    content {
+      public_key = var.ssh_public_key
+      username   = var.admin_username
+    }
   }
 
 }
