@@ -1,4 +1,4 @@
-# v3.0.2 - Unreleased
+# v3.1.0 - Unreleased
 
 Added
   * AZ-261: Add ability to set password authentication 
