@@ -2,6 +2,7 @@
 
 Added
   * AZ-325: Add System Identity to virtual machine
+  * AZ-346: Add specific tags for each data disks
   * AZ-323: Allow use of osdisk custom name 
 
 # v3.2.0 - 2020-10-16
