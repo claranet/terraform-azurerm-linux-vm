@@ -1,4 +1,4 @@
-# v3.2.0 - Unreleased
+# v3.2.0 - 2020-10-16
 
 Added
   * AZ-319: add specific tags for nic, data disk and pub ip 
