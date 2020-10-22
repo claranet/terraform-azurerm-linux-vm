@@ -26,7 +26,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   }
 
   os_disk {
-    name                 = "${local.vm_name}-osdisk"
+    name                 = coalesce(var.os_disk_custom_name, "${local.vm_name}-osdisk")
     caching              = var.os_disk_caching
     storage_account_type = var.os_disk_storage_account_type
     disk_size_gb         = var.os_disk_size_gb

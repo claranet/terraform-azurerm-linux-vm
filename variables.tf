@@ -231,6 +231,13 @@ variable "os_disk_size_gb" {
   default     = null
 }
 
+variable "os_disk_custom_name" {
+  description = "Custom name for OS disk. Should be suffixed by \"-osdisk\". Generated if not set."
+  type        = string
+  default     = null
+}
+
+
 variable "os_disk_storage_account_type" {
   description = "The Type of Storage Account which should back this the Internal OS Disk. (Standard_LRS, StandardSSD_LRS and Premium_LRS)"
   type        = string

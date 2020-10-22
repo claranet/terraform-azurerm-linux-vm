@@ -1,7 +1,8 @@
-# Unreleased
+# v3.3.0 - unreleased
 
 Added
   * AZ-325: Add System Identity to virtual machine
+  * AZ-323: Allow use of osdisk custom name 
 
 # v3.2.0 - 2020-10-16
 
