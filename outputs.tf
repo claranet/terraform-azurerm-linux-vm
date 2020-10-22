@@ -43,3 +43,7 @@ output "vm_nic_ip_configuration_name" {
   value       = local.ip_configuration_name
 }
 
+output "vm_identity" {
+  description = "System Identity assigned to the Virtual Machine"
+  value       = azurerm_linux_virtual_machine.vm.identity
+}
