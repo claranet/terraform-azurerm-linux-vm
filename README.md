@@ -163,6 +163,15 @@ module "vm" {
     }
   }
 
+   storage_data_disk_extra_tags = {
+    appli_data_disk = {
+      some_extra_tag = "tag_value"
+    }
+    logs_disk = {
+      some_other_extra_tag = "tag_value"
+    }
+  }
+
 }
 ```
 
