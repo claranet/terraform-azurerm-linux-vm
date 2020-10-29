@@ -154,7 +154,7 @@ variable "storage_data_disk_config" {
 }
 
 variable "storage_data_disk_extra_tags" {
-  description = "Extra tags to set on each storage disk."
+  description = "Extra tags to set on each data storage disk."
   type        = map(map(string))
   default     = {}
 }
