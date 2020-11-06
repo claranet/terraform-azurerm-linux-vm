@@ -178,7 +178,7 @@ variable "custom_dns_label" {
 }
 
 variable "public_ip_extra_tags" {
-  description = "Extra tags to set on the public IP Adress."
+  description = "Extra tags to set on the public IP resource."
   type        = map(string)
   default     = {}
 }
