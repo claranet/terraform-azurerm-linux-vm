@@ -32,6 +32,10 @@ resource "azurerm_linux_virtual_machine" "vm" {
     disk_size_gb         = var.os_disk_size_gb
   }
 
+  identity {
+    type = "SystemAssigned"
+  }
+
   computer_name  = local.vm_name
   admin_username = var.admin_username
   admin_password = var.admin_password
