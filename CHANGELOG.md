@@ -1,4 +1,4 @@
-# v3.3.0 - unreleased
+# v3.3.0 - 2020-11-17
 
 Added
   * AZ-325: Add System Identity to virtual machine
