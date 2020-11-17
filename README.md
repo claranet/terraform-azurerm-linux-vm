@@ -154,15 +154,20 @@ module "vm" {
       disk_size_gb         = 512
       lun                  = 0
       storage_account_type = "Standard_LRS"
+      extra_tags           = { 
+        some_data_disk_tag = "some_data_disk_tag_value"
+      }
     }
     logs_disk = {
       # Used to define Logical Unit Number (LUN) parameter
       lun          = 10
       disk_size_gb = 64
       caching      = "ReadWrite"
+      extra_tags           = { 
+        some_data_disk_tag = "some_data_disk_tag_value"
+      }
     }
   }
-
 }
 ```
 
@@ -192,21 +197,21 @@ module "vm" {
 | location | Azure location. | `string` | n/a | yes |
 | location\_short | Short string for Azure location. | `string` | n/a | yes |
 | nic\_enable\_accelerated\_networking | Should Accelerated Networking be enabled? Defaults to `false`. | `bool` | `false` | no |
-| nic\_extra\_tags | Extra tags to set on the Network interface. | `map(string)` | `{}` | no |
+| nic\_extra\_tags | Extra tags to set on the network interface. | `map(string)` | `{}` | no |
 | nic\_nsg\_id | NSG ID to associate on the Network Interface. No association if null. | `string` | `null` | no |
 | os\_disk\_caching | Specifies the caching requirements for the OS Disk | `string` | `"ReadWrite"` | no |
-| os\_disk\_custom\_name | Custom name for OS disk. Should be suffixed by \"-osdisk\". Generated if not set. | `string` | `null` | no |
+| os\_disk\_custom\_name | Custom name for OS disk. Should be suffixed by "-osdisk". Generated if not set. | `string` | `null` | no |
 | os\_disk\_size\_gb | Specifies the size of the OS disk in gigabytes | `string` | `null` | no |
 | os\_disk\_storage\_account\_type | The Type of Storage Account which should back this the Internal OS Disk. (Standard\_LRS, StandardSSD\_LRS and Premium\_LRS) | `string` | `"Standard_LRS"` | no |
 | os\_disk\_type | Specifies the type of managed disk to create (Standard\_LRS, StandardSSD\_LRS, Premium\_LRS) | `string` | `"Standard_LRS"` | no |
-| public\_ip\_extra\_tags | Extra tags to set on the Public IP. | `map(string)` | `{}` | no |
+| public\_ip\_extra\_tags | Extra tags to set on the public IP resource. | `map(string)` | `{}` | no |
 | public\_ip\_sku | Sku for the public IP attached to the VM. Can be `null` if no public IP needed. | `string` | `"Standard"` | no |
 | resource\_group\_name | Resource group name | `string` | n/a | yes |
 | ssh\_public\_key | SSH public key | `string` | `null` | no |
 | stack | Project stack name | `string` | n/a | yes |
 | static\_private\_ip | Static private IP. Private IP is dynamic if not set. | `string` | `null` | no |
 | storage\_data\_disk\_config | Map to configure data storage disk. | `map(map(string))` | `{}` | no |
-| storage\_data\_disk\_extra\_tags | Extra tags to set on the data disk. | `map(string)` | `{}` | no |
+| storage\_data\_disk\_extra\_tags | [DEPRECATED] Extra tags to set on each data storage disk. | `map(string)` | `{}` | no |
 | subnet\_id | Id of the Subnet in which create the Virtual Machine | `string` | n/a | yes |
 | vm\_image | Virtual Machine source image information. See https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html#storage_image_reference. This variable cannot be used if `vm_image_id` is already defined. | `map(string)` | <pre>{<br>  "offer": "debian-10",<br>  "publisher": "Debian",<br>  "sku": "10",<br>  "version": "latest"<br>}</pre> | no |
 | vm\_image\_id | The ID of the Image which this Virtual Machine should be created from. This variable cannot be used if `vm_image` is already defined. | `string` | `null` | no |

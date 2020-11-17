@@ -154,8 +154,8 @@ variable "storage_data_disk_config" {
 }
 
 variable "storage_data_disk_extra_tags" {
-  description = "Extra tags to set on each storage disk."
-  type        = map(map(string))
+  description = "[DEPRECATED] Extra tags to set on each data storage disk."
+  type        = map(string)
   default     = {}
 }
 
@@ -184,7 +184,7 @@ variable "custom_dns_label" {
 }
 
 variable "public_ip_extra_tags" {
-  description = "Extra tags to set on the public IP Adress."
+  description = "Extra tags to set on the public IP resource."
   type        = map(string)
   default     = {}
 }
