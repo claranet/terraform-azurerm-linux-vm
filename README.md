@@ -154,14 +154,18 @@ module "vm" {
       disk_size_gb         = 512
       lun                  = 0
       storage_account_type = "Standard_LRS"
-      extra_tags = { some_data_disk_tag = "some_data_disk_tag_value"}
+      extra_tags           = { 
+        some_data_disk_tag = "some_data_disk_tag_value"
+      }
     }
     logs_disk = {
       # Used to define Logical Unit Number (LUN) parameter
       lun          = 10
       disk_size_gb = 64
       caching      = "ReadWrite"
-      extra_tags = { some_logs_disk_tag = "some_logs_disk_tag_value"}
+      extra_tags           = { 
+        some_data_disk_tag = "some_data_disk_tag_value"
+      }
     }
   }
 }
