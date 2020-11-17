@@ -153,6 +153,12 @@ variable "storage_data_disk_config" {
   default     = {}
 }
 
+variable "storage_data_disk_extra_tags" {
+  description = "[DEPRECATED] Extra tags to set on each data storage disk."
+  type        = map(string)
+  default     = {}
+}
+
 variable "vm_image_id" {
   description = "The ID of the Image which this Virtual Machine should be created from. This variable cannot be used if `vm_image` is already defined."
   type        = string
