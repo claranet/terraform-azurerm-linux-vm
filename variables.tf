@@ -147,11 +147,20 @@ variable "vm_image" {
   }
 }
 
+
 variable "storage_data_disk_config" {
   description = "Map to configure data storage disk."
-  type        = map(map(string))
-  default     = {}
+  type = map(object({
+    name                 = string
+    create_option        = string
+    disk_size_gb         = string
+    lun                  = string
+    storage_account_type = string
+    extra_tags           = map(string)
+  }))
+  default = {}
 }
+
 
 variable "storage_data_disk_extra_tags" {
   description = "[DEPRECATED] Extra tags to set on each data storage disk."
