@@ -197,6 +197,7 @@ module "vm" {
 | load\_balancer\_backend\_pool\_id | Id of the Load Balancer Backend Pool to attach the VM. | `string` | `null` | no |
 | location | Azure location. | `string` | n/a | yes |
 | location\_short | Short string for Azure location. | `string` | n/a | yes |
+| name\_prefix | Optional prefix for the generated name | `string` | `""` | no |
 | nic\_enable\_accelerated\_networking | Should Accelerated Networking be enabled? Defaults to `false`. | `bool` | `false` | no |
 | nic\_extra\_tags | Extra tags to set on the network interface. | `map(string)` | `{}` | no |
 | nic\_nsg\_id | NSG ID to associate on the Network Interface. No association if null. | `string` | `null` | no |

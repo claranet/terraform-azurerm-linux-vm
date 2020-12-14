@@ -1,7 +1,13 @@
-# v4.0.1 - Unreleased
+# Unreleased
 
 Fixed
   * AZ-403: Fix storage_data_disk variable definition
+
+Changed
+  * AZ-398: Force lowercases on default generated name
+
+Added
+  * AZ-398: Add `name_prefix` variable for generated name
 
 # v3.3.1/v4.0.0 - 2020-11-19
 
