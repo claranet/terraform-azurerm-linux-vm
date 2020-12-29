@@ -2,6 +2,7 @@
 
 Fixed
   * AZ-403: Fix storage_data_disk variable definition
+  * AZ-413 : Unable to use `source_image_id` (conflict with `source_image_reference`)
 
 Changed
   * AZ-398: Force lowercase on default generated name
@@ -19,17 +20,17 @@ Updated
 Added
   * AZ-325: Add System Identity to virtual machine
   * AZ-346: Add specific tags for each data disks
-  * AZ-323: Allow use of osdisk custom name 
+  * AZ-323: Allow use of osdisk custom name
 
 # v3.2.0 - 2020-10-16
 
 Added
-  * AZ-319: add specific tags for nic, data disk and pub ip 
+  * AZ-319: add specific tags for nic, data disk and pub ip
 
 # v3.1.0 - 2020-08-27
 
 Added
-  * AZ-261: Add ability to set password authentication 
+  * AZ-261: Add ability to set password authentication
 
 # v3.0.1 - 2020-08-24
 
@@ -59,7 +60,7 @@ Fixed
 
 Fixed
   * AZ-180: Apply OS tags only on VM resource
-  
+
 Added
   * AZ-214: Support for `custom_data` parameter in `os_profile` block
   * AZ-222: Option to activate `enable_accelerated_networking` on NIC resource
@@ -67,7 +68,7 @@ Added
 # v2.2.0 - 2020-02-14
 
 Added
-  * AZ-174: Add Availability Zone option 
+  * AZ-174: Add Availability Zone option
   * AZ-173: Allow to configure disk size and type
   * AZ-108: Linux-VM enable diagnostics
   * AZ-180: Additional default tags

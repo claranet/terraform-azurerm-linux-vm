@@ -10,11 +10,14 @@ resource "azurerm_linux_virtual_machine" "vm" {
 
   source_image_id = var.vm_image_id
 
-  source_image_reference {
-    offer     = lookup(var.vm_image, "offer", null)
-    publisher = lookup(var.vm_image, "publisher", null)
-    sku       = lookup(var.vm_image, "sku", null)
-    version   = lookup(var.vm_image, "version", null)
+  dynamic "source_image_reference" {
+    for_each = var.vm_image_id == null ? ["fake"] : []
+    content {
+      offer     = lookup(var.vm_image, "offer", null)
+      publisher = lookup(var.vm_image, "publisher", null)
+      sku       = lookup(var.vm_image, "sku", null)
+      version   = lookup(var.vm_image, "version", null)
+    }
   }
 
   availability_set_id = var.availability_set_id
