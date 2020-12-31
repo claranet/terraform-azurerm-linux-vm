@@ -156,7 +156,7 @@ module "vm" {
       disk_size_gb         = 512
       lun                  = 0
       storage_account_type = "Standard_LRS"
-      extra_tags           = { 
+      extra_tags           = {
         some_data_disk_tag = "some_data_disk_tag_value"
       }
     }
@@ -165,7 +165,7 @@ module "vm" {
       lun          = 10
       disk_size_gb = 64
       caching      = "ReadWrite"
-      extra_tags           = { 
+      extra_tags           = {
         some_data_disk_tag = "some_data_disk_tag_value"
       }
     }
@@ -217,6 +217,7 @@ module "vm" {
 | subnet\_id | Id of the Subnet in which create the Virtual Machine | `string` | n/a | yes |
 | vm\_image | Virtual Machine source image information. See https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html#storage_image_reference. This variable cannot be used if `vm_image_id` is already defined. | `map(string)` | <pre>{<br>  "offer": "debian-10",<br>  "publisher": "Debian",<br>  "sku": "10",<br>  "version": "latest"<br>}</pre> | no |
 | vm\_image\_id | The ID of the Image which this Virtual Machine should be created from. This variable cannot be used if `vm_image` is already defined. | `string` | `null` | no |
+| vm_plan | Virtual Machine plan image information. See https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine#plan. This variable has to be used for BYOS image. Before using BYOS image, you need to accept legal plan terms. See https://docs.microsoft.com/en-us/cli/azure/vm/image?view=azure-cli-latest#az_vm_image_accept_terms. | <code>object({<br />&nbsp;&nbsp;name = string<br />&nbsp;&nbsp;product = string<br />&nbsp;&nbsp;publisher = string<br />})</code> | `null` | no |
 | vm\_size | Size (SKU) of the Virtual Machine to create. | `string` | n/a | yes |
 | zone\_id | Index of the Availability Zone which the Virtual Machine should be allocated in. | `number` | `null` | no |
 

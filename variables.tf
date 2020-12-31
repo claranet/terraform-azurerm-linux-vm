@@ -153,6 +153,16 @@ variable "vm_image" {
   }
 }
 
+variable "vm_plan" {
+  description = "Virtual Machine plan image information. See https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine#plan. This variable has to be used for BYOS image. Before using BYOS image, you need to accept legal plan terms. See https://docs.microsoft.com/en-us/cli/azure/vm/image?view=azure-cli-latest#az_vm_image_accept_terms."
+  type = object({
+    name      = string
+    product   = string
+    publisher = string
+  })
+  default = null
+}
+
 variable "storage_data_disk_config" {
   description = <<EOT
 Map of objects to configure storage data disk(s).

@@ -20,6 +20,15 @@ resource "azurerm_linux_virtual_machine" "vm" {
     }
   }
 
+  dynamic "plan" {
+    for_each = toset(var.vm_plan != null ? ["fake"] : [])
+    content {
+      name      = lookup(var.vm_plan, "name", null)
+      product   = lookup(var.vm_plan, "product", null)
+      publisher = lookup(var.vm_plan, "publisher", null)
+    }
+  }
+
   availability_set_id = var.availability_set_id
 
   zone = var.zone_id
