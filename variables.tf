@@ -33,6 +33,12 @@ variable "subnet_id" {
   type        = string
 }
 
+variable "name_prefix" {
+  description = "Optional prefix for the generated name"
+  type        = string
+  default     = ""
+}
+
 ### SSH Connection inputs
 variable "ssh_public_key" {
   description = "SSH public key"
