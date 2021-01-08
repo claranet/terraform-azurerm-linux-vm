@@ -4,7 +4,7 @@ Fixed
   * AZ-403: Fix storage_data_disk variable definition
 
 Changed
-  * AZ-398: Force lowercases on default generated name
+  * AZ-398: Force lowercase on default generated name
 
 Added
   * AZ-398: Add `name_prefix` variable for generated name
