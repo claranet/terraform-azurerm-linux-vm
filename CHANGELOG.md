@@ -1,3 +1,8 @@
+# v4.0.1 - Unreleased
+
+Fixed
+  * AZ-403: Fix storage_data_disk variable definition
+
 # v3.3.1/v4.0.0 - 2020-11-19
 
 Updated
