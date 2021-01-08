@@ -149,15 +149,17 @@ variable "vm_image" {
 
 variable "storage_data_disk_config" {
   description = <<EOT
-Map to configure data storage disk.
-      name                 = string  
-      create_option        = string
-      disk_size_gb         = string
-      lun                  = string
-      storage_account_type = string
+Map of objects to configure storage data disk(s).
+    disk1 = {
+      name                 = string , 
+      create_option        = string ,
+      disk_size_gb         = string ,
+      lun                  = string ,
+      storage_account_type = string ,
       extra_tags           = map(string)
+    }
 EOT
-  type        = map()
+  type        = map(any)
   default     = {}
 }
 
