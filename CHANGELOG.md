@@ -1,8 +1,8 @@
-# Unreleased
+# v4.1.0 - 2021-01-08
 
 Fixed
   * AZ-403: Fix storage_data_disk variable definition
-  * AZ-413 : Unable to use `source_image_id` (conflict with `source_image_reference`)
+  * AZ-413: Unable to use `source_image_id` (conflict with `source_image_reference`)
 
 Changed
   * AZ-398: Force lowercase on default generated name

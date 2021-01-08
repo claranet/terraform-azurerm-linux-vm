@@ -179,7 +179,6 @@ EOT
   default     = {}
 }
 
-
 variable "storage_data_disk_extra_tags" {
   description = "[DEPRECATED] Extra tags to set on each data storage disk."
   type        = map(string)
@@ -263,7 +262,6 @@ variable "os_disk_custom_name" {
   type        = string
   default     = null
 }
-
 
 variable "os_disk_storage_account_type" {
   description = "The Type of Storage Account which should back this the Internal OS Disk. (Standard_LRS, StandardSSD_LRS and Premium_LRS)"
