@@ -6,9 +6,11 @@ Fixed
 
 Changed
   * AZ-398: Force lowercase on default generated name
+  * AZ-414: Management of plan for BYOS virtual machine images
 
 Added
   * AZ-398: Add `name_prefix` variable for generated name
+  * AZ-414: Add `plan` variable for BYOS virtual machine images (including `name`, `product` and `publisher`)
 
 # v3.3.1/v4.0.0 - 2020-11-19
 
