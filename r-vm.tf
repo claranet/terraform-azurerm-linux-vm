@@ -74,7 +74,7 @@ resource "azurerm_managed_disk" "disk" {
 
   name = lookup(each.value, "name", "${local.vm_name}-datadisk${each.key}")
 
-  zones                = [var.zone_id]
+  zones                = var.zone_id != null ? [var.zone_id] : []
   storage_account_type = lookup(each.value, "storage_account_type", "Standard_LRS")
 
   create_option = lookup(each.value, "create_option", "Empty")
