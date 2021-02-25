@@ -167,7 +167,7 @@ variable "storage_data_disk_config" {
   description = <<EOT
 Map of objects to configure storage data disk(s).
     disk1 = {
-      name                 = string , 
+      name                 = string ,
       create_option        = string ,
       disk_size_gb         = string ,
       lun                  = string ,
@@ -261,4 +261,19 @@ variable "os_disk_caching" {
   description = "Specifies the caching requirements for the OS Disk"
   type        = string
   default     = "ReadWrite"
+}
+
+variable "log_analytics_workspace_guid" {
+  description = "GUID of the Log Analytics Workspace to link with"
+  type        = string
+}
+
+variable "log_analytics_workspace_key" {
+  description = "Access key of the Log Analytics Workspace to link with"
+  type        = string
+}
+
+variable "azure_monitor_data_collection_rule_id" {
+  description = "Data Collection Rule ID from Azure Monitor for metrics and logs collection"
+  type        = string
 }

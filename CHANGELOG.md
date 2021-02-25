@@ -1,5 +1,8 @@
 # Unreleased
 
+Breaking
+  * AZ-302: Replace diagnostics agent with Azure Monitor agent
+
 Changed
   * AZ-572: Revamp examples and improve CI
 
@@ -12,7 +15,7 @@ Changed
 # v4.1.1 - 2021-02-26
 
 Fixed
-  * AZ-451: set `zone_id` as optional 
+  * AZ-451: set `zone_id` as optional
 
 # v4.1.0 - 2021-01-08
 
