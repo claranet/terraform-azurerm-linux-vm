@@ -1,7 +1,12 @@
+# v4.1.1 - 2021-02-26
+
+Fixed
+  * AZ-451: set `zone_id` as optional 
+
 # v4.1.0 - 2021-01-08
 
 Fixed
-  * AZ-403: Fix storage_data_disk variable definition
+  * AZ-403: Fix `storage_data_disk` variable definition
   * AZ-413: Unable to use `source_image_id` (conflict with `source_image_reference`)
 
 Changed
