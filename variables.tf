@@ -309,3 +309,15 @@ variable "log_analytics_extension_enable" {
   type        = bool
   default     = true
 }
+
+variable "identity" {
+  description = "Map with identity block informations as described here https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine#identity"
+  type = object({
+    type         = string
+    identity_ids = list(string)
+  })
+  default = {
+    type         = "SystemAssigned"
+    identity_ids = []
+  }
+}
