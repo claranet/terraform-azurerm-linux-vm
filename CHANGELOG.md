@@ -20,6 +20,7 @@ Changed
 
 Fixed
   * AZ-451: set `zone_id` as optional 
+
 # v4.1.0 - 2021-01-08
 
 Fixed

@@ -304,12 +304,6 @@ variable "log_analytics_agent_version" {
   default     = "1.13"
 }
 
-variable "log_analytics_extension_enable" {
-  description = "Deploy Log Analytics VM extension - depending of OS (cf. https://docs.microsoft.com/fr-fr/azure/azure-monitor/agents/agents-overview#linux)"
-  type        = bool
-  default     = true
-}
-
 variable "identity" {
   description = "Map with identity block informations as described here https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine#identity"
   type = object({

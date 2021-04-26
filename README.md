@@ -203,7 +203,9 @@ module "vm" {
 
 ## Modules
 
-No modules.
+| Name | Source | Version |
+|------|--------|---------|
+| vm\_logs | claranet/vm-logs/azurerm | 3.0.0 |
 
 ## Resources
 

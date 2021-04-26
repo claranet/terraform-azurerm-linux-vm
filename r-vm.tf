@@ -47,8 +47,8 @@ resource "azurerm_linux_virtual_machine" "vm" {
   dynamic "identity" {
     for_each = var.identity != null ? ["fake"] : []
     content {
-      type         = lookup(var.identity, "type")
-      identity_ids = lookup(var.identity, "identity_ids", [])
+      type         = var.identity.type
+      identity_ids = var.identity.identity_ids
     }
   }
 
