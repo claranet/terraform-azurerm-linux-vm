@@ -197,12 +197,6 @@ variable "extra_tags" {
   default     = {}
 }
 
-variable "certificate_validity_in_months" {
-  description = "The created certificate validity in months"
-  type        = string
-  default     = "48"
-}
-
 variable "custom_dns_label" {
   description = "The DNS label to use for public access. VM name if not set. DNS will be <label>.westeurope.cloudapp.azure.com"
   type        = string
@@ -243,12 +237,6 @@ variable "application_gateway_backend_pool_id" {
   description = "Id of the Application Gateway Backend Pool to attach the VM."
   type        = string
   default     = null
-}
-
-variable "os_disk_type" {
-  description = "Specifies the type of managed disk to create (Standard_LRS, StandardSSD_LRS, Premium_LRS)"
-  type        = string
-  default     = "Standard_LRS"
 }
 
 variable "os_disk_size_gb" {
