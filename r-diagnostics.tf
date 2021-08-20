@@ -1,4 +1,4 @@
-module "vm-logs" {
+module "vm_logs" {
   source  = "claranet/vm-logs/azurerm"
   version = "3.0.0"
 

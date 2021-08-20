@@ -29,7 +29,7 @@ resource "azurerm_network_interface" "nic" {
   tags = merge(local.default_tags, var.extra_tags, var.nic_extra_tags)
 }
 
-resource "azurerm_network_interface_security_group_association" "nic-nsg" {
+resource "azurerm_network_interface_security_group_association" "nic_nsg" {
   count = var.nic_nsg_id == null ? 0 : 1
 
   network_interface_id      = azurerm_network_interface.nic.id

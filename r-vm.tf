@@ -83,7 +83,7 @@ resource "azurerm_managed_disk" "disk" {
   tags = merge(local.default_tags, local.default_vm_tags, var.extra_tags, lookup(each.value, "extra_tags", var.storage_data_disk_extra_tags))
 }
 
-resource "azurerm_virtual_machine_data_disk_attachment" "disk-attach" {
+resource "azurerm_virtual_machine_data_disk_attachment" "data_disk_attachment" {
   for_each = var.storage_data_disk_config
 
   managed_disk_id    = azurerm_managed_disk.disk[each.key].id

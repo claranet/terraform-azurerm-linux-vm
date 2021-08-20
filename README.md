@@ -9,7 +9,8 @@ Following tags are automatically set with default values: `env`, `stack`, `os_fa
 ## Version compatibility
 
 | Module version | Terraform version | AzureRM version |
-|----------------|-------------------| --------------- |
+| -------------- | ----------------- | --------------- |
+| >= 5.x.x       | 0.15.x & 1.0.x    | >= 2.0          |
 | >= 4.x.x       | 0.13.x            | >= 2.0          |
 | >= 3.x.x       | 0.12.x            | >= 2.0          |
 | >= 2.x.x       | 0.12.x            | < 2.0           |
@@ -172,6 +173,33 @@ module "vm" {
   }
 }
 ```
+
+<!-- BEGIN_TF_DOCS -->
+## Providers
+
+| Name | Version |
+|------|---------|
+| azurerm | >= 2.0 |
+
+## Modules
+
+| Name | Source | Version |
+|------|--------|---------|
+| vm\_logs | claranet/vm-logs/azurerm | 3.0.0 |
+
+## Resources
+
+| Name | Type |
+|------|------|
+| [azurerm_linux_virtual_machine.vm](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine) | resource |
+| [azurerm_managed_disk.disk](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/managed_disk) | resource |
+| [azurerm_network_interface.nic](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_interface) | resource |
+| [azurerm_network_interface_application_gateway_backend_address_pool_association.appgw_pool_association](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_interface_application_gateway_backend_address_pool_association) | resource |
+| [azurerm_network_interface_backend_address_pool_association.lb_pool_association](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_interface_backend_address_pool_association) | resource |
+| [azurerm_network_interface_security_group_association.nic_nsg](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_interface_security_group_association) | resource |
+| [azurerm_public_ip.public_ip](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/public_ip) | resource |
+| [azurerm_virtual_machine_data_disk_attachment.data_disk_attachment](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_machine_data_disk_attachment) | resource |
+
 ## Inputs
 
 | Name | Description | Type | Default | Required |
@@ -182,7 +210,6 @@ module "vm" {
 | attach\_application\_gateway | True to attach this VM to an Application Gateway | `bool` | `false` | no |
 | attach\_load\_balancer | True to attach this VM to a Load Balancer | `bool` | `false` | no |
 | availability\_set\_id | Id of the availability set in which host the Virtual Machine. | `string` | `null` | no |
-| certificate\_validity\_in\_months | The created certificate validity in months | `string` | `"48"` | no |
 | client\_name | Client name/account used in naming | `string` | n/a | yes |
 | custom\_data | Custom data. See https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html#os_profile block | `any` | `null` | no |
 | custom\_dns\_label | The DNS label to use for public access. VM name if not set. DNS will be <label>.westeurope.cloudapp.azure.com | `string` | `""` | no |
@@ -205,7 +232,6 @@ module "vm" {
 | os\_disk\_custom\_name | Custom name for OS disk. Should be suffixed by "-osdisk". Generated if not set. | `string` | `null` | no |
 | os\_disk\_size\_gb | Specifies the size of the OS disk in gigabytes | `string` | `null` | no |
 | os\_disk\_storage\_account\_type | The Type of Storage Account which should back this the Internal OS Disk. (Standard\_LRS, StandardSSD\_LRS and Premium\_LRS) | `string` | `"Standard_LRS"` | no |
-| os\_disk\_type | Specifies the type of managed disk to create (Standard\_LRS, StandardSSD\_LRS, Premium\_LRS) | `string` | `"Standard_LRS"` | no |
 | public\_ip\_extra\_tags | Extra tags to set on the public IP resource. | `map(string)` | `{}` | no |
 | public\_ip\_sku | Sku for the public IP attached to the VM. Can be `null` if no public IP needed. | `string` | `"Standard"` | no |
 | resource\_group\_name | Resource group name | `string` | n/a | yes |
@@ -235,9 +261,7 @@ module "vm" {
 | vm\_public\_domain\_name\_label | Public DNS of the Virtual machine |
 | vm\_public\_ip\_address | Public IP address of the Virtual Machine |
 | vm\_public\_ip\_id | Public IP ID of the Virtual Machine |
-
+<!-- END_TF_DOCS -->
 ## Related documentation
-
-Terraform resource documentation: [www.terraform.io/docs/providers/azurerm/r/virtual\_machine.html](https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html)
 
 Microsoft Azure documentation: [docs.microsoft.com/en-us/azure/virtual-machines/linux/](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/)
