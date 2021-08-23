@@ -178,7 +178,7 @@ module "vm" {
 | Name | Version |
 |------|---------|
 | azurerm | >= 2.0 |
-| null | n/a |
+| null | >= 3.0.0 |
 
 ## Modules
 
@@ -220,7 +220,6 @@ No modules.
 | custom\_nic\_name | Custom name for the NIC interface. Should be suffixed by "-nic". Generated if not set. | `string` | `null` | no |
 | custom\_public\_ip\_name | Custom name for public IP. Should be suffixed by "-pubip". Generated if not set. | `string` | `null` | no |
 | diagnostics\_storage\_account\_name | Name of the Storage Account in which store vm diagnostics | `string` | n/a | yes |
-| diagnostics\_storage\_account\_sas\_token | SAS token of the Storage Account in which store vm diagnostics | `string` | n/a | yes |
 | environment | Project environment | `string` | n/a | yes |
 | extra\_tags | Extra tags to set on each created resource. | `map(string)` | `{}` | no |
 | load\_balancer\_backend\_pool\_id | Id of the Load Balancer Backend Pool to attach the VM. | `string` | `null` | no |
@@ -267,6 +266,7 @@ No modules.
 | vm\_public\_ip\_address | Public IP address of the Virtual Machine |
 | vm\_public\_ip\_id | Public IP ID of the Virtual Machine |
 <!-- END_TF_DOCS -->
+
 ## Related documentation
 
 Microsoft Azure documentation: [docs.microsoft.com/en-us/azure/virtual-machines/linux/](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/)
