@@ -275,6 +275,12 @@ variable "azure_monitor_data_collection_rule_id" {
   type        = string
 }
 
+variable "azure_monitor_agent_version" {
+  description = "Azure Monitor Agent extension version"
+  type        = string
+  default     = "1.12"
+}
+
 variable "log_analytics_extension_enable" {
   description = "Deploy Log Analytics VM extension - depending of OS (cf. https://docs.microsoft.com/fr-fr/azure/azure-monitor/agents/agents-overview#linux)"
   type        = bool
