@@ -281,7 +281,7 @@ variable "azure_monitor_agent_version" {
   default     = "1.12"
 }
 
-variable "log_analytics_extension_enable" {
+variable "log_analytics_extension_enabled" {
   description = "Deploy Log Analytics VM extension - depending of OS (cf. https://docs.microsoft.com/fr-fr/azure/azure-monitor/agents/agents-overview#linux)"
   type        = bool
   default     = true
