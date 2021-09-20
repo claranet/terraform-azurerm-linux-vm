@@ -6,7 +6,8 @@ This module creates a [Linux Virtual Machine](https://docs.microsoft.com/en-us/a
 
 Following tags are automatically set with default values: `env`, `stack`, `os_family`, `os_distribution`, `os_version`.
 
-## Version compatibility
+<!-- BEGIN_TF_DOCS -->
+## Global versionning rule for Claranet Azure modules
 
 | Module version | Terraform version | AzureRM version |
 | -------------- | ----------------- | --------------- |
@@ -23,7 +24,7 @@ which set some terraform variables in the environment needed by this module.
 More details about variables set by the `terraform-wrapper` available in the [documentation](https://github.com/claranet/terraform-wrapper#environment).
 
 ```hcl
-module "azure-region" {
+module "azure_region" {
   source  = "claranet/regions/azurerm"
   version = "x.x.x"
 
@@ -34,27 +35,45 @@ module "rg" {
   source  = "claranet/rg/azurerm"
   version = "x.x.x"
 
-  location    = module.azure-region.location
+  location    = module.azure_region.location
   client_name = var.client_name
   environment = var.environment
   stack       = var.stack
 }
 
-module "azure-network-vnet" {
+module "azure_network_vnet" {
   source  = "claranet/vnet/azurerm"
   version = "x.x.x"
 
-  environment      = var.environment
-  location         = module.azure-region.location
-  location_short   = module.azure-region.location_short
-  client_name      = var.client_name
-  stack            = var.stack
+  environment    = var.environment
+  location       = module.azure_region.location
+  location_short = module.azure_region.location_short
+  client_name    = var.client_name
+  stack          = var.stack
 
   resource_group_name = module.rg.resource_group_name
   vnet_cidr           = ["10.10.0.0/16"]
 }
 
-module "network-security-group" {
+module "azure_network_subnet" {
+  source  = "claranet/subnet/azurerm"
+  version = "x.x.x"
+
+  environment    = var.environment
+  location_short = module.azure_region.location_short
+  client_name    = var.client_name
+  stack          = var.stack
+
+  resource_group_name  = module.rg.resource_group_name
+  virtual_network_name = module.azure_network_vnet.virtual_network_name
+  subnet_cidr_list     = ["10.10.10.0/24"]
+
+  route_table_name = module.azure_network_route_table.route_table_name
+
+  network_security_group_name = module.network_security_group.network_security_group_name
+}
+
+module "network_security_group" {
   source  = "claranet/nsg/azurerm"
   version = "x.x.x"
 
@@ -62,85 +81,64 @@ module "network-security-group" {
   environment         = var.environment
   stack               = var.stack
   resource_group_name = module.rg.resource_group_name
-  location            = module.azure-region.location
-  location_short      = module.azure-region.location_short
+  location            = module.azure_region.location
+  location_short      = module.azure_region.location_short
 }
 
-module "azure-network-route-table" {
+module "azure_network_route_table" {
   source  = "claranet/route-table/azurerm"
   version = "x.x.x"
 
   client_name         = var.client_name
   environment         = var.environment
   stack               = var.stack
+  location            = module.azure_region.location
+  location_short      = module.azure_region.location_short
   resource_group_name = module.rg.resource_group_name
-  location            = module.azure-region.location
-  location_short      = module.azure-region.location_short
-}
-
-module "azure-network-subnet" {
-  source  = "claranet/subnet/azurerm"
-  version = "x.x.x"
-
-  environment    = var.environment
-  location_short = module.azure-region.location_short
-  client_name    = var.client_name
-  stack          = var.stack
-
-  resource_group_name  = module.rg.resource_group_name
-  virtual_network_name = module.azure-network-vnet.virtual_network_name
-  subnet_cidr_list     = ["10.10.10.0/24"]
-
-  route_table_ids = {
-    keys(local.subnets)[0] = module.azure-network-route-table.route_table_id
-  }
-
-  network_security_group_ids = {
-    keys(local.subnets)[0] = module.network-security-group.network_security_group_id
-  }
 }
 
 resource "azurerm_availability_set" "vm_avset" {
-  name                = "${var.stack}-${var.client_name}-${module.azure-region.location_short}-${var.environment}-as"
-  location            = module.azure-region.location
+  name                = "${var.stack}-${var.client_name}-${module.azure_region.location_short}-${var.environment}-as"
+  location            = module.azure_region.location
   resource_group_name = module.rg.resource_group_name
-  managed             = "true"
+  managed             = true
 }
 
-module "run-common" {
-  source = "claranet/run-common/azurerm"
+module "run_common" {
+  source  = "claranet/run-common/azurerm"
   version = "x.x.x"
 
   client_name         = var.client_name
-  location            = module.azure-region.location
-  location_short      = module.azure-region.location_short
+  location            = module.azure_region.location
+  location_short      = module.azure_region.location_short
   environment         = var.environment
   stack               = var.stack
   resource_group_name = module.rg.resource_group_name
 
-  tenant_id = var.azure_tenant_id
+  tenant_id                        = var.azure_tenant_id
+  monitoring_function_splunk_token = null
 }
 
 module "vm" {
   source  = "claranet/linux-vm/azurerm"
   version = "x.x.x"
 
-  location            = module.azure-region.location
-  location_short      = module.azure-region.location_short
+  location            = module.azure_region.location
+  location_short      = module.azure_region.location_short
   client_name         = var.client_name
   environment         = var.environment
   stack               = var.stack
   resource_group_name = module.rg.resource_group_name
 
-  subnet_id                             = element(module.azure-network-subnet.subnet_ids, 0)
-  diagnostics_storage_account_name      = module.run-common.logs_storage_account_name
-  diagnostics_storage_account_sas_token = lookup(module.run-common.logs_storage_account_sas_token, "sastoken")
+  subnet_id                             = module.azure_network_subnet.subnet_id
+  diagnostics_storage_account_name      = module.run_common.logs_storage_account_name
+  diagnostics_storage_account_sas_token = lookup(module.run_common.logs_storage_account_sas_token, "sastoken")
   vm_size                               = "Standard_B2s"
-  custom_name                           = "app-${var.stack}-${var.client_name}-${module.azure-region.location_short}-${var.environment}-vm"
-  admin_username                        = var.vm_admin_username
-  ssh_public_key                        = var.public_key
+  custom_name                           = "app-${var.stack}-${var.client_name}-${module.azure_region.location_short}-${var.environment}-vm"
+  admin_username                        = var.vm_administrator_login
+  ssh_public_key                        = var.ssh_public_key
 
-  availability_set_id              = azurerm_availability_set.vm_avset.id
+  availability_set_id = azurerm_availability_set.vm_avset.id
   # or use Availability Zone
   # zone_id = 1
 
@@ -157,7 +155,7 @@ module "vm" {
       disk_size_gb         = 512
       lun                  = 0
       storage_account_type = "Standard_LRS"
-      extra_tags           = {
+      extra_tags = {
         some_data_disk_tag = "some_data_disk_tag_value"
       }
     }
@@ -166,15 +164,15 @@ module "vm" {
       lun          = 10
       disk_size_gb = 64
       caching      = "ReadWrite"
-      extra_tags           = {
+      extra_tags = {
         some_data_disk_tag = "some_data_disk_tag_value"
       }
     }
   }
 }
+
 ```
 
-<!-- BEGIN_TF_DOCS -->
 ## Providers
 
 | Name | Version |
@@ -238,7 +236,7 @@ module "vm" {
 | ssh\_public\_key | SSH public key | `string` | `null` | no |
 | stack | Project stack name | `string` | n/a | yes |
 | static\_private\_ip | Static private IP. Private IP is dynamic if not set. | `string` | `null` | no |
-| storage\_data\_disk\_config | Map of objects to configure storage data disk(s).<br>    disk1 = {<br>      name                 = string , <br>      create\_option        = string ,<br>      disk\_size\_gb         = string ,<br>      lun                  = string ,<br>      storage\_account\_type = string ,<br>      extra\_tags           = map(string)<br>    } | `map(any)` | `{}` | no |
+| storage\_data\_disk\_config | Map of objects to configure storage data disk(s).<br>    disk1 = {<br>      name                 = string , <br>      create\_option        = string ,<br>      disk\_size\_gb         = string ,<br>      lun                  = string ,<br>      storage\_account\_type = string ,<br>      extra\_tags           = map(string)<br>    } | `any` | `{}` | no |
 | storage\_data\_disk\_extra\_tags | [DEPRECATED] Extra tags to set on each data storage disk. | `map(string)` | `{}` | no |
 | subnet\_id | Id of the Subnet in which create the Virtual Machine | `string` | n/a | yes |
 | vm\_image | Virtual Machine source image information. See https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html#storage_image_reference. This variable cannot be used if `vm_image_id` is already defined. | `map(string)` | <pre>{<br>  "offer": "debian-10",<br>  "publisher": "Debian",<br>  "sku": "10",<br>  "version": "latest"<br>}</pre> | no |
