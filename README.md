@@ -7,7 +7,7 @@ This module creates a [Linux Virtual Machine](https://docs.microsoft.com/en-us/a
 Following tags are automatically set with default values: `env`, `stack`, `os_family`, `os_distribution`, `os_version`.
 
 <!-- BEGIN_TF_DOCS -->
-## Global versionning rule for Claranet Azure modules
+## Global versioning rule for Claranet Azure modules
 
 | Module version | Terraform version | AzureRM version |
 | -------------- | ----------------- | --------------- |
