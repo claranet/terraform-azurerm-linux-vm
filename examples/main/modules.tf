@@ -164,4 +164,6 @@ module "vm" {
       }
     }
   }
+
+  spot_instance = true
 }
