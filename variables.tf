@@ -263,6 +263,7 @@ variable "os_disk_caching" {
   default     = "ReadWrite"
 }
 
+## Logs & monitoring variables
 variable "use_legacy_monitoring_agent" {
   description = "True to use the legacy monitoring agent instead of Azure Monitor Agent"
   type        = bool
@@ -304,6 +305,7 @@ variable "log_analytics_agent_version" {
   default     = "1.13"
 }
 
+## Identity variables
 variable "identity" {
   description = "Map with identity block informations as described here https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine#identity"
   type = object({
@@ -314,4 +316,23 @@ variable "identity" {
     type         = "SystemAssigned"
     identity_ids = []
   }
+}
+
+## Spot variables
+variable "spot_instance" {
+  description = "Deploy VM as a Spot Instance"
+  type        = bool
+  default     = false
+}
+
+variable "spot_instance_max_bid_price" {
+  description = "The maximum price you're willing to pay for this VM in US Dollars; must be greater than the current spot price. `-1` If you don't want the VM to be evicted for price reasons."
+  type        = number
+  default     = -1
+}
+
+variable "spot_instance_eviction_policy" {
+  description = "Specifies what should happen when the Virtual Machine is evicted for price reasons when using a Spot instance. At this time the only supported value is `Deallocate`. Changing this forces a new resource to be created."
+  type        = string
+  default     = "Deallocate"
 }
