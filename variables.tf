@@ -320,7 +320,7 @@ variable "identity" {
 
 ## Spot variables
 variable "spot_instance" {
-  description = "Deploy VM as a Spot Instance"
+  description = "True to deploy VM as a Spot Instance"
   type        = bool
   default     = false
 }
