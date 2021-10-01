@@ -78,19 +78,34 @@ resource "azurerm_availability_set" "vm_avset" {
   managed             = true
 }
 
-module "run_common" {
-  source  = "claranet/run-common/azurerm"
+module "logs" {
+  source  = "claranet/run-common/azurerm//modules/logs"
   version = "x.x.x"
 
-  client_name         = var.client_name
-  location            = module.azure_region.location
-  location_short      = module.azure_region.location_short
-  environment         = var.environment
-  stack               = var.stack
-  resource_group_name = module.rg.resource_group_name
+  client_name    = var.client_name
+  location       = module.azure_region.location
+  location_short = module.azure_region.location_short
+  environment    = var.environment
+  stack          = var.stack
 
-  tenant_id                        = var.azure_tenant_id
-  monitoring_function_splunk_token = null
+  resource_group_name = module.rg.resource_group_name
+}
+
+module "az_monitor" {
+  source = "git::ssh://git@git.fr.clara.net/claranet/projects/cloud/azure/terraform/modules/run-iaas.git//modules/vm-monitoring?ref=AZ-302-vm-monitor"
+
+  client_name    = var.client_name
+  location       = module.azure_region.location
+  location_short = module.azure_region.location_short
+  environment    = var.environment
+  stack          = var.stack
+
+  resource_group_name        = module.rg.resource_group_name
+  log_analytics_workspace_id = module.logs.log_analytics_workspace_id
+
+  extra_tags = {
+    foo = "bar"
+  }
 }
 
 module "vm" {
@@ -104,13 +119,17 @@ module "vm" {
   stack               = var.stack
   resource_group_name = module.rg.resource_group_name
 
-  subnet_id                             = module.azure_network_subnet.subnet_id
-  diagnostics_storage_account_name      = module.run_common.logs_storage_account_name
-  diagnostics_storage_account_sas_token = lookup(module.run_common.logs_storage_account_sas_token, "sastoken")
-  vm_size                               = "Standard_B2s"
-  custom_name                           = "app-${var.stack}-${var.client_name}-${module.azure_region.location_short}-${var.environment}-vm"
-  admin_username                        = var.vm_administrator_login
-  ssh_public_key                        = var.ssh_public_key
+
+  subnet_id      = module.azure_network_subnet.subnet_id
+  vm_size        = "Standard_B2s"
+  custom_name    = "app-${var.stack}-${var.client_name}-${module.azure_region.location_short}-${var.environment}-vm"
+  admin_username = var.vm_administrator_login
+  ssh_public_key = var.ssh_public_key
+
+  diagnostics_storage_account_name      = module.logs.logs_storage_account_name
+  azure_monitor_data_collection_rule_id = module.az_monitor.data_collection_rule_id
+  log_analytics_workspace_guid          = module.logs.log_analytics_workspace_guid
+  log_analytics_workspace_key           = module.logs.log_analytics_workspace_primary_key
 
   availability_set_id = azurerm_availability_set.vm_avset.id
   # or use Availability Zone
