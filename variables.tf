@@ -175,7 +175,7 @@ Map of objects to configure storage data disk(s).
       extra_tags           = map(string)
     }
 EOT
-  type        = map(any)
+  type        = any
   default     = {}
 }
 
