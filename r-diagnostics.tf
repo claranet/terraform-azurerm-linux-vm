@@ -1,4 +1,31 @@
+module "vm_logs" {
+  for_each = var.use_legacy_monitoring_agent ? ["enabled"] : []
+
+  source  = "claranet/vm-logs/azurerm"
+  version = "3.0.0"
+
+  location    = var.location
+  client_name = var.client_name
+  environment = var.environment
+  stack       = var.stack
+
+  resource_group_name = var.resource_group_name
+
+  diagnostics_storage_account_name      = var.diagnostics_storage_account_name
+  diagnostics_storage_account_sas_token = var.diagnostics_storage_account_sas_token
+
+  vm_ids = [azurerm_linux_virtual_machine.vm.id]
+
+  tags = {
+    environment = var.environment
+    stack       = var.stack
+    vm_name     = azurerm_linux_virtual_machine.vm.name
+  }
+}
+
 resource "azurerm_virtual_machine_extension" "azure_monitor_agent" {
+  for_each = var.use_legacy_monitoring_agent ? [] : ["enabled"]
+
   name = "${azurerm_linux_virtual_machine.vm.name}-azmonitorextension"
 
   publisher                  = "Microsoft.Azure.Monitor"
@@ -10,6 +37,8 @@ resource "azurerm_virtual_machine_extension" "azure_monitor_agent" {
 }
 
 resource "null_resource" "azure_monitor_link" {
+  for_each = var.use_legacy_monitoring_agent ? [] : ["enabled"]
+
   provisioner "local-exec" {
     command = <<EOC
       az rest --subscription ${data.azurerm_client_config.current.subscription_id} \

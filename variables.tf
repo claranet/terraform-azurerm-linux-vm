@@ -136,6 +136,11 @@ variable "diagnostics_storage_account_name" {
   type        = string
 }
 
+variable "diagnostics_storage_account_sas_token" {
+  description = "SAS token of the Storage Account in which store vm diagnostics. Used only with legacy monitoring agent, set to `null` if not needed."
+  type        = string
+}
+
 variable "vm_image" {
   description = "Virtual Machine source image information. See https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html#storage_image_reference. This variable cannot be used if `vm_image_id` is already defined."
   type        = map(string)
@@ -258,6 +263,12 @@ variable "os_disk_caching" {
   default     = "ReadWrite"
 }
 
+variable "use_legacy_monitoring_agent" {
+  description = "True to use the legacy monitoring agent instead of Azure Monitor Agent"
+  type        = bool
+  default     = false
+}
+
 variable "log_analytics_workspace_guid" {
   description = "GUID of the Log Analytics Workspace to link with"
   type        = string
@@ -271,7 +282,7 @@ variable "log_analytics_workspace_key" {
 }
 
 variable "azure_monitor_data_collection_rule_id" {
-  description = "Data Collection Rule ID from Azure Monitor for metrics and logs collection"
+  description = "Data Collection Rule ID from Azure Monitor for metrics and logs collection. Used with new monitoring agent, set to `null` if legacy agent is used."
   type        = string
 }
 
