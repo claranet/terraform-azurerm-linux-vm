@@ -1,5 +1,5 @@
 resource "azurerm_virtual_machine_extension" "log_extension" {
-  for_each = var.log_analytics_agent_enabled ? ["enabled"] : []
+  for_each = toset(var.log_analytics_agent_enabled ? ["enabled"] : [])
 
   name = "${azurerm_linux_virtual_machine.vm.name}-logextension"
 
