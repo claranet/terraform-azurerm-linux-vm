@@ -247,6 +247,7 @@ module "vm" {
 | diagnostics\_storage\_account\_sas\_token | SAS token of the Storage Account in which store vm diagnostics. Used only with legacy monitoring agent, set to `null` if not needed. | `string` | n/a | yes |
 | environment | Project environment | `string` | n/a | yes |
 | extra\_tags | Extra tags to set on each created resource. | `map(string)` | `{}` | no |
+| identity | Map with identity block informations as described here https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine#identity | <pre>object({<br>    type         = string<br>    identity_ids = list(string)<br>  })</pre> | <pre>{<br>  "identity_ids": [],<br>  "type": "SystemAssigned"<br>}</pre> | no |
 | load\_balancer\_backend\_pool\_id | Id of the Load Balancer Backend Pool to attach the VM. | `string` | `null` | no |
 | location | Azure location. | `string` | n/a | yes |
 | location\_short | Short string for Azure location. | `string` | n/a | yes |
@@ -283,7 +284,7 @@ module "vm" {
 | Name | Description |
 |------|-------------|
 | vm\_id | ID of the Virtual Machine |
-| vm\_identity | System Identity assigned to the Virtual Machine |
+| vm\_identity | Identity block with principal ID |
 | vm\_name | Name of the Virtual Machine |
 | vm\_nic\_id | ID of the Network Interface Configuration attached to the Virtual Machine |
 | vm\_nic\_ip\_configuration\_name | Name of the IP Configuration for the Network Interface Configuration attached to the Virtual Machine |

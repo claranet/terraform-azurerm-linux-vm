@@ -44,8 +44,12 @@ resource "azurerm_linux_virtual_machine" "vm" {
     disk_size_gb         = var.os_disk_size_gb
   }
 
-  identity {
-    type = "SystemAssigned"
+  dynamic "identity" {
+    for_each = var.identity != null ? ["fake"] : []
+    content {
+      type         = var.identity.type
+      identity_ids = var.identity.identity_ids
+    }
   }
 
   computer_name  = local.vm_name

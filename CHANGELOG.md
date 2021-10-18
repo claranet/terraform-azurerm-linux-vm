@@ -1,5 +1,8 @@
 # Unreleased
 
+Added
+  * AZ-487: Manage user managed identity for the virtual machine
+
 Breaking
   * AZ-302: Replace diagnostics agent with Azure Monitor agent
 
