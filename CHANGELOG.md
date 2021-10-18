@@ -1,17 +1,15 @@
-# Unreleased
-
-Added
-  * AZ-487: Manage user managed identity for the virtual machine
+# v4.2.0 - 2021-10-18
 
 Breaking
   * AZ-302: Replace diagnostics agent with Azure Monitor agent
 
+Added
+  * AZ-487: Manage user managed identity for the virtual machine
+  * AZ-576: Allow deploying Spot Instances
+
 Changed
   * AZ-302: Bump Log Analytics version to latest and allow override
   * AZ-572: Revamp examples and improve CI
-
-Added
-  * AZ-576: Allow deploying Spot Instances
 
 # v4.1.2 - 2021-08-20
 
