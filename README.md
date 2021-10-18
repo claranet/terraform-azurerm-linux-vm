@@ -104,19 +104,35 @@ resource "azurerm_availability_set" "vm_avset" {
   managed             = true
 }
 
-module "run_common" {
-  source  = "claranet/run-common/azurerm"
+module "logs" {
+  source  = "claranet/run-common/azurerm//modules/logs"
   version = "x.x.x"
 
-  client_name         = var.client_name
-  location            = module.azure_region.location
-  location_short      = module.azure_region.location_short
-  environment         = var.environment
-  stack               = var.stack
-  resource_group_name = module.rg.resource_group_name
+  client_name    = var.client_name
+  location       = module.azure_region.location
+  location_short = module.azure_region.location_short
+  environment    = var.environment
+  stack          = var.stack
 
-  tenant_id                        = var.azure_tenant_id
-  monitoring_function_splunk_token = null
+  resource_group_name = module.rg.resource_group_name
+}
+
+module "az_monitor" {
+  source  = "claranet/run-iaas/azurerm//modules/vm-monitoring"
+  version = "x.x.x"
+
+  client_name    = var.client_name
+  location       = module.azure_region.location
+  location_short = module.azure_region.location_short
+  environment    = var.environment
+  stack          = var.stack
+
+  resource_group_name        = module.rg.resource_group_name
+  log_analytics_workspace_id = module.logs.log_analytics_workspace_id
+
+  extra_tags = {
+    foo = "bar"
+  }
 }
 
 module "vm" {
@@ -130,13 +146,18 @@ module "vm" {
   stack               = var.stack
   resource_group_name = module.rg.resource_group_name
 
-  subnet_id                             = module.azure_network_subnet.subnet_id
-  diagnostics_storage_account_name      = module.run_common.logs_storage_account_name
-  diagnostics_storage_account_sas_token = lookup(module.run_common.logs_storage_account_sas_token, "sastoken")
-  vm_size                               = "Standard_B2s"
-  custom_name                           = "app-${var.stack}-${var.client_name}-${module.azure_region.location_short}-${var.environment}-vm"
-  admin_username                        = var.vm_administrator_login
-  ssh_public_key                        = var.ssh_public_key
+
+  subnet_id      = module.azure_network_subnet.subnet_id
+  vm_size        = "Standard_B2s"
+  custom_name    = "app-${var.stack}-${var.client_name}-${module.azure_region.location_short}-${var.environment}-vm"
+  admin_username = var.vm_administrator_login
+  ssh_public_key = var.ssh_public_key
+
+  diagnostics_storage_account_name      = module.logs.logs_storage_account_name
+  diagnostics_storage_account_sas_token = null # used by legacy agent only
+  azure_monitor_data_collection_rule_id = module.az_monitor.data_collection_rule_id
+  log_analytics_workspace_guid          = module.logs.log_analytics_workspace_guid
+  log_analytics_workspace_key           = module.logs.log_analytics_workspace_primary_key
 
   availability_set_id = azurerm_availability_set.vm_avset.id
   # or use Availability Zone
@@ -178,6 +199,7 @@ module "vm" {
 | Name | Version |
 |------|---------|
 | azurerm | >= 2.0 |
+| null | >= 3.0.0 |
 
 ## Modules
 
@@ -197,6 +219,10 @@ module "vm" {
 | [azurerm_network_interface_security_group_association.nic_nsg](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_interface_security_group_association) | resource |
 | [azurerm_public_ip.public_ip](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/public_ip) | resource |
 | [azurerm_virtual_machine_data_disk_attachment.data_disk_attachment](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_machine_data_disk_attachment) | resource |
+| [azurerm_virtual_machine_extension.azure_monitor_agent](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_machine_extension) | resource |
+| [azurerm_virtual_machine_extension.log_extension](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_machine_extension) | resource |
+| [null_resource.azure_monitor_link](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
+| [azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config) | data source |
 
 ## Inputs
 
@@ -208,6 +234,8 @@ module "vm" {
 | attach\_application\_gateway | True to attach this VM to an Application Gateway | `bool` | `false` | no |
 | attach\_load\_balancer | True to attach this VM to a Load Balancer | `bool` | `false` | no |
 | availability\_set\_id | Id of the availability set in which host the Virtual Machine. | `string` | `null` | no |
+| azure\_monitor\_agent\_version | Azure Monitor Agent extension version | `string` | `"1.12"` | no |
+| azure\_monitor\_data\_collection\_rule\_id | Data Collection Rule ID from Azure Monitor for metrics and logs collection. Used with new monitoring agent, set to `null` if legacy agent is used. | `string` | n/a | yes |
 | client\_name | Client name/account used in naming | `string` | n/a | yes |
 | custom\_data | Custom data. See https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html#os_profile block | `any` | `null` | no |
 | custom\_dns\_label | The DNS label to use for public access. VM name if not set. DNS will be <label>.westeurope.cloudapp.azure.com | `string` | `""` | no |
@@ -216,12 +244,16 @@ module "vm" {
 | custom\_nic\_name | Custom name for the NIC interface. Should be suffixed by "-nic". Generated if not set. | `string` | `null` | no |
 | custom\_public\_ip\_name | Custom name for public IP. Should be suffixed by "-pubip". Generated if not set. | `string` | `null` | no |
 | diagnostics\_storage\_account\_name | Name of the Storage Account in which store vm diagnostics | `string` | n/a | yes |
-| diagnostics\_storage\_account\_sas\_token | SAS token of the Storage Account in which store vm diagnostics | `string` | n/a | yes |
+| diagnostics\_storage\_account\_sas\_token | SAS token of the Storage Account in which store vm diagnostics. Used only with legacy monitoring agent, set to `null` if not needed. | `string` | n/a | yes |
 | environment | Project environment | `string` | n/a | yes |
 | extra\_tags | Extra tags to set on each created resource. | `map(string)` | `{}` | no |
 | load\_balancer\_backend\_pool\_id | Id of the Load Balancer Backend Pool to attach the VM. | `string` | `null` | no |
 | location | Azure location. | `string` | n/a | yes |
 | location\_short | Short string for Azure location. | `string` | n/a | yes |
+| log\_analytics\_agent\_enabled | Deploy Log Analytics VM extension - depending of OS (cf. https://docs.microsoft.com/fr-fr/azure/azure-monitor/agents/agents-overview#linux) | `bool` | `true` | no |
+| log\_analytics\_agent\_version | Azure Log Analytics extension version | `string` | `"1.13"` | no |
+| log\_analytics\_workspace\_guid | GUID of the Log Analytics Workspace to link with | `string` | `null` | no |
+| log\_analytics\_workspace\_key | Access key of the Log Analytics Workspace to link with | `string` | `null` | no |
 | name\_prefix | Optional prefix for the generated name | `string` | `""` | no |
 | nic\_enable\_accelerated\_networking | Should Accelerated Networking be enabled? Defaults to `false`. | `bool` | `false` | no |
 | nic\_extra\_tags | Extra tags to set on the network interface. | `map(string)` | `{}` | no |
@@ -236,9 +268,10 @@ module "vm" {
 | ssh\_public\_key | SSH public key | `string` | `null` | no |
 | stack | Project stack name | `string` | n/a | yes |
 | static\_private\_ip | Static private IP. Private IP is dynamic if not set. | `string` | `null` | no |
-| storage\_data\_disk\_config | Map of objects to configure storage data disk(s).<br>    disk1 = {<br>      name                 = string , <br>      create\_option        = string ,<br>      disk\_size\_gb         = string ,<br>      lun                  = string ,<br>      storage\_account\_type = string ,<br>      extra\_tags           = map(string)<br>    } | `any` | `{}` | no |
+| storage\_data\_disk\_config | Map of objects to configure storage data disk(s).<br>    disk1 = {<br>      name                 = string ,<br>      create\_option        = string ,<br>      disk\_size\_gb         = string ,<br>      lun                  = string ,<br>      storage\_account\_type = string ,<br>      extra\_tags           = map(string)<br>    } | `any` | `{}` | no |
 | storage\_data\_disk\_extra\_tags | [DEPRECATED] Extra tags to set on each data storage disk. | `map(string)` | `{}` | no |
 | subnet\_id | Id of the Subnet in which create the Virtual Machine | `string` | n/a | yes |
+| use\_legacy\_monitoring\_agent | True to use the legacy monitoring agent instead of Azure Monitor Agent | `bool` | `false` | no |
 | vm\_image | Virtual Machine source image information. See https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html#storage_image_reference. This variable cannot be used if `vm_image_id` is already defined. | `map(string)` | <pre>{<br>  "offer": "debian-10",<br>  "publisher": "Debian",<br>  "sku": "10",<br>  "version": "latest"<br>}</pre> | no |
 | vm\_image\_id | The ID of the Image which this Virtual Machine should be created from. This variable cannot be used if `vm_image` is already defined. | `string` | `null` | no |
 | vm\_plan | Virtual Machine plan image information. See https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine#plan. This variable has to be used for BYOS image. Before using BYOS image, you need to accept legal plan terms. See https://docs.microsoft.com/en-us/cli/azure/vm/image?view=azure-cli-latest#az_vm_image_accept_terms. | <pre>object({<br>    name      = string<br>    product   = string<br>    publisher = string<br>  })</pre> | `null` | no |
@@ -260,6 +293,7 @@ module "vm" {
 | vm\_public\_ip\_address | Public IP address of the Virtual Machine |
 | vm\_public\_ip\_id | Public IP ID of the Virtual Machine |
 <!-- END_TF_DOCS -->
+
 ## Related documentation
 
 Microsoft Azure documentation: [docs.microsoft.com/en-us/azure/virtual-machines/linux/](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/)
