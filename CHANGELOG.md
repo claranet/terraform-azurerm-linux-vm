@@ -1,3 +1,8 @@
+# Unreleased
+
+Changed
+  * AZ-606: Remove VM Tags on disk
+
 # v4.2.0 - 2021-10-18
 
 Breaking
@@ -20,7 +25,7 @@ Changed
 # v4.1.1 - 2021-02-26
 
 Fixed
-  * AZ-451: set `zone_id` as optional 
+  * AZ-451: set `zone_id` as optional
 
 # v4.1.0 - 2021-01-08
 
