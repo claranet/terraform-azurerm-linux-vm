@@ -198,7 +198,7 @@ module "vm" {
 
 | Name | Version |
 |------|---------|
-| azurerm | >= 2.0 |
+| azurerm | >= 2.83 |
 | null | >= 3.0.0 |
 
 ## Modules
