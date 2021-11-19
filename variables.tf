@@ -293,6 +293,12 @@ variable "azure_monitor_agent_version" {
   default     = "1.12"
 }
 
+variable "enable_azure_monitor_extension_auto_upgrade" {
+  description = "Automatically update extension when publisher releases a new version of the extension"
+  type        = bool
+  default     = false
+}
+
 variable "log_analytics_agent_enabled" {
   description = "Deploy Log Analytics VM extension - depending of OS (cf. https://docs.microsoft.com/fr-fr/azure/azure-monitor/agents/agents-overview#linux)"
   type        = bool
