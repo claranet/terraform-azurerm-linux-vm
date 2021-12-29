@@ -33,12 +33,6 @@ variable "subnet_id" {
   type        = string
 }
 
-variable "name_prefix" {
-  description = "Optional prefix for the generated name"
-  type        = string
-  default     = ""
-}
-
 ### SSH Connection inputs
 variable "ssh_public_key" {
   description = "SSH public key"
@@ -54,18 +48,6 @@ variable "admin_password" {
 }
 
 ### Network inputs
-variable "custom_public_ip_name" {
-  description = "Custom name for public IP. Should be suffixed by \"-pubip\". Generated if not set."
-  type        = string
-  default     = null
-}
-
-variable "custom_nic_name" {
-  description = "Custom name for the NIC interface. Should be suffixed by \"-nic\". Generated if not set."
-  type        = string
-  default     = null
-}
-
 variable "nic_enable_accelerated_networking" {
   description = "Should Accelerated Networking be enabled? Defaults to `false`."
   type        = bool
@@ -90,12 +72,6 @@ variable "static_private_ip" {
   default     = null
 }
 
-variable "custom_ipconfig_name" {
-  description = "Custom name for the IP config of the NIC. Should be suffixed by \"-nic-ipconfig\". Generated if not set."
-  type        = string
-  default     = null
-}
-
 ### VM inputs
 variable "admin_username" {
   description = "Username for Virtual Machine administrator account"
@@ -111,12 +87,6 @@ variable "custom_data" {
 variable "vm_size" {
   description = "Size (SKU) of the Virtual Machine to create."
   type        = string
-}
-
-variable "custom_name" {
-  description = "Custom name for the Virtual Machine. Should be suffixed by \"-vm\". Generated if not set."
-  type        = string
-  default     = ""
 }
 
 variable "availability_set_id" {
@@ -241,12 +211,6 @@ variable "application_gateway_backend_pool_id" {
 
 variable "os_disk_size_gb" {
   description = "Specifies the size of the OS disk in gigabytes"
-  type        = string
-  default     = null
-}
-
-variable "os_disk_custom_name" {
-  description = "Custom name for OS disk. Should be suffixed by \"-osdisk\". Generated if not set."
   type        = string
   default     = null
 }
