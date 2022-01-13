@@ -38,7 +38,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   }
 
   os_disk {
-    name                 = coalesce(var.os_disk_custom_name, "${local.vm_name}-osdisk")
+    name                 = local.vm_os_disk_name
     caching              = var.os_disk_caching
     storage_account_type = var.os_disk_storage_account_type
     disk_size_gb         = var.os_disk_size_gb
@@ -80,7 +80,7 @@ resource "azurerm_managed_disk" "disk" {
   location            = var.location
   resource_group_name = var.resource_group_name
 
-  name = lookup(each.value, "name", "${local.vm_name}-datadisk${each.key}")
+  name = lookup(each.value, "name", var.use_caf_naming ? azurecaf_name.disk[each.key].result : "${local.vm_name}-datadisk${each.key}")
 
   zones                = var.zone_id != null ? [var.zone_id] : []
   storage_account_type = lookup(each.value, "storage_account_type", "Standard_LRS")

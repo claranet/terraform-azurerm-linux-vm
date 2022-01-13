@@ -33,12 +33,6 @@ variable "subnet_id" {
   type        = string
 }
 
-variable "name_prefix" {
-  description = "Optional prefix for the generated name"
-  type        = string
-  default     = ""
-}
-
 ### SSH Connection inputs
 variable "ssh_public_key" {
   description = "SSH public key"
@@ -54,18 +48,6 @@ variable "admin_password" {
 }
 
 ### Network inputs
-variable "custom_public_ip_name" {
-  description = "Custom name for public IP. Should be suffixed by \"-pubip\". Generated if not set."
-  type        = string
-  default     = null
-}
-
-variable "custom_nic_name" {
-  description = "Custom name for the NIC interface. Should be suffixed by \"-nic\". Generated if not set."
-  type        = string
-  default     = null
-}
-
 variable "nic_enable_accelerated_networking" {
   description = "Should Accelerated Networking be enabled? Defaults to `false`."
   type        = bool
@@ -90,12 +72,6 @@ variable "static_private_ip" {
   default     = null
 }
 
-variable "custom_ipconfig_name" {
-  description = "Custom name for the IP config of the NIC. Should be suffixed by \"-nic-ipconfig\". Generated if not set."
-  type        = string
-  default     = null
-}
-
 ### VM inputs
 variable "admin_username" {
   description = "Username for Virtual Machine administrator account"
@@ -113,12 +89,6 @@ variable "vm_size" {
   type        = string
 }
 
-variable "custom_name" {
-  description = "Custom name for the Virtual Machine. Should be suffixed by \"-vm\". Generated if not set."
-  type        = string
-  default     = ""
-}
-
 variable "availability_set_id" {
   description = "Id of the availability set in which host the Virtual Machine."
   type        = string
@@ -129,16 +99,6 @@ variable "zone_id" {
   description = "Index of the Availability Zone which the Virtual Machine should be allocated in."
   type        = number
   default     = null
-}
-
-variable "diagnostics_storage_account_name" {
-  description = "Name of the Storage Account in which store vm diagnostics"
-  type        = string
-}
-
-variable "diagnostics_storage_account_sas_token" {
-  description = "SAS token of the Storage Account in which store vm diagnostics. Used only with legacy monitoring agent, set to `null` if not needed."
-  type        = string
 }
 
 variable "vm_image" {
@@ -245,12 +205,6 @@ variable "os_disk_size_gb" {
   default     = null
 }
 
-variable "os_disk_custom_name" {
-  description = "Custom name for OS disk. Should be suffixed by \"-osdisk\". Generated if not set."
-  type        = string
-  default     = null
-}
-
 variable "os_disk_storage_account_type" {
   description = "The Type of Storage Account which should back this the Internal OS Disk. (Standard_LRS, StandardSSD_LRS and Premium_LRS)"
   type        = string
@@ -261,54 +215,6 @@ variable "os_disk_caching" {
   description = "Specifies the caching requirements for the OS Disk"
   type        = string
   default     = "ReadWrite"
-}
-
-## Logs & monitoring variables
-variable "use_legacy_monitoring_agent" {
-  description = "True to use the legacy monitoring agent instead of Azure Monitor Agent"
-  type        = bool
-  default     = false
-}
-
-variable "log_analytics_workspace_guid" {
-  description = "GUID of the Log Analytics Workspace to link with"
-  type        = string
-  default     = null
-}
-
-variable "log_analytics_workspace_key" {
-  description = "Access key of the Log Analytics Workspace to link with"
-  type        = string
-  default     = null
-}
-
-variable "azure_monitor_data_collection_rule_id" {
-  description = "Data Collection Rule ID from Azure Monitor for metrics and logs collection. Used with new monitoring agent, set to `null` if legacy agent is used."
-  type        = string
-}
-
-variable "azure_monitor_agent_version" {
-  description = "Azure Monitor Agent extension version"
-  type        = string
-  default     = "1.12"
-}
-
-variable "azure_monitor_agent_auto_upgrade_enabled" {
-  description = "Automatically update agent when publisher releases a new version of the agent"
-  type        = bool
-  default     = false
-}
-
-variable "log_analytics_agent_enabled" {
-  description = "Deploy Log Analytics VM extension - depending of OS (cf. https://docs.microsoft.com/fr-fr/azure/azure-monitor/agents/agents-overview#linux)"
-  type        = bool
-  default     = true
-}
-
-variable "log_analytics_agent_version" {
-  description = "Azure Log Analytics extension version"
-  type        = string
-  default     = "1.13"
 }
 
 ## Identity variables
