@@ -16,11 +16,15 @@ module "vm_logs" {
 
   vm_ids = [azurerm_linux_virtual_machine.vm.id]
 
-  tags = {
-    environment = var.environment
-    stack       = var.stack
-    vm_name     = azurerm_linux_virtual_machine.vm.name
-  }
+  tags = merge(
+    local.default_tags,
+    {
+      vm_name = azurerm_linux_virtual_machine.vm.name
+    }
+  )
+
+  # The option has to be integrated in this module beforehand (waiting for the new version of the module)
+  # default_tags_enabled = var.default_tags_enabled
 }
 
 resource "azurerm_virtual_machine_extension" "azure_monitor_agent" {

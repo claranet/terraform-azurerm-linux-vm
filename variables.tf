@@ -54,12 +54,6 @@ variable "nic_enable_accelerated_networking" {
   default     = false
 }
 
-variable "nic_extra_tags" {
-  description = "Extra tags to set on the network interface."
-  type        = map(string)
-  default     = {}
-}
-
 variable "nic_nsg_id" {
   description = "NSG ID to associate on the Network Interface. No association if null."
   type        = string
@@ -139,34 +133,16 @@ EOT
   default     = {}
 }
 
-variable "storage_data_disk_extra_tags" {
-  description = "[DEPRECATED] Extra tags to set on each data storage disk."
-  type        = map(string)
-  default     = {}
-}
-
 variable "vm_image_id" {
   description = "The ID of the Image which this Virtual Machine should be created from. This variable cannot be used if `vm_image` is already defined."
   type        = string
   default     = null
 }
 
-variable "extra_tags" {
-  description = "Extra tags to set on each created resource."
-  type        = map(string)
-  default     = {}
-}
-
 variable "custom_dns_label" {
   description = "The DNS label to use for public access. VM name if not set. DNS will be <label>.westeurope.cloudapp.azure.com"
   type        = string
   default     = ""
-}
-
-variable "public_ip_extra_tags" {
-  description = "Extra tags to set on the public IP resource."
-  type        = map(string)
-  default     = {}
 }
 
 variable "public_ip_sku" {
