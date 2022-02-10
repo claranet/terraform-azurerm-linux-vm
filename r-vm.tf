@@ -73,6 +73,17 @@ resource "azurerm_linux_virtual_machine" "vm" {
   eviction_policy = var.spot_instance ? var.spot_instance_eviction_policy : null
 }
 
+module "vm_os_disk_tagging" {
+  source  = "claranet/tagging/azurerm"
+  version = "4.0.0"
+
+  nb_resources = var.os_disk_tagging_enabled ? 1 : 0
+  resource_ids = [data.azurerm_managed_disk.vm_os_disk.id]
+  behavior     = "merge" # Must be "merge" or "overwrite"
+
+  tags = merge(local.default_tags, var.extra_tags, var.os_disk_extra_tags)
+}
+
 resource "azurerm_managed_disk" "disk" {
   for_each = var.storage_data_disk_config
 
