@@ -2,19 +2,17 @@ module "vm_logs" {
   for_each = toset(var.use_legacy_monitoring_agent ? ["enabled"] : [])
 
   source  = "claranet/vm-logs/azurerm"
-  version = "3.0.0"
+  version = "4.1.0"
 
-  location    = var.location
-  client_name = var.client_name
   environment = var.environment
   stack       = var.stack
-
-  resource_group_name = var.resource_group_name
 
   diagnostics_storage_account_name      = var.diagnostics_storage_account_name
   diagnostics_storage_account_sas_token = var.diagnostics_storage_account_sas_token
 
-  vm_ids = [azurerm_linux_virtual_machine.vm.id]
+  vm_id = azurerm_linux_virtual_machine.vm.id
+
+  default_tags_enabled = var.default_tags_enabled
 
   tags = merge(
     local.default_tags,
@@ -22,9 +20,6 @@ module "vm_logs" {
       vm_name = azurerm_linux_virtual_machine.vm.name
     }
   )
-
-  # The option has to be integrated in this module beforehand (waiting for the new version of the module)
-  # default_tags_enabled = var.default_tags_enabled
 }
 
 resource "azurerm_virtual_machine_extension" "azure_monitor_agent" {
