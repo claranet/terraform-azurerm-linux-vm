@@ -71,7 +71,6 @@ resource "azurerm_linux_virtual_machine" "vm" {
   priority        = var.spot_instance ? "Spot" : "Regular"
   max_bid_price   = var.spot_instance ? var.spot_instance_max_bid_price : null
   eviction_policy = var.spot_instance ? var.spot_instance_eviction_policy : null
-
 }
 
 resource "azurerm_managed_disk" "disk" {
@@ -88,7 +87,7 @@ resource "azurerm_managed_disk" "disk" {
   create_option = lookup(each.value, "create_option", "Empty")
   disk_size_gb  = lookup(each.value, "disk_size_gb", null)
 
-  tags = merge(local.default_tags, var.extra_tags, lookup(each.value, "extra_tags", var.storage_data_disk_extra_tags))
+  tags = merge(local.default_tags, var.extra_tags, lookup(each.value, "extra_tags", {}))
 }
 
 resource "azurerm_virtual_machine_data_disk_attachment" "data_disk_attachment" {

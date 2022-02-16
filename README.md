@@ -206,7 +206,7 @@ module "vm" {
 
 | Name | Source | Version |
 |------|--------|---------|
-| vm\_logs | claranet/vm-logs/azurerm | 3.0.0 |
+| vm\_logs | claranet/vm-logs/azurerm | 4.1.0 |
 
 ## Resources
 
@@ -249,6 +249,7 @@ module "vm" {
 | custom\_name | Custom name for the Virtual Machine. Generated if not set. | `string` | `""` | no |
 | custom\_nic\_name | Custom name for the NIC interface. Generated if not set. | `string` | `null` | no |
 | custom\_public\_ip\_name | Custom name for public IP. Generated if not set. | `string` | `null` | no |
+| default\_tags\_enabled | Option to enable or disable default tags. | `bool` | `true` | no |
 | diagnostics\_storage\_account\_name | Name of the Storage Account in which store vm diagnostics | `string` | n/a | yes |
 | diagnostics\_storage\_account\_sas\_token | SAS token of the Storage Account in which store vm diagnostics. Used only with legacy monitoring agent, set to `null` if not needed. | `string` | n/a | yes |
 | environment | Project environment | `string` | n/a | yes |
@@ -280,7 +281,6 @@ module "vm" {
 | stack | Project stack name | `string` | n/a | yes |
 | static\_private\_ip | Static private IP. Private IP is dynamic if not set. | `string` | `null` | no |
 | storage\_data\_disk\_config | Map of objects to configure storage data disk(s).<br>    disk1 = {<br>      name                 = string ,<br>      create\_option        = string ,<br>      disk\_size\_gb         = string ,<br>      lun                  = string ,<br>      storage\_account\_type = string ,<br>      extra\_tags           = map(string)<br>    } | `any` | `{}` | no |
-| storage\_data\_disk\_extra\_tags | [DEPRECATED] Extra tags to set on each data storage disk. | `map(string)` | `{}` | no |
 | subnet\_id | Id of the Subnet in which create the Virtual Machine | `string` | n/a | yes |
 | use\_caf\_naming | Use the Azure CAF naming provider to generate default resource name. `custom_name` override this if set. Legacy default name is used if this is set to `false`. | `bool` | `true` | no |
 | use\_legacy\_monitoring\_agent | True to use the legacy monitoring agent instead of Azure Monitor Agent | `bool` | `false` | no |
