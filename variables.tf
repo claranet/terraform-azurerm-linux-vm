@@ -193,12 +193,6 @@ variable "os_disk_caching" {
   default     = "ReadWrite"
 }
 
-variable "os_disk_extra_tags" {
-  description = "Extra tags to set on the OS disk."
-  type        = map(string)
-  default     = {}
-}
-
 ## Identity variables
 variable "identity" {
   description = "Map with identity block informations as described here https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine#identity"
@@ -229,10 +223,4 @@ variable "spot_instance_eviction_policy" {
   description = "Specifies what should happen when the Virtual Machine is evicted for price reasons when using a Spot instance. At this time the only supported value is `Deallocate`. Changing this forces a new resource to be created."
   type        = string
   default     = "Deallocate"
-}
-
-variable "os_disk_tagging_enabled" {
-  description = "Should OS disk tagging be enabled? Defaults to `true`."
-  type        = bool
-  default     = true
 }

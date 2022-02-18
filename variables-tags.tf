@@ -21,3 +21,15 @@ variable "extra_tags" {
   type        = map(string)
   default     = {}
 }
+
+variable "os_disk_extra_tags" {
+  description = "Extra tags to set on the OS disk."
+  type        = map(string)
+  default     = {}
+}
+
+variable "os_disk_tagging_enabled" {
+  description = "Should OS disk tagging be enabled? Defaults to `true`."
+  type        = bool
+  default     = true
+}
