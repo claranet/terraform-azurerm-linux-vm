@@ -1,3 +1,8 @@
+# Unreleased
+
+Breaking
+  * AZ-717: Update module for AzureRM provider `v3.0`
+
 # v5.1.0 - 2022-02-18
 
 Added

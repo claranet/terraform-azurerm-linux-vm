@@ -92,11 +92,11 @@ resource "azurerm_managed_disk" "disk" {
 
   name = lookup(each.value, "name", var.use_caf_naming ? azurecaf_name.disk[each.key].result : "${local.vm_name}-datadisk${each.key}")
 
-  zones                = var.zone_id != null ? [var.zone_id] : []
-  storage_account_type = lookup(each.value, "storage_account_type", "Standard_LRS")
+  zone = var.zone_id
 
-  create_option = lookup(each.value, "create_option", "Empty")
-  disk_size_gb  = lookup(each.value, "disk_size_gb", null)
+  storage_account_type = lookup(each.value, "storage_account_type", "Standard_LRS")
+  create_option        = lookup(each.value, "create_option", "Empty")
+  disk_size_gb         = lookup(each.value, "disk_size_gb", null)
 
   tags = merge(local.default_tags, var.extra_tags, lookup(each.value, "extra_tags", {}))
 }

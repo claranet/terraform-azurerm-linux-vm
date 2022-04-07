@@ -199,7 +199,7 @@ module "vm" {
 | Name | Version |
 |------|---------|
 | azurecaf | ~> 1.1 |
-| azurerm | >= 2.83 |
+| azurerm | >= 3.0 |
 | null | >= 3.0.0 |
 
 ## Modules
