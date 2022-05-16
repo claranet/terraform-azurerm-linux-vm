@@ -146,9 +146,15 @@ variable "custom_dns_label" {
 }
 
 variable "public_ip_sku" {
-  description = "Sku for the public IP attached to the VM. Can be `null` if no public IP needed."
+  description = "SKU for the public IP attached to the VM. Can be `null` if no public IP needed."
   type        = string
   default     = "Standard"
+}
+
+variable "public_ip_zones" {
+  description = "Zones for public IP attached to the VM. Can be `null` if no zone distpatch."
+  type        = list(number)
+  default     = [1, 2, 3]
 }
 
 variable "attach_load_balancer" {
