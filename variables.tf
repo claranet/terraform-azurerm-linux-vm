@@ -28,16 +28,9 @@ variable "resource_group_name" {
   type        = string
 }
 
-variable "subnet_id" {
-  description = "Id of the Subnet in which create the Virtual Machine"
+variable "admin_username" {
+  description = "Username for Virtual Machine administrator account"
   type        = string
-}
-
-### SSH Connection inputs
-variable "ssh_public_key" {
-  description = "SSH public key"
-  type        = string
-  default     = null
 }
 
 ### Password authentication
@@ -47,7 +40,25 @@ variable "admin_password" {
   default     = null
 }
 
+### SSH Connection inputs
+variable "ssh_public_key" {
+  description = "SSH public key"
+  type        = string
+  default     = null
+}
+
+variable "ssh_private_key" {
+  description = "SSH private key"
+  type        = string
+  default     = null
+}
+
 ### Network inputs
+variable "subnet_id" {
+  description = "Id of the Subnet in which create the Virtual Machine"
+  type        = string
+}
+
 variable "nic_enable_accelerated_networking" {
   description = "Should Accelerated Networking be enabled? Defaults to `false`."
   type        = bool
@@ -67,11 +78,6 @@ variable "static_private_ip" {
 }
 
 ### VM inputs
-variable "admin_username" {
-  description = "Username for Virtual Machine administrator account"
-  type        = string
-}
-
 variable "custom_data" {
   description = "Custom data. See https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html#os_profile block"
   type        = any

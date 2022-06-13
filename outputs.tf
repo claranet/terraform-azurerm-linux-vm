@@ -47,3 +47,27 @@ output "vm_identity" {
   description = "Identity block with principal ID"
   value       = azurerm_linux_virtual_machine.vm.identity
 }
+
+output "vm_admin_username" {
+  description = "Virtual Machine admin username"
+  value       = var.admin_username
+  sensitive   = true
+}
+
+output "vm_admin_password" {
+  description = "Virtual Machine admin password"
+  value       = var.admin_password
+  sensitive   = true
+}
+
+output "vm_admin_ssh_private_key" {
+  description = "Virtual Machine admin SSH private key"
+  value       = var.ssh_private_key
+  sensitive   = true
+}
+
+output "vm_admin_ssh_public_key" {
+  description = "Virtual Machine admin SSH public key"
+  value       = var.ssh_public_key
+  sensitive   = true
+}

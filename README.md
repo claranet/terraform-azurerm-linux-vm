@@ -282,6 +282,7 @@ module "vm" {
 | spot\_instance | True to deploy VM as a Spot Instance | `bool` | `false` | no |
 | spot\_instance\_eviction\_policy | Specifies what should happen when the Virtual Machine is evicted for price reasons when using a Spot instance. At this time the only supported value is `Deallocate`. Changing this forces a new resource to be created. | `string` | `"Deallocate"` | no |
 | spot\_instance\_max\_bid\_price | The maximum price you're willing to pay for this VM in US Dollars; must be greater than the current spot price. `-1` If you don't want the VM to be evicted for price reasons. | `number` | `-1` | no |
+| ssh\_private\_key | SSH private key | `string` | `null` | no |
 | ssh\_public\_key | SSH public key | `string` | `null` | no |
 | stack | Project stack name | `string` | n/a | yes |
 | static\_private\_ip | Static private IP. Private IP is dynamic if not set. | `string` | `null` | no |
@@ -299,6 +300,11 @@ module "vm" {
 
 | Name | Description |
 |------|-------------|
+| terraform\_module | Information about this Terraform module |
+| vm\_admin\_password | Virtual Machine admin password |
+| vm\_admin\_ssh\_private\_key | Virtual Machine admin SSH private key |
+| vm\_admin\_ssh\_public\_key | Virtual Machine admin SSH public key |
+| vm\_admin\_username | Virtual Machine admin username |
 | vm\_id | ID of the Virtual Machine |
 | vm\_identity | Identity block with principal ID |
 | vm\_name | Name of the Virtual Machine |
