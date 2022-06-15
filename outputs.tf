@@ -69,5 +69,4 @@ output "vm_admin_ssh_private_key" {
 output "vm_admin_ssh_public_key" {
   description = "Virtual Machine admin SSH public key"
   value       = var.ssh_public_key
-  sensitive   = true
 }
