@@ -282,11 +282,12 @@ module "vm" {
 | spot\_instance | True to deploy VM as a Spot Instance | `bool` | `false` | no |
 | spot\_instance\_eviction\_policy | Specifies what should happen when the Virtual Machine is evicted for price reasons when using a Spot instance. At this time the only supported value is `Deallocate`. Changing this forces a new resource to be created. | `string` | `"Deallocate"` | no |
 | spot\_instance\_max\_bid\_price | The maximum price you're willing to pay for this VM in US Dollars; must be greater than the current spot price. `-1` If you don't want the VM to be evicted for price reasons. | `number` | `-1` | no |
+| ssh\_private\_key | SSH private key | `string` | `null` | no |
 | ssh\_public\_key | SSH public key | `string` | `null` | no |
 | stack | Project stack name | `string` | n/a | yes |
 | static\_private\_ip | Static private IP. Private IP is dynamic if not set. | `string` | `null` | no |
 | storage\_data\_disk\_config | Map of objects to configure storage data disk(s).<br>    disk1 = {<br>      name                 = string ,<br>      create\_option        = string ,<br>      disk\_size\_gb         = string ,<br>      lun                  = string ,<br>      storage\_account\_type = string ,<br>      extra\_tags           = map(string)<br>    } | `any` | `{}` | no |
-| subnet\_id | Id of the Subnet in which create the Virtual Machine | `string` | n/a | yes |
+| subnet\_id | ID of the Subnet in which create the Virtual Machine | `string` | n/a | yes |
 | use\_caf\_naming | Use the Azure CAF naming provider to generate default resource name. `custom_name` override this if set. Legacy default name is used if this is set to `false`. | `bool` | `true` | no |
 | use\_legacy\_monitoring\_agent | True to use the legacy monitoring agent instead of Azure Monitor Agent | `bool` | `false` | no |
 | vm\_image | Virtual Machine source image information. See https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html#storage_image_reference. This variable cannot be used if `vm_image_id` is already defined. | `map(string)` | <pre>{<br>  "offer": "debian-10",<br>  "publisher": "Debian",<br>  "sku": "10",<br>  "version": "latest"<br>}</pre> | no |
@@ -299,6 +300,11 @@ module "vm" {
 
 | Name | Description |
 |------|-------------|
+| terraform\_module | Information about this Terraform module |
+| vm\_admin\_password | Virtual Machine admin password |
+| vm\_admin\_ssh\_private\_key | Virtual Machine admin SSH private key |
+| vm\_admin\_ssh\_public\_key | Virtual Machine admin SSH public key |
+| vm\_admin\_username | Virtual Machine admin username |
 | vm\_id | ID of the Virtual Machine |
 | vm\_identity | Identity block with principal ID |
 | vm\_name | Name of the Virtual Machine |
