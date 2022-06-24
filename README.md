@@ -287,7 +287,7 @@ module "vm" {
 | stack | Project stack name | `string` | n/a | yes |
 | static\_private\_ip | Static private IP. Private IP is dynamic if not set. | `string` | `null` | no |
 | storage\_data\_disk\_config | Map of objects to configure storage data disk(s).<br>    disk1 = {<br>      name                 = string ,<br>      create\_option        = string ,<br>      disk\_size\_gb         = string ,<br>      lun                  = string ,<br>      storage\_account\_type = string ,<br>      extra\_tags           = map(string)<br>    } | `any` | `{}` | no |
-| subnet\_id | Id of the Subnet in which create the Virtual Machine | `string` | n/a | yes |
+| subnet\_id | ID of the Subnet in which create the Virtual Machine | `string` | n/a | yes |
 | use\_caf\_naming | Use the Azure CAF naming provider to generate default resource name. `custom_name` override this if set. Legacy default name is used if this is set to `false`. | `bool` | `true` | no |
 | use\_legacy\_monitoring\_agent | True to use the legacy monitoring agent instead of Azure Monitor Agent | `bool` | `false` | no |
 | vm\_image | Virtual Machine source image information. See https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html#storage_image_reference. This variable cannot be used if `vm_image_id` is already defined. | `map(string)` | <pre>{<br>  "offer": "debian-10",<br>  "publisher": "Debian",<br>  "sku": "10",<br>  "version": "latest"<br>}</pre> | no |

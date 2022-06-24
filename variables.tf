@@ -55,7 +55,7 @@ variable "ssh_private_key" {
 
 ### Network inputs
 variable "subnet_id" {
-  description = "Id of the Subnet in which create the Virtual Machine"
+  description = "ID of the Subnet in which create the Virtual Machine"
   type        = string
 }
 
