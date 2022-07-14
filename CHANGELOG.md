@@ -1,3 +1,8 @@
+# Unreleased
+
+Changed:
+  * GITHUB-2: Bump `claranet/vm-logs/azurerm` version to 4.2.0
+
 # v6.1.0 - 2022-06-24
 
 Added
