@@ -33,3 +33,9 @@ variable "os_disk_tagging_enabled" {
   type        = bool
   default     = true
 }
+
+variable "os_disk_overwrite_tags" {
+  description = "Given tags must be merged with existing ones for os disk storage."
+  type        = bool
+  default     = true
+}
