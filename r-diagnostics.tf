@@ -2,7 +2,7 @@ module "vm_logs" {
   for_each = toset(var.use_legacy_monitoring_agent ? ["enabled"] : [])
 
   source  = "claranet/vm-logs/azurerm"
-  version = "4.1.0"
+  version = "4.2.0"
 
   environment = var.environment
   stack       = var.stack

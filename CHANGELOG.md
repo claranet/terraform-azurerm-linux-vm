@@ -1,3 +1,8 @@
+# Unreleased
+
+Fixed
+  * AZ-717: Bump legacy `vm-logs` module to latest `v4.2.0`
+
 # v6.1.0 - 2022-06-24
 
 Added
