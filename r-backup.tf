@@ -1,5 +1,5 @@
 resource "azurerm_backup_protected_vm" "backup" {
-  count = var.backup_policy_id != null ? 1 : 0
+  for_each = toset(var.backup_policy_id != null ? ["enabled"] : [])
 
   resource_group_name = local.backup_resource_group_name
   recovery_vault_name = local.backup_recovery_vault_name
