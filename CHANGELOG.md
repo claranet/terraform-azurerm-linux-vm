@@ -2,6 +2,7 @@
 
 Added
   * AZ-814: Add backup option
+  * AZ-818: Add Azure Active Directory Login capability
 
 # v6.2.0 - 2022-07-29
 
