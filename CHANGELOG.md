@@ -1,4 +1,4 @@
-# Unreleased
+# v6.3.0 - 2022-08-05
 
 Added
   * AZ-814: Add backup option
