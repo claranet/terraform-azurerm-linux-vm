@@ -118,6 +118,24 @@ module "logs" {
   resource_group_name = module.rg.resource_group_name
 }
 
+module "az_vm_backup" {
+  source  = "claranet/run-iaas/azurerm//modules/backup"
+  version = "x.x.x"
+
+  location       = module.azure_region.location
+  location_short = module.azure_region.location_short
+  client_name    = var.client_name
+  environment    = var.environment
+  stack          = var.stack
+
+  resource_group_name = module.rg.resource_group_name
+
+  logs_destinations_ids = [
+    module.logs.logs_storage_account_id,
+    module.logs.log_analytics_workspace_id
+  ]
+}
+
 module "az_monitor" {
   source  = "claranet/run-iaas/azurerm//modules/vm-monitoring"
   version = "x.x.x"
@@ -159,6 +177,9 @@ module "vm" {
   azure_monitor_data_collection_rule_id = module.az_monitor.data_collection_rule_id
   log_analytics_workspace_guid          = module.logs.log_analytics_workspace_guid
   log_analytics_workspace_key           = module.logs.log_analytics_workspace_primary_key
+
+  # Set to null to deactivate backup
+  backup_policy_id = module.az_vm_backup.vm_backup_policy_id
 
   availability_set_id = azurerm_availability_set.vm_avset.id
   # or use Availability Zone
@@ -217,6 +238,7 @@ module "vm" {
 | [azurecaf_name.nic](https://registry.terraform.io/providers/aztfmod/azurecaf/latest/docs/resources/name) | resource |
 | [azurecaf_name.pub_ip](https://registry.terraform.io/providers/aztfmod/azurecaf/latest/docs/resources/name) | resource |
 | [azurecaf_name.vm](https://registry.terraform.io/providers/aztfmod/azurecaf/latest/docs/resources/name) | resource |
+| [azurerm_backup_protected_vm.backup](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/backup_protected_vm) | resource |
 | [azurerm_linux_virtual_machine.vm](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine) | resource |
 | [azurerm_managed_disk.disk](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/managed_disk) | resource |
 | [azurerm_network_interface.nic](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_interface) | resource |
@@ -244,6 +266,7 @@ module "vm" {
 | azure\_monitor\_agent\_auto\_upgrade\_enabled | Automatically update agent when publisher releases a new version of the agent | `bool` | `false` | no |
 | azure\_monitor\_agent\_version | Azure Monitor Agent extension version | `string` | `"1.12"` | no |
 | azure\_monitor\_data\_collection\_rule\_id | Data Collection Rule ID from Azure Monitor for metrics and logs collection. Used with new monitoring agent, set to `null` if legacy agent is used. | `string` | n/a | yes |
+| backup\_policy\_id | Backup policy ID from the Recovery Vault to attach the Virtual Machine to (value to `null` to disable backup) | `string` | n/a | yes |
 | client\_name | Client name/account used in naming | `string` | n/a | yes |
 | custom\_data | Custom data. See https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html#os_profile block | `any` | `null` | no |
 | custom\_dns\_label | The DNS label to use for public access. VM name if not set. DNS will be <label>.westeurope.cloudapp.azure.com | `string` | `""` | no |

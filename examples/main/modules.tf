@@ -91,6 +91,24 @@ module "logs" {
   resource_group_name = module.rg.resource_group_name
 }
 
+module "az_vm_backup" {
+  source  = "claranet/run-iaas/azurerm//modules/backup"
+  version = "x.x.x"
+
+  location       = module.azure_region.location
+  location_short = module.azure_region.location_short
+  client_name    = var.client_name
+  environment    = var.environment
+  stack          = var.stack
+
+  resource_group_name = module.rg.resource_group_name
+
+  logs_destinations_ids = [
+    module.logs.logs_storage_account_id,
+    module.logs.log_analytics_workspace_id
+  ]
+}
+
 module "az_monitor" {
   source  = "claranet/run-iaas/azurerm//modules/vm-monitoring"
   version = "x.x.x"
@@ -132,6 +150,9 @@ module "vm" {
   azure_monitor_data_collection_rule_id = module.az_monitor.data_collection_rule_id
   log_analytics_workspace_guid          = module.logs.log_analytics_workspace_guid
   log_analytics_workspace_key           = module.logs.log_analytics_workspace_primary_key
+
+  # Set to null to deactivate backup
+  backup_policy_id = module.az_vm_backup.vm_backup_policy_id
 
   availability_set_id = azurerm_availability_set.vm_avset.id
   # or use Availability Zone

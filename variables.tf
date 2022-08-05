@@ -236,3 +236,9 @@ variable "spot_instance_eviction_policy" {
   type        = string
   default     = "Deallocate"
 }
+
+## Backup variable
+variable "backup_policy_id" {
+  description = "Backup policy ID from the Recovery Vault to attach the Virtual Machine to (value to `null` to disable backup)"
+  type        = string
+}

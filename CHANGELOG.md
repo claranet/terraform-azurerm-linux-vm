@@ -1,3 +1,8 @@
+# Unreleased
+
+Added
+  * AZ-814: Add backup option
+
 # v6.2.0 - 2022-07-29
 
 Fixed
