@@ -1,4 +1,4 @@
-# Unreleased
+# v6.3.1 - 2022-08-19
 
 Fixed
   * AZ-828: Bump `vm_os_disk_tagging` module to latest `v4.0.2`
