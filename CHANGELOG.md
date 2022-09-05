@@ -1,3 +1,8 @@
+# Unreleased
+
+Changed
+  * AZ-838: Change `os_disk_storage_account_type` default value to `StandardSSD_ZRS`
+
 # v6.3.1 - 2022-08-19
 
 Fixed
