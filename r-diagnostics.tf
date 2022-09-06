@@ -34,6 +34,8 @@ resource "azurerm_virtual_machine_extension" "azure_monitor_agent" {
   automatic_upgrade_enabled  = var.azure_monitor_agent_auto_upgrade_enabled
 
   virtual_machine_id = azurerm_linux_virtual_machine.vm.id
+
+  tags = merge(local.default_tags, var.extra_tags, var.extensions_extra_tags)
 }
 
 resource "azurerm_monitor_data_collection_rule_association" "dcr" {

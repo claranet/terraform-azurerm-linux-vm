@@ -7,4 +7,6 @@ resource "azurerm_virtual_machine_extension" "aad_ssh_login" {
   type_handler_version       = var.aad_ssh_login_extension_version
   virtual_machine_id         = azurerm_linux_virtual_machine.vm.id
   auto_upgrade_minor_version = true
+
+  tags = merge(local.default_tags, var.extra_tags, var.extensions_extra_tags)
 }
