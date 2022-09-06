@@ -18,7 +18,8 @@ module "vm_logs" {
     local.default_tags,
     {
       vm_name = azurerm_linux_virtual_machine.vm.name
-    }
+    },
+    var.extra_tags, var.extensions_extra_tags
   )
 }
 
