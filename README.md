@@ -299,7 +299,7 @@ module "vm" {
 | os\_disk\_custom\_name | Custom name for OS disk. Generated if not set. | `string` | `null` | no |
 | os\_disk\_extra\_tags | Extra tags to set on the OS disk. | `map(string)` | `{}` | no |
 | os\_disk\_size\_gb | Specifies the size of the OS disk in gigabytes | `string` | `null` | no |
-| os\_disk\_storage\_account\_type | The Type of Storage Account which should back this the Internal OS Disk. (Standard\_LRS, StandardSSD\_LRS and Premium\_LRS) | `string` | `"Standard_LRS"` | no |
+| os\_disk\_storage\_account\_type | The Type of Storage Account which should back this the Internal OS Disk. Possible values are `Standard_LRS`, `StandardSSD_LRS`, `Premium_LRS`, `StandardSSD_ZRS` and `Premium_ZRS` | `string` | `"Premium_ZRS"` | no |
 | os\_disk\_tagging\_enabled | Should OS disk tagging be enabled? Defaults to `true`. | `bool` | `true` | no |
 | public\_ip\_extra\_tags | Extra tags to set on the public IP resource. | `map(string)` | `{}` | no |
 | public\_ip\_sku | SKU for the public IP attached to the VM. Can be `null` if no public IP needed. | `string` | `"Standard"` | no |
