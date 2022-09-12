@@ -33,3 +33,9 @@ variable "os_disk_tagging_enabled" {
   type        = bool
   default     = true
 }
+
+variable "extensions_extra_tags" {
+  description = "Extra tags to set on the VM extensions."
+  type        = map(string)
+  default     = {}
+}

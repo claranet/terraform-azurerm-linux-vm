@@ -4,6 +4,12 @@ Changed
   * AZ-838: Change `os_disk_storage_account_type` default value to `Premium_ZRS`
   * AZ-807: Use native resource for Data Collection Rule link
 
+Added
+  * AZ-825: Add tags on deployed VM extensions and add `extensions_extra_tags` parameter
+
+Changed
+  * AZ-825: Upgrade Azure Monitor agent extension (`azure_monitor_agent_version`) to latest `v1.21`
+
 # v6.3.1 - 2022-08-19
 
 Fixed
