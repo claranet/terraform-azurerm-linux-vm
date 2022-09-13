@@ -127,6 +127,14 @@ module "az_monitor" {
   }
 }
 
+data "azuread_group" "vm_admins_group" {
+  display_name = "Virtual Machines Admins"
+}
+
+data "azuread_group" "vm_users_group" {
+  display_name = "Virtual Machines Users"
+}
+
 module "vm" {
   source  = "claranet/linux-vm/azurerm"
   version = "x.x.x"
@@ -186,25 +194,7 @@ module "vm" {
     }
   }
 
-  aad_ssh_login_enabled = true
-}
-
-data "azuread_group" "vm_admins_group" {
-  display_name = "Virtual Machines Admins"
-}
-
-data "azuread_group" "vm_users_group" {
-  display_name = "Virtual Machines Users"
-}
-
-resource "azurerm_role_assignment" "allow_aad_user_to_ssh_as_admin" {
-  principal_id         = data.azuread_group.vm_admins_group.object_id
-  scope                = module.vm.vm_id
-  role_definition_name = "Virtual Machine Administrator Login"
-}
-
-resource "azurerm_role_assignment" "allow_aad_user_to_ssh_as_user" {
-  principal_id         = data.azuread_group.vm_users_group.object_id
-  scope                = module.vm.vm_id
-  role_definition_name = "Virtual Machine User Login"
+  aad_ssh_login_enabled           = true
+  aad_ssh_login_admin_objects_ids = [data.azuread_group.vm_admins_group.object_id]
+  aad_ssh_login_user_objects_ids  = [data.azuread_group.vm_users_group.object_id]
 }
