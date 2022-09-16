@@ -2,6 +2,7 @@
 
 Added
   * AZ-807: Custom name for Data Collection Rule link resource
+  * AZ-818: Add RBAC option management for AAD SSH Login extension
 
 # v6.4.0 - 2022-09-12
 
