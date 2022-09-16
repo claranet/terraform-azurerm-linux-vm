@@ -42,7 +42,7 @@ resource "azurerm_virtual_machine_extension" "azure_monitor_agent" {
 resource "azurerm_monitor_data_collection_rule_association" "dcr" {
   for_each = toset(var.use_legacy_monitoring_agent ? [] : ["enabled"])
 
-  name                    = format("%s-dcrassociation", azurerm_linux_virtual_machine.vm.name)
+  name                    = local.dcr_name
   target_resource_id      = azurerm_linux_virtual_machine.vm.id
   data_collection_rule_id = var.azure_monitor_data_collection_rule_id
 }
