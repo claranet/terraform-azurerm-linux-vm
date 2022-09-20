@@ -1,3 +1,8 @@
+# Unreleased
+
+Added
+  * AZ-845: Add `patch_mode` option
+
 # v6.5.0 - 2022-09-16
 
 Added
