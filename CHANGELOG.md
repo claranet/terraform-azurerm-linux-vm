@@ -1,3 +1,12 @@
+# Unreleased
+
+Beaking
+  * AZ-840: Update to Terraform `1.3`
+
+Added
+  * AZ-845: Add `patch_mode` option
+  * AZ-845: Set `patch_assessment_mode` to `AutomaticByPlatform` when `path_mode` is also set to `AutomaticByPlatform`
+
 # v6.5.0 - 2022-09-16
 
 Added

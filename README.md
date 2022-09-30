@@ -182,6 +182,8 @@ module "vm" {
   # Set to null to deactivate backup
   backup_policy_id = module.az_vm_backup.vm_backup_policy_id
 
+  patch_mode = "AutomaticByPlatform"
+
   availability_set_id = azurerm_availability_set.vm_avset.id
   # or use Availability Zone
   # zone_id = 1
@@ -221,7 +223,7 @@ module "vm" {
 | Name | Version |
 |------|---------|
 | azurecaf | ~> 1.1 |
-| azurerm | ~> 3.22 |
+| azurerm | ~> 3.24 |
 
 ## Modules
 
@@ -306,6 +308,7 @@ module "vm" {
 | os\_disk\_size\_gb | Specifies the size of the OS disk in gigabytes | `string` | `null` | no |
 | os\_disk\_storage\_account\_type | The Type of Storage Account which should back this the Internal OS Disk. Possible values are `Standard_LRS`, `StandardSSD_LRS`, `Premium_LRS`, `StandardSSD_ZRS` and `Premium_ZRS` | `string` | `"Premium_ZRS"` | no |
 | os\_disk\_tagging\_enabled | Should OS disk tagging be enabled? Defaults to `true`. | `bool` | `true` | no |
+| patch\_mode | Specifies the mode of in-guest patching to this Linux Virtual Machine. Possible values are `AutomaticByPlatform` and `ImageDefault` | `string` | `"ImageDefault"` | no |
 | public\_ip\_extra\_tags | Extra tags to set on the public IP resource. | `map(string)` | `{}` | no |
 | public\_ip\_sku | SKU for the public IP attached to the VM. Can be `null` if no public IP needed. | `string` | `"Standard"` | no |
 | public\_ip\_zones | Zones for public IP attached to the VM. Can be `null` if no zone distpatch. | `list(number)` | <pre>[<br>  1,<br>  2,<br>  3<br>]</pre> | no |

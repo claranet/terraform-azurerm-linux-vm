@@ -71,6 +71,10 @@ resource "azurerm_linux_virtual_machine" "vm" {
   priority        = var.spot_instance ? "Spot" : "Regular"
   max_bid_price   = var.spot_instance ? var.spot_instance_max_bid_price : null
   eviction_policy = var.spot_instance ? var.spot_instance_eviction_policy : null
+
+  patch_mode            = var.patch_mode
+  patch_assessment_mode = var.patch_mode == "AutomaticByPlatform" ? var.patch_mode : "ImageDefault"
+
 }
 
 module "vm_os_disk_tagging" {
