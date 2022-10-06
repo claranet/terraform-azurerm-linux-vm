@@ -101,6 +101,7 @@ resource "azurerm_managed_disk" "disk" {
   storage_account_type = lookup(each.value, "storage_account_type", "Standard_LRS")
   create_option        = lookup(each.value, "create_option", "Empty")
   disk_size_gb         = lookup(each.value, "disk_size_gb", null)
+  source_resource_id   = each.value.create_option == "Copy" || each.value.create_option == "Restore" ? each.value.source_resource_id : null
 
   tags = merge(local.default_tags, var.extra_tags, lookup(each.value, "extra_tags", {}))
 }

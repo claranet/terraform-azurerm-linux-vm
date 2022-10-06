@@ -328,7 +328,7 @@ module "vm" {
 | ssh\_public\_key | SSH public key | `string` | `null` | no |
 | stack | Project stack name | `string` | n/a | yes |
 | static\_private\_ip | Static private IP. Private IP is dynamic if not set. | `string` | `null` | no |
-| storage\_data\_disk\_config | Map of objects to configure storage data disk(s).<br>    disk1 = {<br>      name                 = string ,<br>      create\_option        = string ,<br>      disk\_size\_gb         = string ,<br>      lun                  = string ,<br>      storage\_account\_type = string ,<br>      extra\_tags           = map(string)<br>    } | `any` | `{}` | no |
+| storage\_data\_disk\_config | Map of objects to configure storage data disk(s).<br>    disk1 = {<br>      name                 = string ,<br>      create\_option        = string ,<br>      disk\_size\_gb         = string ,<br>      lun                  = string ,<br>      caching              = string ,<br>      storage\_account\_type = string ,<br>      source\_resource\_id   = string ,<br>      extra\_tags           = map(string)<br>    } | `any` | `{}` | no |
 | subnet\_id | ID of the Subnet in which create the Virtual Machine | `string` | n/a | yes |
 | use\_caf\_naming | Use the Azure CAF naming provider to generate default resource name. `custom_name` override this if set. Legacy default name is used if this is set to `false`. | `bool` | `true` | no |
 | use\_legacy\_monitoring\_agent | True to use the legacy monitoring agent instead of Azure Monitor Agent | `bool` | `false` | no |

@@ -131,7 +131,9 @@ Map of objects to configure storage data disk(s).
       create_option        = string ,
       disk_size_gb         = string ,
       lun                  = string ,
+      caching              = string ,
       storage_account_type = string ,
+      source_resource_id   = string ,
       extra_tags           = map(string)
     }
 EOT
