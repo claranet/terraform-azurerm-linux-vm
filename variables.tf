@@ -124,21 +124,18 @@ variable "vm_plan" {
 }
 
 variable "storage_data_disk_config" {
-  description = <<EOT
-Map of objects to configure storage data disk(s).
-    disk1 = {
-      name                 = string ,
-      create_option        = string ,
-      disk_size_gb         = string ,
-      lun                  = string ,
-      caching              = string ,
-      storage_account_type = string ,
-      source_resource_id   = string ,
-      extra_tags           = map(string)
-    }
-EOT
-  type        = any
-  default     = {}
+  description = "Map of objects to configure storage data disk(s)"
+  type = map(object({
+    name                 = optional(string)
+    create_option        = optional(string, "Empty")
+    disk_size_gb         = number
+    lun                  = optional(number)
+    caching              = optional(string, "ReadWrite")
+    storage_account_type = optional(string, "StandardSSD_ZRS")
+    source_resource_id   = optional(string)
+    extra_tags           = optional(map(string), {})
+  }))
+  default = {}
 }
 
 variable "vm_image_id" {
