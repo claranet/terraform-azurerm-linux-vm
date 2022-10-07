@@ -83,7 +83,7 @@ module "vm_os_disk_tagging" {
 
   nb_resources = var.os_disk_tagging_enabled ? 1 : 0
   resource_ids = [data.azurerm_managed_disk.vm_os_disk.id]
-  behavior     = "merge" # Must be "merge" or "overwrite"
+  behavior     = var.os_disk_overwrite_tags ? "overwrite" : "merge"
 
   tags = merge(local.default_tags, var.extra_tags, var.os_disk_extra_tags)
 }
