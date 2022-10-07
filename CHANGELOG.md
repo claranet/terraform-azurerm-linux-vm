@@ -1,4 +1,4 @@
-# Unreleased
+# v7.1.0 - 2022-10-07
 
 Added
   * AZ-858: Add support when given tags must be merged with existing ones for os disk storage
