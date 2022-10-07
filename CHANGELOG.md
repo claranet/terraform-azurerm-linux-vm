@@ -1,3 +1,7 @@
+# Unreleased
+Added
+  * AZ-858: Add support when given tags must be merged with existing ones for os disk storage
+
 # v7.0.0 - 2022-09-30
 
 Beaking
