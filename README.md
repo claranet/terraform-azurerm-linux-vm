@@ -6,6 +6,13 @@ This module creates a [Linux Virtual Machine](https://docs.microsoft.com/en-us/a
 
 Following tags are automatically set with default values: `env`, `stack`, `os_family`, `os_distribution`, `os_version`.
 
+<<<<<<< HEAD
+=======
+## Requirements
+
+* [Microsoft.Compute/InGuestAutoAssessmentVMPreview](https://learn.microsoft.com/en-us/azure/update-center/enable-machines?tabs=portal-periodic) must be activated on the subscription to use `patch_mode = "AutomaticByPlatform"` patching option.
+
+>>>>>>> 4c34eb8 (AZ-859: Apply suggestions)
 <!-- BEGIN_TF_DOCS -->
 ## Global versioning rule for Claranet Azure modules
 
