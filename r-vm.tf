@@ -94,7 +94,7 @@ resource "azurerm_managed_disk" "disk" {
   location            = var.location
   resource_group_name = var.resource_group_name
 
-  name = coalesce(each.value.name, var.use_caf_naming ? azurecaf_name.disk[each.key].result : "${local.vm_name}-datadisk${each.key}")
+  name = coalesce(each.value.name, var.use_caf_naming ? azurecaf_name.disk[each.key].result : format("%s-datadisk%s", local.vm_name, each.key))
 
   zone = var.zone_id
 
