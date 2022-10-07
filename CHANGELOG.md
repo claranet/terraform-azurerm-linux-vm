@@ -1,8 +1,8 @@
 # v7.1.0 - 2022-10-07
 
 Added
-  * AZ-858: Add support when given tags must be merged with existing ones for os disk storage
-  * AZ-864: Add `source_resource_id` parameter to support the restoration of datadisks
+  * AZ-858: OS disk storage tags can now be merged with existing ones using `os_disk_overwrite_tags` variable
+  * AZ-864: Add `source_resource_id` parameter to support the restoration of data disks
 
 Fixed
   * AZ-859: Add requirements for new patch management (preview)
