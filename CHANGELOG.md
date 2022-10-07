@@ -2,13 +2,14 @@
 
 Added
   * AZ-858: Add support when given tags must be merged with existing ones for os disk storage
+  * AZ-864: Add `source_resource_id` parameter to support the restoration of datadisks
 
 Fixed
   * AZ-859: Add requirements for new patch management (preview)
 
 # v7.0.0 - 2022-09-30
 
-Beaking
+Breaking
   * AZ-840: Update to Terraform `1.3`
 
 Added

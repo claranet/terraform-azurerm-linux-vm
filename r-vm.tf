@@ -94,15 +94,16 @@ resource "azurerm_managed_disk" "disk" {
   location            = var.location
   resource_group_name = var.resource_group_name
 
-  name = lookup(each.value, "name", var.use_caf_naming ? azurecaf_name.disk[each.key].result : "${local.vm_name}-datadisk${each.key}")
+  name = coalesce(each.value.name, var.use_caf_naming ? azurecaf_name.disk[each.key].result : format("%s-datadisk%s", local.vm_name, each.key))
 
   zone = var.zone_id
 
-  storage_account_type = lookup(each.value, "storage_account_type", "Standard_LRS")
-  create_option        = lookup(each.value, "create_option", "Empty")
-  disk_size_gb         = lookup(each.value, "disk_size_gb", null)
+  storage_account_type = each.value.storage_account_type
+  create_option        = each.value.create_option
+  disk_size_gb         = each.value.disk_size_gb
+  source_resource_id   = contains(["Copy", "Restore"], each.value.create_option) ? each.value.source_resource_id : null
 
-  tags = merge(local.default_tags, var.extra_tags, lookup(each.value, "extra_tags", {}))
+  tags = merge(local.default_tags, var.extra_tags, each.value.extra_tags)
 }
 
 resource "azurerm_virtual_machine_data_disk_attachment" "data_disk_attachment" {
@@ -111,6 +112,6 @@ resource "azurerm_virtual_machine_data_disk_attachment" "data_disk_attachment" {
   managed_disk_id    = azurerm_managed_disk.disk[each.key].id
   virtual_machine_id = azurerm_linux_virtual_machine.vm.id
 
-  lun     = lookup(each.value, "lun", each.key)
-  caching = lookup(each.value, "caching", "ReadWrite")
+  lun     = coalesce(each.value.lun, index(keys(var.storage_data_disk_config), each.key))
+  caching = each.value.caching
 }
