@@ -79,8 +79,14 @@ variable "static_private_ip" {
 
 ### VM inputs
 variable "custom_data" {
-  description = "Custom data. See https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html#os_profile block"
-  type        = any
+  description = "The Base64-Encoded Custom Data which should be used for this Virtual Machine. Changing this forces a new resource to be created."
+  type        = string
+  default     = null
+}
+
+variable "user_data" {
+  description = "The Base64-Encoded User Data which should be used for this Virtual Machine."
+  type        = string
   default     = null
 }
 
