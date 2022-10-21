@@ -1,3 +1,8 @@
+# Unreleased
+
+Added
+  * AZ-857: Add `user_data` variable
+
 # v7.1.0 - 2022-10-07
 
 Added

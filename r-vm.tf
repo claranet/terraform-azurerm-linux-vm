@@ -57,6 +57,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   admin_password = var.admin_password
 
   custom_data = var.custom_data
+  user_data   = var.user_data
 
   disable_password_authentication = var.admin_password != null ? false : true
 
@@ -74,7 +75,6 @@ resource "azurerm_linux_virtual_machine" "vm" {
 
   patch_mode            = var.patch_mode
   patch_assessment_mode = var.patch_mode == "AutomaticByPlatform" ? var.patch_mode : "ImageDefault"
-
 }
 
 module "vm_os_disk_tagging" {

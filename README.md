@@ -280,7 +280,7 @@ module "vm" {
 | azure\_monitor\_data\_collection\_rule\_id | Data Collection Rule ID from Azure Monitor for metrics and logs collection. Used with new monitoring agent, set to `null` if legacy agent is used. | `string` | n/a | yes |
 | backup\_policy\_id | Backup policy ID from the Recovery Vault to attach the Virtual Machine to (value to `null` to disable backup) | `string` | n/a | yes |
 | client\_name | Client name/account used in naming | `string` | n/a | yes |
-| custom\_data | Custom data. See https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html#os_profile block | `any` | `null` | no |
+| custom\_data | The Base64-Encoded Custom Data which should be used for this Virtual Machine. Changing this forces a new resource to be created. | `string` | `null` | no |
 | custom\_dcr\_name | Custom name for Data collection rule association | `string` | `null` | no |
 | custom\_dns\_label | The DNS label to use for public access. VM name if not set. DNS will be <label>.westeurope.cloudapp.azure.com | `string` | `""` | no |
 | custom\_ipconfig\_name | Custom name for the IP config of the NIC. Generated if not set. | `string` | `null` | no |
@@ -329,6 +329,7 @@ module "vm" {
 | subnet\_id | ID of the Subnet in which create the Virtual Machine | `string` | n/a | yes |
 | use\_caf\_naming | Use the Azure CAF naming provider to generate default resource name. `custom_name` override this if set. Legacy default name is used if this is set to `false`. | `bool` | `true` | no |
 | use\_legacy\_monitoring\_agent | True to use the legacy monitoring agent instead of Azure Monitor Agent | `bool` | `false` | no |
+| user\_data | The Base64-Encoded User Data which should be used for this Virtual Machine. | `string` | `null` | no |
 | vm\_image | Virtual Machine source image information. See https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html#storage_image_reference. This variable cannot be used if `vm_image_id` is already defined. | `map(string)` | <pre>{<br>  "offer": "debian-10",<br>  "publisher": "Debian",<br>  "sku": "10",<br>  "version": "latest"<br>}</pre> | no |
 | vm\_image\_id | The ID of the Image which this Virtual Machine should be created from. This variable cannot be used if `vm_image` is already defined. | `string` | `null` | no |
 | vm\_plan | Virtual Machine plan image information. See https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine#plan. This variable has to be used for BYOS image. Before using BYOS image, you need to accept legal plan terms. See https://docs.microsoft.com/en-us/cli/azure/vm/image?view=azure-cli-latest#az_vm_image_accept_terms. | <pre>object({<br>    name      = string<br>    product   = string<br>    publisher = string<br>  })</pre> | `null` | no |
