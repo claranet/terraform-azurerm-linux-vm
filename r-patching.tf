@@ -12,4 +12,11 @@ resource "azapi_resource" "maintenance_configurations" {
   tags                    = merge(local.default_tags, var.extra_tags)
   response_export_values  = ["*"]
   ignore_missing_property = true
+
+  lifecycle {
+    precondition {
+      condition     = var.patch_mode != "AutomaticByPlatform"
+      error_message = "The variable path_mode must be set to AutomaticByPlatform to use maintenance configurations."
+    }
+  }
 }

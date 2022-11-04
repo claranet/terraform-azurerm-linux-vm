@@ -259,8 +259,4 @@ variable "maintenance_configuration_ids" {
   description = "List of maintenance configurations to attach to this VM."
   type        = list(string)
   default     = []
-  validation {
-    condition     = var.patch_mode != "AutomaticByPlatform"
-    error_message = "The variable path_mode must be set to AutomaticByPlatform to use maintenance configurations."
-  }
 }
