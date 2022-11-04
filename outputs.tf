@@ -10,17 +10,17 @@ output "vm_name" {
 
 output "vm_public_ip_address" {
   description = "Public IP address of the Virtual Machine"
-  value       = var.public_ip_sku == null ? null : join("", azurerm_public_ip.public_ip.*.ip_address)
+  value       = one(azurerm_public_ip.public_ip[*].ip_address)
 }
 
 output "vm_public_ip_id" {
   description = "Public IP ID of the Virtual Machine"
-  value       = var.public_ip_sku == null ? null : join("", azurerm_public_ip.public_ip.*.id)
+  value       = one(azurerm_public_ip.public_ip[*].id)
 }
 
 output "vm_public_domain_name_label" {
   description = "Public DNS of the Virtual machine"
-  value       = var.public_ip_sku == null ? null : join("", azurerm_public_ip.public_ip.*.domain_name_label)
+  value       = one(azurerm_public_ip.public_ip[*].domain_name_label)
 }
 
 output "vm_private_ip_address" {
