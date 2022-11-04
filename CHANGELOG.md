@@ -3,6 +3,9 @@
 Fixed
   * AZ-883: Lint code, fix deprecated HCL syntax
 
+Added
+  * AZ-894: Add `custom_computer_name` variable
+
 # v7.2.0 - 2022-10-21
 
 Added

@@ -24,6 +24,12 @@ variable "custom_name" {
   default     = ""
 }
 
+variable "custom_computer_name" {
+  description = "Custom name for the Virtual Machine Hostname. `vm_name` if not set."
+  type        = string
+  default     = ""
+}
+
 variable "custom_public_ip_name" {
   description = "Custom name for public IP. Generated if not set."
   type        = string
