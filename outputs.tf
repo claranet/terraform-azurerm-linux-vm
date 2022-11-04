@@ -8,6 +8,11 @@ output "vm_name" {
   value       = azurerm_linux_virtual_machine.vm.name
 }
 
+output "vm_hostname" {
+  description = "Hostname of the Virtual Machine"
+  value       = azurerm_linux_virtual_machine.vm.computer_name
+}
+
 output "vm_public_ip_address" {
   description = "Public IP address of the Virtual Machine"
   value       = one(azurerm_public_ip.public_ip[*].ip_address)

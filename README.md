@@ -280,6 +280,7 @@ module "vm" {
 | azure\_monitor\_data\_collection\_rule\_id | Data Collection Rule ID from Azure Monitor for metrics and logs collection. Used with new monitoring agent, set to `null` if legacy agent is used. | `string` | n/a | yes |
 | backup\_policy\_id | Backup policy ID from the Recovery Vault to attach the Virtual Machine to (value to `null` to disable backup) | `string` | n/a | yes |
 | client\_name | Client name/account used in naming | `string` | n/a | yes |
+| custom\_computer\_name | Custom name for the Virtual Machine Hostname. `vm_name` if not set. | `string` | `""` | no |
 | custom\_data | The Base64-Encoded Custom Data which should be used for this Virtual Machine. Changing this forces a new resource to be created. | `string` | `null` | no |
 | custom\_dcr\_name | Custom name for Data collection rule association | `string` | `null` | no |
 | custom\_dns\_label | The DNS label to use for public access. VM name if not set. DNS will be <label>.westeurope.cloudapp.azure.com | `string` | `""` | no |
@@ -345,6 +346,7 @@ module "vm" {
 | vm\_admin\_ssh\_private\_key | Virtual Machine admin SSH private key |
 | vm\_admin\_ssh\_public\_key | Virtual Machine admin SSH public key |
 | vm\_admin\_username | Virtual Machine admin username |
+| vm\_hostname | Hostname of the Virtual Machine |
 | vm\_id | ID of the Virtual Machine |
 | vm\_identity | Identity block with principal ID |
 | vm\_name | Name of the Virtual Machine |
