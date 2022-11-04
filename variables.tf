@@ -248,8 +248,19 @@ variable "backup_policy_id" {
   type        = string
 }
 
+## Patching variables
 variable "patch_mode" {
   description = "Specifies the mode of in-guest patching to this Linux Virtual Machine. Possible values are `AutomaticByPlatform` and `ImageDefault`"
   type        = string
   default     = "ImageDefault"
+}
+
+variable "maintenance_configuration_ids" {
+  description = "List of maintenance configurations to attach to this VM."
+  type        = list(string)
+  default     = []
+  validation {
+    condition     = var.patch_mode != "AutomaticByPlatform"
+    error_message = "The variable path_mode must be set to AutomaticByPlatform to use maintenance configurations."
+  }
 }

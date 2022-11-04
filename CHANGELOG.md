@@ -1,8 +1,12 @@
+# Unreleased
+
+Added
+  * AZ-837: Add the capability to attach a maintenance configuration
+
 # v7.5.0 - 2023-01-13
 
 Added
   * [GH-3](https://github.com/claranet/terraform-azurerm-linux-vm/pull/3): Add `vm_os_disk` output
-
 # v7.4.0 - 2022-11-23
 
 Changed
