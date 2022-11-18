@@ -9,27 +9,27 @@ variable "location_short" {
 }
 
 variable "client_name" {
-  description = "Client name/account used in naming"
+  description = "Client name/account used in naming."
   type        = string
 }
 
 variable "environment" {
-  description = "Project environment"
+  description = "Project environment."
   type        = string
 }
 
 variable "stack" {
-  description = "Project stack name"
+  description = "Project stack name."
   type        = string
 }
 
 variable "resource_group_name" {
-  description = "Resource group name"
+  description = "Resource group name."
   type        = string
 }
 
 variable "admin_username" {
-  description = "Username for Virtual Machine administrator account"
+  description = "Username for Virtual Machine administrator account."
   type        = string
 }
 
@@ -42,20 +42,20 @@ variable "admin_password" {
 
 ### SSH Connection inputs
 variable "ssh_public_key" {
-  description = "SSH public key"
+  description = "SSH public key."
   type        = string
   default     = null
 }
 
 variable "ssh_private_key" {
-  description = "SSH private key"
+  description = "SSH private key."
   type        = string
   default     = null
 }
 
 ### Network inputs
 variable "subnet_id" {
-  description = "ID of the Subnet in which create the Virtual Machine"
+  description = "ID of the Subnet in which create the Virtual Machine."
   type        = string
 }
 
@@ -130,7 +130,7 @@ variable "vm_plan" {
 }
 
 variable "storage_data_disk_config" {
-  description = "Map of objects to configure storage data disk(s)"
+  description = "Map of objects to configure storage data disk(s)."
   type = map(object({
     name                 = optional(string)
     create_option        = optional(string, "Empty")
@@ -151,7 +151,7 @@ variable "vm_image_id" {
 }
 
 variable "custom_dns_label" {
-  description = "The DNS label to use for public access. VM name if not set. DNS will be <label>.westeurope.cloudapp.azure.com"
+  description = "The DNS label to use for public access. VM name if not set. DNS will be <label>.westeurope.cloudapp.azure.com."
   type        = string
   default     = ""
 }
@@ -169,7 +169,7 @@ variable "public_ip_zones" {
 }
 
 variable "attach_load_balancer" {
-  description = "True to attach this VM to a Load Balancer"
+  description = "True to attach this VM to a Load Balancer."
   type        = bool
   default     = false
 }
@@ -181,7 +181,7 @@ variable "load_balancer_backend_pool_id" {
 }
 
 variable "attach_application_gateway" {
-  description = "True to attach this VM to an Application Gateway"
+  description = "True to attach this VM to an Application Gateway."
   type        = bool
   default     = false
 }
@@ -193,26 +193,26 @@ variable "application_gateway_backend_pool_id" {
 }
 
 variable "os_disk_size_gb" {
-  description = "Specifies the size of the OS disk in gigabytes"
+  description = "Specifies the size of the OS disk in gigabytes."
   type        = string
   default     = null
 }
 
 variable "os_disk_storage_account_type" {
-  description = "The Type of Storage Account which should back this the Internal OS Disk. Possible values are `Standard_LRS`, `StandardSSD_LRS`, `Premium_LRS`, `StandardSSD_ZRS` and `Premium_ZRS`"
+  description = "The Type of Storage Account which should back this the Internal OS Disk. Possible values are `Standard_LRS`, `StandardSSD_LRS`, `Premium_LRS`, `StandardSSD_ZRS` and `Premium_ZRS`."
   type        = string
   default     = "Premium_ZRS"
 }
 
 variable "os_disk_caching" {
-  description = "Specifies the caching requirements for the OS Disk"
+  description = "Specifies the caching requirements for the OS Disk."
   type        = string
   default     = "ReadWrite"
 }
 
 ## Identity variables
 variable "identity" {
-  description = "Map with identity block informations as described here https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine#identity"
+  description = "Map with identity block informations as described here https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine#identity."
   type = object({
     type         = string
     identity_ids = list(string)
@@ -244,13 +244,13 @@ variable "spot_instance_eviction_policy" {
 
 ## Backup variable
 variable "backup_policy_id" {
-  description = "Backup policy ID from the Recovery Vault to attach the Virtual Machine to (value to `null` to disable backup)"
+  description = "Backup policy ID from the Recovery Vault to attach the Virtual Machine to (value to `null` to disable backup)."
   type        = string
 }
 
 ## Patching variables
 variable "patch_mode" {
-  description = "Specifies the mode of in-guest patching to this Linux Virtual Machine. Possible values are `AutomaticByPlatform` and `ImageDefault`"
+  description = "Specifies the mode of in-guest patching to this Linux Virtual Machine. Possible values are `AutomaticByPlatform` and `ImageDefault`. Compatibility list is available here https://learn.microsoft.com/en-us/azure/virtual-machines/automatic-vm-guest-patching#supported-os-images."
   type        = string
   default     = "ImageDefault"
 }
