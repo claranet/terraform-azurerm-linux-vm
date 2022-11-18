@@ -80,3 +80,8 @@ output "vm_os_disk" {
   description = "Virtual Machine OS disk"
   value       = data.azurerm_managed_disk.vm_os_disk
 }
+
+output "maintenance_configurations_assignments" {
+  description = "Maintenance configurations assignments configurations."
+  value       = azapi_resource.maintenance_configurations
+}

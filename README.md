@@ -227,6 +227,7 @@ module "vm" {
 | Name | Version |
 |------|---------|
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -238,6 +239,10 @@ module "vm" {
 | azapi | ~> 0.1 |
 >>>>>>> f4bf1aa (AZ-837: Update variable description and doc)
 | azurecaf | ~> 1.1 |
+=======
+| azapi | ~> 0.1 |
+| azurecaf | ~> 1.2, >= 1.2.22 |
+>>>>>>> 2c92f42 (AZ-837: Fix examples + perpetual diff on location)
 | azurerm | ~> 3.24 |
 
 ## Modules
@@ -251,14 +256,7 @@ module "vm" {
 
 | Name | Type |
 |------|------|
-<<<<<<< HEAD
-=======
 | [azapi_resource.maintenance_configurations](https://registry.terraform.io/providers/Azure/azapi/latest/docs/resources/resource) | resource |
-| [azurecaf_name.disk](https://registry.terraform.io/providers/aztfmod/azurecaf/latest/docs/resources/name) | resource |
-| [azurecaf_name.nic](https://registry.terraform.io/providers/aztfmod/azurecaf/latest/docs/resources/name) | resource |
-| [azurecaf_name.pub_ip](https://registry.terraform.io/providers/aztfmod/azurecaf/latest/docs/resources/name) | resource |
-| [azurecaf_name.vm](https://registry.terraform.io/providers/aztfmod/azurecaf/latest/docs/resources/name) | resource |
->>>>>>> e546500 (AZ-837 Add maintenance configuration attachment)
 | [azurerm_backup_protected_vm.backup](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/backup_protected_vm) | resource |
 | [azurerm_linux_virtual_machine.vm](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine) | resource |
 | [azurerm_managed_disk.disk](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/managed_disk) | resource |
@@ -361,6 +359,7 @@ module "vm" {
 
 | Name | Description |
 |------|-------------|
+| maintenance\_configurations\_assignments | Maintenance configurations assignments configurations. |
 | terraform\_module | Information about this Terraform module |
 | vm\_admin\_password | Virtual Machine admin password |
 | vm\_admin\_ssh\_private\_key | Virtual Machine admin SSH private key |
