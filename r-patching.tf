@@ -15,7 +15,7 @@ resource "azapi_resource" "maintenance_configurations" {
 
   lifecycle {
     precondition {
-      condition     = var.patch_mode != "AutomaticByPlatform"
+      condition     = var.patch_mode == "AutomaticByPlatform"
       error_message = "The variable path_mode must be set to AutomaticByPlatform to use maintenance configurations."
     }
   }
