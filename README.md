@@ -159,6 +159,40 @@ module "az_monitor" {
   }
 }
 
+module "update_management" {
+  source  = "claranet/run-iaas/azurerm//modules/update-management-center"
+  version = "x.x.x"
+
+  client_name    = var.client_name
+  location       = module.azure_region.location
+  location_short = module.azure_region.location_short
+  environment    = var.environment
+  stack          = var.stack
+
+  resource_group_name        = module.rg.resource_group_name
+  log_analytics_workspace_id = module.logs.log_analytics_workspace_id
+
+  extra_tags = {
+    foo = "bar"
+  }
+
+  update_management_center_enabled = true
+  patching_auto_assessment_enabled = true
+  patching_auto_assessment_scopes  = [module.rg.resource_group_id]
+  maintenance_configurations = [
+    {
+      configuration_name = "Donald"
+      start_date_time    = "2021-08-21 04:00"
+      recur_every        = "1Day"
+    },
+    {
+      configuration_name = "Hammer"
+      start_date_time    = "1900-01-01 03:00"
+      recur_every        = "1Week"
+    }
+  ]
+}
+
 module "vm" {
   source  = "claranet/linux-vm/azurerm"
   version = "x.x.x"
@@ -186,7 +220,8 @@ module "vm" {
   # Set to null to deactivate backup
   backup_policy_id = module.az_vm_backup.vm_backup_policy_id
 
-  patch_mode = "AutomaticByPlatform"
+  patch_mode                    = "AutomaticByPlatform"
+  maintenance_configuration_ids = [module.update_management.maintenance_configurations["Donald"].id, module.update_management.maintenance_configurations["Hammer"].id]
 
   availability_set_id = azurerm_availability_set.vm_avset.id
   # or use Availability Zone
@@ -228,6 +263,7 @@ module "vm" {
 |------|---------|
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -241,6 +277,9 @@ module "vm" {
 | azurecaf | ~> 1.1 |
 =======
 | azapi | ~> 0.1 |
+=======
+| azapi | ~> 1.0 |
+>>>>>>> 42756d4 (AZ-837: Add example)
 | azurecaf | ~> 1.2, >= 1.2.22 |
 >>>>>>> 2c92f42 (AZ-837: Fix examples + perpetual diff on location)
 | azurerm | ~> 3.24 |
@@ -256,7 +295,7 @@ module "vm" {
 
 | Name | Type |
 |------|------|
-| [azapi_resource.maintenance_configurations](https://registry.terraform.io/providers/Azure/azapi/latest/docs/resources/resource) | resource |
+| [azapi_resource.maintenance_configurations](https://registry.terraform.io/providers/azure/azapi/latest/docs/resources/resource) | resource |
 | [azurerm_backup_protected_vm.backup](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/backup_protected_vm) | resource |
 | [azurerm_linux_virtual_machine.vm](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine) | resource |
 | [azurerm_managed_disk.disk](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/managed_disk) | resource |
