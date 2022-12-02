@@ -1,7 +1,7 @@
 # azurerm_maintenance_assignment_virtual_machine does not support this maintenance scope yet.
 resource "azapi_resource" "maintenance_configurations" {
   for_each  = toset(var.maintenance_configuration_ids)
-  name      = format("%s-%s", azurerm_linux_virtual_machine.vm.name, split("/", each.value)[8]) # vmname-maintenance-name
+  name      = format("%s-%s", azurerm_linux_virtual_machine.vm.name, reverse(split("/", each.value))[0]) # vmname-maintenance-name
   location  = azurerm_linux_virtual_machine.vm.location
   parent_id = azurerm_linux_virtual_machine.vm.id
   type      = "Microsoft.Maintenance/configurationAssignments@2022-07-01-preview"
