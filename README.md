@@ -160,7 +160,7 @@ module "az_monitor" {
 }
 
 module "update_management" {
-  source  = "claranet/run-iaas/azurerm//modules/update-management-center"
+  source  = "claranet/run-iaas/azurerm//modules/update-center"
   version = "x.x.x"
 
   client_name    = var.client_name
