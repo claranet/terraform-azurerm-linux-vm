@@ -131,22 +131,13 @@ module "update_management" {
   source  = "claranet/run-iaas/azurerm//modules/update-center"
   version = "x.x.x"
 
-  client_name    = var.client_name
-  location       = module.azure_region.location
-  location_short = module.azure_region.location_short
-  environment    = var.environment
-  stack          = var.stack
+  resource_group_name = module.rg.resource_group_name
+  stack               = var.stack
+  environment         = var.environment
+  location            = module.azure_region.location
 
-  resource_group_name        = module.rg.resource_group_name
-  log_analytics_workspace_id = module.logs.log_analytics_workspace_id
-
-  extra_tags = {
-    foo = "bar"
-  }
-
-  update_management_center_enabled = true
-  patching_auto_assessment_enabled = true
-  patching_auto_assessment_scopes  = [module.rg.resource_group_id]
+  auto_assessment_enabled = true
+  auto_assessment_scopes  = [module.rg.resource_group_id]
   maintenance_configurations = [
     {
       configuration_name = "Donald"
