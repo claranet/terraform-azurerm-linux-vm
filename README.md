@@ -353,6 +353,7 @@ module "vm" {
 | vm\_nic\_id | ID of the Network Interface Configuration attached to the Virtual Machine |
 | vm\_nic\_ip\_configuration\_name | Name of the IP Configuration for the Network Interface Configuration attached to the Virtual Machine |
 | vm\_nic\_name | Name of the Network Interface Configuration attached to the Virtual Machine |
+| vm\_os\_disk | Virtual Machine OS disk |
 | vm\_private\_ip\_address | Private IP address of the Virtual Machine |
 | vm\_public\_domain\_name\_label | Public DNS of the Virtual machine |
 | vm\_public\_ip\_address | Public IP address of the Virtual Machine |
