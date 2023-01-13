@@ -75,3 +75,8 @@ output "vm_admin_ssh_public_key" {
   description = "Virtual Machine admin SSH public key"
   value       = var.ssh_public_key
 }
+
+output "vm_os_disk" {
+  description = "Virtual Machine OS disk"
+  value       = data.azurerm_managed_disk.vm_os_disk
+}
