@@ -252,33 +252,8 @@ module "vm" {
 
 | Name | Version |
 |------|---------|
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-| azurecaf | ~> 1.2, >= 1.2.22 |
-=======
->>>>>>> 886e311 (AZ-837: Update variable description and doc)
-| azapi | ~> 1.0 |
-=======
-| azapi | ~> 0.1 |
->>>>>>> f4bf1aa (AZ-837: Update variable description and doc)
-| azurecaf | ~> 1.1 |
-=======
-| azapi | ~> 0.1 |
-=======
-| azapi | ~> 1.0 |
->>>>>>> 42756d4 (AZ-837: Add example)
-| azurecaf | ~> 1.2, >= 1.2.22 |
->>>>>>> 2c92f42 (AZ-837: Fix examples + perpetual diff on location)
-| azurerm | ~> 3.24 |
-=======
 | azurecaf | ~> 1.2, >= 1.2.22 |
 | azurerm | ~> 3.39 |
->>>>>>> f59b7f8 (AZ-837: Replace azapi call by azurerm resource)
 
 ## Modules
 
