@@ -255,6 +255,7 @@ module "vm" {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -274,6 +275,10 @@ module "vm" {
 | azurecaf | ~> 1.2, >= 1.2.22 |
 >>>>>>> 2c92f42 (AZ-837: Fix examples + perpetual diff on location)
 | azurerm | ~> 3.24 |
+=======
+| azurecaf | ~> 1.2, >= 1.2.22 |
+| azurerm | ~> 3.39 |
+>>>>>>> f59b7f8 (AZ-837: Replace azapi call by azurerm resource)
 
 ## Modules
 
@@ -286,9 +291,9 @@ module "vm" {
 
 | Name | Type |
 |------|------|
-| [azapi_resource.maintenance_configurations](https://registry.terraform.io/providers/azure/azapi/latest/docs/resources/resource) | resource |
 | [azurerm_backup_protected_vm.backup](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/backup_protected_vm) | resource |
 | [azurerm_linux_virtual_machine.vm](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine) | resource |
+| [azurerm_maintenance_assignment_virtual_machine.maintenace_configurations](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/maintenance_assignment_virtual_machine) | resource |
 | [azurerm_managed_disk.disk](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/managed_disk) | resource |
 | [azurerm_monitor_data_collection_rule_association.dcr](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_data_collection_rule_association) | resource |
 | [azurerm_network_interface.nic](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_interface) | resource |
