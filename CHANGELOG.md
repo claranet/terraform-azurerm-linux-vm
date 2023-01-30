@@ -7,6 +7,7 @@ Added
 
 Added
   * [GH-3](https://github.com/claranet/terraform-azurerm-linux-vm/pull/3): Add `vm_os_disk` output
+
 # v7.4.0 - 2022-11-23
 
 Changed
