@@ -159,6 +159,31 @@ module "az_monitor" {
   }
 }
 
+module "update_management" {
+  source  = "claranet/run/azurerm//modules/update-center"
+  version = "x.x.x"
+
+  resource_group_name = module.rg.resource_group_name
+  stack               = var.stack
+  environment         = var.environment
+  location            = module.azure_region.location
+
+  auto_assessment_enabled = true
+  auto_assessment_scopes  = [module.rg.resource_group_id]
+  maintenance_configurations = [
+    {
+      configuration_name = "Donald"
+      start_date_time    = "2021-08-21 04:00"
+      recur_every        = "1Day"
+    },
+    {
+      configuration_name = "Hammer"
+      start_date_time    = "1900-01-01 03:00"
+      recur_every        = "1Week"
+    }
+  ]
+}
+
 module "vm" {
   source  = "claranet/linux-vm/azurerm"
   version = "x.x.x"
@@ -186,7 +211,8 @@ module "vm" {
   # Set to null to deactivate backup
   backup_policy_id = module.az_vm_backup.vm_backup_policy_id
 
-  patch_mode = "AutomaticByPlatform"
+  patch_mode                    = "AutomaticByPlatform"
+  maintenance_configuration_ids = [module.update_management.maintenance_configurations["Donald"].id, module.update_management.maintenance_configurations["Hammer"].id]
 
   availability_set_id = azurerm_availability_set.vm_avset.id
   # or use Availability Zone
@@ -227,7 +253,7 @@ module "vm" {
 | Name | Version |
 |------|---------|
 | azurecaf | ~> 1.2, >= 1.2.22 |
-| azurerm | ~> 3.24 |
+| azurerm | ~> 3.39 |
 
 ## Modules
 
@@ -242,6 +268,7 @@ module "vm" {
 |------|------|
 | [azurerm_backup_protected_vm.backup](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/backup_protected_vm) | resource |
 | [azurerm_linux_virtual_machine.vm](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine) | resource |
+| [azurerm_maintenance_assignment_virtual_machine.maintenace_configurations](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/maintenance_assignment_virtual_machine) | resource |
 | [azurerm_managed_disk.disk](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/managed_disk) | resource |
 | [azurerm_monitor_data_collection_rule_association.dcr](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_data_collection_rule_association) | resource |
 | [azurerm_network_interface.nic](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_interface) | resource |
@@ -270,20 +297,20 @@ module "vm" {
 | aad\_ssh\_login\_extension\_version | VM Extension version for Azure Active Directory SSH Login extension | `string` | `"1.0"` | no |
 | aad\_ssh\_login\_user\_objects\_ids | Azure Active Directory objects IDs allowed to connect as standard user on the VM. | `list(string)` | `[]` | no |
 | admin\_password | Password for the administrator account of the virtual machine. | `string` | `null` | no |
-| admin\_username | Username for Virtual Machine administrator account | `string` | n/a | yes |
+| admin\_username | Username for Virtual Machine administrator account. | `string` | n/a | yes |
 | application\_gateway\_backend\_pool\_id | Id of the Application Gateway Backend Pool to attach the VM. | `string` | `null` | no |
-| attach\_application\_gateway | True to attach this VM to an Application Gateway | `bool` | `false` | no |
-| attach\_load\_balancer | True to attach this VM to a Load Balancer | `bool` | `false` | no |
+| attach\_application\_gateway | True to attach this VM to an Application Gateway. | `bool` | `false` | no |
+| attach\_load\_balancer | True to attach this VM to a Load Balancer. | `bool` | `false` | no |
 | availability\_set\_id | Id of the availability set in which host the Virtual Machine. | `string` | `null` | no |
 | azure\_monitor\_agent\_auto\_upgrade\_enabled | Automatically update agent when publisher releases a new version of the agent | `bool` | `false` | no |
 | azure\_monitor\_agent\_version | Azure Monitor Agent extension version | `string` | `"1.21"` | no |
 | azure\_monitor\_data\_collection\_rule\_id | Data Collection Rule ID from Azure Monitor for metrics and logs collection. Used with new monitoring agent, set to `null` if legacy agent is used. | `string` | n/a | yes |
-| backup\_policy\_id | Backup policy ID from the Recovery Vault to attach the Virtual Machine to (value to `null` to disable backup) | `string` | n/a | yes |
-| client\_name | Client name/account used in naming | `string` | n/a | yes |
+| backup\_policy\_id | Backup policy ID from the Recovery Vault to attach the Virtual Machine to (value to `null` to disable backup). | `string` | n/a | yes |
+| client\_name | Client name/account used in naming. | `string` | n/a | yes |
 | custom\_computer\_name | Custom name for the Virtual Machine Hostname. `vm_name` if not set. | `string` | `""` | no |
 | custom\_data | The Base64-Encoded Custom Data which should be used for this Virtual Machine. Changing this forces a new resource to be created. | `string` | `null` | no |
 | custom\_dcr\_name | Custom name for Data collection rule association | `string` | `null` | no |
-| custom\_dns\_label | The DNS label to use for public access. VM name if not set. DNS will be <label>.westeurope.cloudapp.azure.com | `string` | `""` | no |
+| custom\_dns\_label | The DNS label to use for public access. VM name if not set. DNS will be <label>.westeurope.cloudapp.azure.com. | `string` | `""` | no |
 | custom\_ipconfig\_name | Custom name for the IP config of the NIC. Generated if not set. | `string` | `null` | no |
 | custom\_name | Custom name for the Virtual Machine. Generated if not set. | `string` | `""` | no |
 | custom\_nic\_name | Custom name for the NIC interface. Generated if not set. | `string` | `null` | no |
@@ -291,10 +318,10 @@ module "vm" {
 | default\_tags\_enabled | Option to enable or disable default tags. | `bool` | `true` | no |
 | diagnostics\_storage\_account\_name | Name of the Storage Account in which store vm diagnostics | `string` | n/a | yes |
 | diagnostics\_storage\_account\_sas\_token | SAS token of the Storage Account in which store vm diagnostics. Used only with legacy monitoring agent, set to `null` if not needed. | `string` | n/a | yes |
-| environment | Project environment | `string` | n/a | yes |
+| environment | Project environment. | `string` | n/a | yes |
 | extensions\_extra\_tags | Extra tags to set on the VM extensions. | `map(string)` | `{}` | no |
 | extra\_tags | Extra tags to set on each created resource. | `map(string)` | `{}` | no |
-| identity | Map with identity block informations as described here https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine#identity | <pre>object({<br>    type         = string<br>    identity_ids = list(string)<br>  })</pre> | <pre>{<br>  "identity_ids": [],<br>  "type": "SystemAssigned"<br>}</pre> | no |
+| identity | Map with identity block informations as described here https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine#identity. | <pre>object({<br>    type         = string<br>    identity_ids = list(string)<br>  })</pre> | <pre>{<br>  "identity_ids": [],<br>  "type": "SystemAssigned"<br>}</pre> | no |
 | load\_balancer\_backend\_pool\_id | Id of the Load Balancer Backend Pool to attach the VM. | `string` | `null` | no |
 | location | Azure location. | `string` | n/a | yes |
 | location\_short | Short string for Azure location. | `string` | n/a | yes |
@@ -302,32 +329,33 @@ module "vm" {
 | log\_analytics\_agent\_version | Azure Log Analytics extension version | `string` | `"1.13"` | no |
 | log\_analytics\_workspace\_guid | GUID of the Log Analytics Workspace to link with | `string` | `null` | no |
 | log\_analytics\_workspace\_key | Access key of the Log Analytics Workspace to link with | `string` | `null` | no |
+| maintenance\_configuration\_ids | List of maintenance configurations to attach to this VM. | `list(string)` | `[]` | no |
 | name\_prefix | Optional prefix for the generated name | `string` | `""` | no |
 | name\_suffix | Optional suffix for the generated name | `string` | `""` | no |
 | nic\_enable\_accelerated\_networking | Should Accelerated Networking be enabled? Defaults to `false`. | `bool` | `false` | no |
 | nic\_extra\_tags | Extra tags to set on the network interface. | `map(string)` | `{}` | no |
 | nic\_nsg\_id | NSG ID to associate on the Network Interface. No association if null. | `string` | `null` | no |
-| os\_disk\_caching | Specifies the caching requirements for the OS Disk | `string` | `"ReadWrite"` | no |
+| os\_disk\_caching | Specifies the caching requirements for the OS Disk. | `string` | `"ReadWrite"` | no |
 | os\_disk\_custom\_name | Custom name for OS disk. Generated if not set. | `string` | `null` | no |
 | os\_disk\_extra\_tags | Extra tags to set on the OS disk. | `map(string)` | `{}` | no |
 | os\_disk\_overwrite\_tags | True to overwrite existing OS disk tags instead of merging. | `bool` | `false` | no |
-| os\_disk\_size\_gb | Specifies the size of the OS disk in gigabytes | `string` | `null` | no |
-| os\_disk\_storage\_account\_type | The Type of Storage Account which should back this the Internal OS Disk. Possible values are `Standard_LRS`, `StandardSSD_LRS`, `Premium_LRS`, `StandardSSD_ZRS` and `Premium_ZRS` | `string` | `"Premium_ZRS"` | no |
+| os\_disk\_size\_gb | Specifies the size of the OS disk in gigabytes. | `string` | `null` | no |
+| os\_disk\_storage\_account\_type | The Type of Storage Account which should back this the Internal OS Disk. Possible values are `Standard_LRS`, `StandardSSD_LRS`, `Premium_LRS`, `StandardSSD_ZRS` and `Premium_ZRS`. | `string` | `"Premium_ZRS"` | no |
 | os\_disk\_tagging\_enabled | Should OS disk tagging be enabled? Defaults to `true`. | `bool` | `true` | no |
-| patch\_mode | Specifies the mode of in-guest patching to this Linux Virtual Machine. Possible values are `AutomaticByPlatform` and `ImageDefault` | `string` | `"ImageDefault"` | no |
+| patch\_mode | Specifies the mode of in-guest patching to this Linux Virtual Machine. Possible values are `AutomaticByPlatform` and `ImageDefault`. Compatibility list is available here https://learn.microsoft.com/en-us/azure/virtual-machines/automatic-vm-guest-patching#supported-os-images. | `string` | `"ImageDefault"` | no |
 | public\_ip\_extra\_tags | Extra tags to set on the public IP resource. | `map(string)` | `{}` | no |
 | public\_ip\_sku | SKU for the public IP attached to the VM. Can be `null` if no public IP needed. | `string` | `"Standard"` | no |
 | public\_ip\_zones | Zones for public IP attached to the VM. Can be `null` if no zone distpatch. | `list(number)` | <pre>[<br>  1,<br>  2,<br>  3<br>]</pre> | no |
-| resource\_group\_name | Resource group name | `string` | n/a | yes |
+| resource\_group\_name | Resource group name. | `string` | n/a | yes |
 | spot\_instance | True to deploy VM as a Spot Instance | `bool` | `false` | no |
 | spot\_instance\_eviction\_policy | Specifies what should happen when the Virtual Machine is evicted for price reasons when using a Spot instance. At this time the only supported value is `Deallocate`. Changing this forces a new resource to be created. | `string` | `"Deallocate"` | no |
 | spot\_instance\_max\_bid\_price | The maximum price you're willing to pay for this VM in US Dollars; must be greater than the current spot price. `-1` If you don't want the VM to be evicted for price reasons. | `number` | `-1` | no |
-| ssh\_private\_key | SSH private key | `string` | `null` | no |
-| ssh\_public\_key | SSH public key | `string` | `null` | no |
-| stack | Project stack name | `string` | n/a | yes |
+| ssh\_private\_key | SSH private key. | `string` | `null` | no |
+| ssh\_public\_key | SSH public key. | `string` | `null` | no |
+| stack | Project stack name. | `string` | n/a | yes |
 | static\_private\_ip | Static private IP. Private IP is dynamic if not set. | `string` | `null` | no |
-| storage\_data\_disk\_config | Map of objects to configure storage data disk(s) | <pre>map(object({<br>    name                 = optional(string)<br>    create_option        = optional(string, "Empty")<br>    disk_size_gb         = number<br>    lun                  = optional(number)<br>    caching              = optional(string, "ReadWrite")<br>    storage_account_type = optional(string, "StandardSSD_ZRS")<br>    source_resource_id   = optional(string)<br>    extra_tags           = optional(map(string), {})<br>  }))</pre> | `{}` | no |
-| subnet\_id | ID of the Subnet in which create the Virtual Machine | `string` | n/a | yes |
+| storage\_data\_disk\_config | Map of objects to configure storage data disk(s). | <pre>map(object({<br>    name                 = optional(string)<br>    create_option        = optional(string, "Empty")<br>    disk_size_gb         = number<br>    lun                  = optional(number)<br>    caching              = optional(string, "ReadWrite")<br>    storage_account_type = optional(string, "StandardSSD_ZRS")<br>    source_resource_id   = optional(string)<br>    extra_tags           = optional(map(string), {})<br>  }))</pre> | `{}` | no |
+| subnet\_id | ID of the Subnet in which create the Virtual Machine. | `string` | n/a | yes |
 | use\_caf\_naming | Use the Azure CAF naming provider to generate default resource name. `custom_name` override this if set. Legacy default name is used if this is set to `false`. | `bool` | `true` | no |
 | use\_legacy\_monitoring\_agent | True to use the legacy monitoring agent instead of Azure Monitor Agent | `bool` | `false` | no |
 | user\_data | The Base64-Encoded User Data which should be used for this Virtual Machine. | `string` | `null` | no |
@@ -341,6 +369,7 @@ module "vm" {
 
 | Name | Description |
 |------|-------------|
+| maintenance\_configurations\_assignments | Maintenance configurations assignments configurations. |
 | terraform\_module | Information about this Terraform module |
 | vm\_admin\_password | Virtual Machine admin password |
 | vm\_admin\_ssh\_private\_key | Virtual Machine admin SSH private key |
