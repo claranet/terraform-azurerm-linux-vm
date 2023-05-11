@@ -119,6 +119,12 @@ variable "vm_image" {
   }
 }
 
+variable "vm_image_id" {
+  description = "The ID of the Image which this Virtual Machine should be created from. This variable supersedes the `vm_image` variable if not null."
+  type        = string
+  default     = null
+}
+
 variable "vm_plan" {
   description = "Virtual Machine plan image information. See https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine#plan. This variable has to be used for BYOS image. Before using BYOS image, you need to accept legal plan terms. See https://docs.microsoft.com/en-us/cli/azure/vm/image?view=azure-cli-latest#az_vm_image_accept_terms."
   type = object({
@@ -144,11 +150,6 @@ variable "storage_data_disk_config" {
   default = {}
 }
 
-variable "vm_image_id" {
-  description = "The ID of the Image which this Virtual Machine should be created from. This variable cannot be used if `vm_image` is already defined."
-  type        = string
-  default     = null
-}
 
 variable "custom_dns_label" {
   description = "The DNS label to use for public access. VM name if not set. DNS will be <label>.westeurope.cloudapp.azure.com."

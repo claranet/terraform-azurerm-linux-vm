@@ -1,4 +1,4 @@
-resource "azurerm_maintenance_assignment_virtual_machine" "maintenace_configurations" {
+resource "azurerm_maintenance_assignment_virtual_machine" "maintenance_configurations" {
   for_each                     = toset(var.maintenance_configuration_ids)
   location                     = azurerm_linux_virtual_machine.vm.location
   maintenance_configuration_id = each.value
@@ -8,7 +8,12 @@ resource "azurerm_maintenance_assignment_virtual_machine" "maintenace_configurat
     precondition {
       condition     = var.patch_mode == "AutomaticByPlatform"
       error_message = "The variable patch_mode must be set to AutomaticByPlatform to use maintenance configurations."
-
     }
   }
+}
+
+# Fix typo
+moved {
+  from = azurerm_maintenance_assignment_virtual_machine.maintenace_configurations
+  to   = azurerm_maintenance_assignment_virtual_machine.maintenance_configurations
 }

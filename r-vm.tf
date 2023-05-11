@@ -23,9 +23,9 @@ resource "azurerm_linux_virtual_machine" "vm" {
   dynamic "plan" {
     for_each = toset(var.vm_plan != null ? ["fake"] : [])
     content {
-      name      = lookup(var.vm_plan, "name", null)
-      product   = lookup(var.vm_plan, "product", null)
-      publisher = lookup(var.vm_plan, "publisher", null)
+      name      = var.vm_plan.name
+      product   = var.vm_plan.product
+      publisher = var.vm_plan.publisher
     }
   }
 
@@ -115,3 +115,32 @@ resource "azurerm_virtual_machine_data_disk_attachment" "data_disk_attachment" {
   lun     = coalesce(each.value.lun, index(keys(var.storage_data_disk_config), each.key))
   caching = each.value.caching
 }
+
+resource "azapi_update_resource" "set_bypassplatformsafetychecksonuserschedule" {
+  count = var.patch_mode == "AutomaticByPlatform" ? 1 : 0
+
+  type        = "Microsoft.Compute/virtualMachines@2023-03-01"
+  resource_id = resource.azurerm_linux_virtual_machine.vm.id
+
+  ignore_missing_property = true
+  ignore_casing           = true
+
+  body = jsonencode({
+    location = module.azure_region.location_cli
+    properties = {
+      osProfile = {
+        linuxConfiguration = {
+          provisionVMAgent       = true
+          enableAutomaticUpdates = true
+          patchSettings = {
+            patchMode = "AutomaticByPlatform"
+            automaticByPlatformSettings = {
+              bypassPlatformSafetyChecksOnUserSchedule = true
+            }
+          }
+        }
+      }
+    }
+  })
+}
+
