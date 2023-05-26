@@ -1,4 +1,4 @@
-# Unreleased
+# v7.8.0 - 2023-05-26
 
 Added
   * AZ-1080: Added `bypassPlatformSafetyChecksOnUserSchedule` when `patch_mode` is `AutomaticByPlatform`.
