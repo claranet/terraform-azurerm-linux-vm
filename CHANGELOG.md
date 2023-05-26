@@ -1,3 +1,11 @@
+# Unreleased
+
+Added
+  * AZ-1080: Added `bypassPlatformSafetyChecksOnUserSchedule` when `patch_mode` is `AutomaticByPlatform`.
+
+Changed
+  * AZ-1080: The `Azure-Region` Claranet module is now included.
+
 # v7.7.0 - 2023-03-03
 
 Changed

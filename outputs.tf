@@ -83,5 +83,5 @@ output "vm_os_disk" {
 
 output "maintenance_configurations_assignments" {
   description = "Maintenance configurations assignments configurations."
-  value       = azurerm_maintenance_assignment_virtual_machine.maintenace_configurations
+  value       = azurerm_maintenance_assignment_virtual_machine.maintenance_configurations
 }
