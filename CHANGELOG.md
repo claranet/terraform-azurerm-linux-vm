@@ -1,3 +1,8 @@
+# Unreleased
+
+Fixed
+  * AZ-1102: Fix the managed data disks zone parameter if the storage type is `ZRS`
+
 # v7.8.0 - 2023-05-26
 
 Added

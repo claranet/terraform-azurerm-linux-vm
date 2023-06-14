@@ -96,7 +96,7 @@ resource "azurerm_managed_disk" "disk" {
 
   name = coalesce(each.value.name, var.use_caf_naming ? data.azurecaf_name.disk[each.key].result : format("%s-datadisk%s", local.vm_name, each.key))
 
-  zone = var.zone_id
+  zone = can(regex("_zrs$", lower(each.value.storage_account_type))) ? null : var.zone_id
 
   storage_account_type = each.value.storage_account_type
   create_option        = each.value.create_option
@@ -143,4 +143,3 @@ resource "azapi_update_resource" "set_bypassplatformsafetychecksonuserschedule" 
     }
   })
 }
-
