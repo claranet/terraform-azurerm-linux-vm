@@ -73,8 +73,10 @@ resource "azurerm_linux_virtual_machine" "vm" {
   max_bid_price   = var.spot_instance ? var.spot_instance_max_bid_price : null
   eviction_policy = var.spot_instance ? var.spot_instance_eviction_policy : null
 
-  patch_mode            = var.patch_mode
-  patch_assessment_mode = var.patch_mode == "AutomaticByPlatform" ? var.patch_mode : "ImageDefault"
+  patch_mode                                             = var.patch_mode
+  patch_assessment_mode                                  = var.patch_mode == "AutomaticByPlatform" ? var.patch_mode : "ImageDefault"
+  bypass_platform_safety_checks_on_user_schedule_enabled = var.patch_mode == "AutomaticByPlatform"
+  reboot_setting                                         = var.patch_mode == "AutomaticByPlatform" ? var.patching_reboot_setting : null
 }
 
 module "vm_os_disk_tagging" {
@@ -114,32 +116,4 @@ resource "azurerm_virtual_machine_data_disk_attachment" "data_disk_attachment" {
 
   lun     = coalesce(each.value.lun, index(keys(var.storage_data_disk_config), each.key))
   caching = each.value.caching
-}
-
-resource "azapi_update_resource" "set_bypassplatformsafetychecksonuserschedule" {
-  count = var.patch_mode == "AutomaticByPlatform" ? 1 : 0
-
-  type        = "Microsoft.Compute/virtualMachines@2023-03-01"
-  resource_id = resource.azurerm_linux_virtual_machine.vm.id
-
-  ignore_missing_property = true
-  ignore_casing           = true
-
-  body = jsonencode({
-    location = module.azure_region.location_cli
-    properties = {
-      osProfile = {
-        linuxConfiguration = {
-          provisionVMAgent       = true
-          enableAutomaticUpdates = true
-          patchSettings = {
-            patchMode = "AutomaticByPlatform"
-            automaticByPlatformSettings = {
-              bypassPlatformSafetyChecksOnUserSchedule = true
-            }
-          }
-        }
-      }
-    }
-  })
 }

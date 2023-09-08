@@ -261,3 +261,10 @@ variable "maintenance_configuration_ids" {
   type        = list(string)
   default     = []
 }
+
+variable "patching_reboot_setting" {
+  description = "Specifies the reboot setting for platform scheduled patching. Possible values are `Always`, `IfRequired` and `Never`."
+  type        = string
+  default     = "IfRequired"
+  nullable    = false
+}
