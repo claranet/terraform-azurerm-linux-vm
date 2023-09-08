@@ -1,3 +1,8 @@
+# Unreleased
+
+Changed
+  * AZ-1165: Change `bypass_platform_safety_checks_on_user_schedule_enabled` implementation from azapi provider to native azurerm
+
 # v7.8.1 - 2023-06-16
 
 Fixed
