@@ -170,10 +170,7 @@ module "vm" {
   ssh_public_key = var.ssh_public_key
 
   diagnostics_storage_account_name      = module.run.logs_storage_account_name
-  diagnostics_storage_account_sas_token = null # used by legacy agent only
   azure_monitor_data_collection_rule_id = module.run.data_collection_rule_id
-  log_analytics_workspace_guid          = module.run.log_analytics_workspace_guid
-  log_analytics_workspace_key           = module.run.log_analytics_workspace_primary_key
 
   # Set to null to deactivate backup
   backup_policy_id = module.run.vm_backup_policy_id
@@ -221,6 +218,7 @@ module "vm" {
 |------|---------|
 | azurecaf | ~> 1.2, >= 1.2.22 |
 | azurerm | ~> 3.67 |
+| null | ~> 3 |
 
 ## Modules
 
@@ -250,6 +248,7 @@ module "vm" {
 | [azurerm_virtual_machine_extension.aad_ssh_login](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_machine_extension) | resource |
 | [azurerm_virtual_machine_extension.azure_monitor_agent](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_machine_extension) | resource |
 | [azurerm_virtual_machine_extension.log_extension](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_machine_extension) | resource |
+| [null_resource.fake_vm_logs_condition](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
 | [azurecaf_name.disk](https://registry.terraform.io/providers/aztfmod/azurecaf/latest/docs/data-sources/name) | data source |
 | [azurecaf_name.nic](https://registry.terraform.io/providers/aztfmod/azurecaf/latest/docs/data-sources/name) | data source |
 | [azurecaf_name.pub_ip](https://registry.terraform.io/providers/aztfmod/azurecaf/latest/docs/data-sources/name) | data source |
@@ -284,8 +283,8 @@ module "vm" {
 | custom\_nic\_name | Custom name for the NIC interface. Generated if not set. | `string` | `null` | no |
 | custom\_public\_ip\_name | Custom name for public IP. Generated if not set. | `string` | `null` | no |
 | default\_tags\_enabled | Option to enable or disable default tags. | `bool` | `true` | no |
-| diagnostics\_storage\_account\_name | Name of the Storage Account in which store vm diagnostics. | `string` | n/a | yes |
-| diagnostics\_storage\_account\_sas\_token | SAS token of the Storage Account in which store vm diagnostics. Used only with legacy monitoring agent, set to `null` if not needed. | `string` | n/a | yes |
+| diagnostics\_storage\_account\_name | Name of the Storage Account in which store boot diagnostics and for legacy monitoring agent. | `string` | n/a | yes |
+| diagnostics\_storage\_account\_sas\_token | SAS token of the Storage Account in which store vm diagnostics. Used only with legacy monitoring agent, set to `null` if not needed. | `string` | `null` | no |
 | environment | Project environment. | `string` | n/a | yes |
 | extensions\_extra\_tags | Extra tags to set on the VM extensions. | `map(string)` | `{}` | no |
 | extra\_tags | Extra tags to set on each created resource. | `map(string)` | `{}` | no |
@@ -293,7 +292,7 @@ module "vm" {
 | load\_balancer\_backend\_pool\_id | Id of the Load Balancer Backend Pool to attach the VM. | `string` | `null` | no |
 | location | Azure location. | `string` | n/a | yes |
 | location\_short | Short string for Azure location. | `string` | n/a | yes |
-| log\_analytics\_agent\_enabled | Deploy Log Analytics VM extension - depending of OS (cf. https://docs.microsoft.com/fr-fr/azure/azure-monitor/agents/agents-overview#linux) | `bool` | `true` | no |
+| log\_analytics\_agent\_enabled | Deploy Log Analytics VM extension - depending of OS (cf. https://docs.microsoft.com/fr-fr/azure/azure-monitor/agents/agents-overview#linux) | `bool` | `false` | no |
 | log\_analytics\_agent\_version | Azure Log Analytics extension version. | `string` | `"1.14"` | no |
 | log\_analytics\_workspace\_guid | GUID of the Log Analytics Workspace to link with. | `string` | `null` | no |
 | log\_analytics\_workspace\_key | Access key of the Log Analytics Workspace to link with. | `string` | `null` | no |
