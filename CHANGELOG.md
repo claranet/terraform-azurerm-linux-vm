@@ -1,4 +1,4 @@
-# Unreleased
+# v7.10.0 - 2023-09-15
 
 Changed
   * AZ-1052: Disable legacy log agent by default
