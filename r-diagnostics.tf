@@ -1,3 +1,20 @@
+resource "null_resource" "fake_vm_logs_condition" {
+  count = var.use_legacy_monitoring_agent ? 1 : 0
+
+  triggers = {
+    diagnostics_storage_account_name      = var.diagnostics_storage_account_name
+    diagnostics_storage_account_sas_token = var.diagnostics_storage_account_sas_token
+    vm_id                                 = azurerm_linux_virtual_machine.vm.id
+  }
+
+  lifecycle {
+    precondition {
+      condition     = var.diagnostics_storage_account_sas_token != null
+      error_message = "Variable diagnostics_storage_account_sas_token must be set when legacy monitoring agent is enabled."
+    }
+  }
+}
+
 module "vm_logs" {
   for_each = toset(var.use_legacy_monitoring_agent ? ["enabled"] : [])
 
@@ -21,6 +38,8 @@ module "vm_logs" {
     },
     var.extra_tags, var.extensions_extra_tags
   )
+
+  depends_on = [null_resource.fake_vm_logs_condition]
 }
 
 resource "azurerm_virtual_machine_extension" "azure_monitor_agent" {

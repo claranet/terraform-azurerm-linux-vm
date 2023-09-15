@@ -131,10 +131,7 @@ module "vm" {
   ssh_public_key = var.ssh_public_key
 
   diagnostics_storage_account_name      = module.run.logs_storage_account_name
-  diagnostics_storage_account_sas_token = null # used by legacy agent only
   azure_monitor_data_collection_rule_id = module.run.data_collection_rule_id
-  log_analytics_workspace_guid          = module.run.log_analytics_workspace_guid
-  log_analytics_workspace_key           = module.run.log_analytics_workspace_primary_key
 
   # Set to null to deactivate backup
   backup_policy_id = module.run.vm_backup_policy_id

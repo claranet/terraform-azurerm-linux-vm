@@ -1,11 +1,12 @@
 variable "diagnostics_storage_account_name" {
-  description = "Name of the Storage Account in which store vm diagnostics."
+  description = "Name of the Storage Account in which store boot diagnostics and for legacy monitoring agent."
   type        = string
 }
 
 variable "diagnostics_storage_account_sas_token" {
   description = "SAS token of the Storage Account in which store vm diagnostics. Used only with legacy monitoring agent, set to `null` if not needed."
   type        = string
+  default     = null
 }
 
 ## Logs & monitoring variables
@@ -47,7 +48,7 @@ variable "azure_monitor_agent_auto_upgrade_enabled" {
 variable "log_analytics_agent_enabled" {
   description = "Deploy Log Analytics VM extension - depending of OS (cf. https://docs.microsoft.com/fr-fr/azure/azure-monitor/agents/agents-overview#linux)"
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "log_analytics_agent_version" {

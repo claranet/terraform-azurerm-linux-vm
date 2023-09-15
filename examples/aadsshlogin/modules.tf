@@ -78,53 +78,39 @@ resource "azurerm_availability_set" "vm_avset" {
   managed             = true
 }
 
-module "logs" {
-  source  = "claranet/run/azurerm//modules/logs"
+module "run" {
+  source  = "claranet/run/azurerm"
   version = "x.x.x"
 
-  client_name    = var.client_name
-  location       = module.azure_region.location
-  location_short = module.azure_region.location_short
-  environment    = var.environment
-  stack          = var.stack
-
-  resource_group_name = module.rg.resource_group_name
-}
-
-module "az_vm_backup" {
-  source  = "claranet/run-iaas/azurerm//modules/backup"
-  version = "x.x.x"
-
-  location       = module.azure_region.location
-  location_short = module.azure_region.location_short
-  client_name    = var.client_name
-  environment    = var.environment
-  stack          = var.stack
-
+  client_name         = var.client_name
+  environment         = var.environment
+  stack               = var.stack
+  location            = module.azure_region.location
+  location_short      = module.azure_region.location_short
   resource_group_name = module.rg.resource_group_name
 
-  logs_destinations_ids = [
-    module.logs.logs_storage_account_id,
-    module.logs.log_analytics_workspace_id
+  monitoring_function_enabled = false
+  vm_monitoring_enabled       = true
+  backup_vm_enabled           = true
+  update_center_enabled       = true
+
+  update_center_periodic_assessment_enabled = true
+  update_center_periodic_assessment_scopes  = [module.rg.resource_group_id]
+  update_center_maintenance_configurations = [
+    {
+      configuration_name = "Donald"
+      start_date_time    = "2021-08-21 04:00"
+      recur_every        = "1Day"
+    },
+    {
+      configuration_name = "Hammer"
+      start_date_time    = "1900-01-01 03:00"
+      recur_every        = "1Week"
+    }
   ]
-}
 
-module "az_monitor" {
-  source  = "claranet/run-iaas/azurerm//modules/vm-monitoring"
-  version = "x.x.x"
-
-  client_name    = var.client_name
-  location       = module.azure_region.location
-  location_short = module.azure_region.location_short
-  environment    = var.environment
-  stack          = var.stack
-
-  resource_group_name        = module.rg.resource_group_name
-  log_analytics_workspace_id = module.logs.log_analytics_workspace_id
-
-  extra_tags = {
-    foo = "bar"
-  }
+  recovery_vault_cross_region_restore_enabled = true
+  vm_backup_daily_policy_retention            = 31
 }
 
 data "azuread_group" "vm_admins_group" {
@@ -153,14 +139,14 @@ module "vm" {
   admin_username = var.vm_administrator_login
   ssh_public_key = var.ssh_public_key
 
-  diagnostics_storage_account_name      = module.logs.logs_storage_account_name
-  diagnostics_storage_account_sas_token = null # used by legacy agent only
-  azure_monitor_data_collection_rule_id = module.az_monitor.data_collection_rule_id
-  log_analytics_workspace_guid          = module.logs.log_analytics_workspace_guid
-  log_analytics_workspace_key           = module.logs.log_analytics_workspace_primary_key
+  diagnostics_storage_account_name      = module.run.logs_storage_account_name
+  azure_monitor_data_collection_rule_id = module.run.data_collection_rule_id
 
   # Set to null to deactivate backup
-  backup_policy_id = module.az_vm_backup.vm_backup_policy_id
+  backup_policy_id = module.run.vm_backup_policy_id
+
+  patch_mode                    = "AutomaticByPlatform"
+  maintenance_configuration_ids = [module.run.maintenance_configurations["Donald"].id, module.run.maintenance_configurations["Hammer"].id]
 
   availability_set_id = azurerm_availability_set.vm_avset.id
   # or use Availability Zone
