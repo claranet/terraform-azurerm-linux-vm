@@ -150,7 +150,6 @@ variable "storage_data_disk_config" {
   default = {}
 }
 
-
 variable "custom_dns_label" {
   description = "The DNS label to use for public access. VM name if not set. DNS will be <label>.westeurope.cloudapp.azure.com."
   type        = string
@@ -209,6 +208,12 @@ variable "os_disk_caching" {
   description = "Specifies the caching requirements for the OS Disk."
   type        = string
   default     = "ReadWrite"
+}
+
+variable "encryption_at_host_enabled" {
+  description = "Should all disks (including the temporary disk) attached to the Virtual Machine be encrypted by enabling Encryption at Host? List of compatible VM sizes: https://learn.microsoft.com/en-us/azure/virtual-machines/linux/disks-enable-host-based-encryption-cli#finding-supported-vm-sizes."
+  type        = bool
+  default     = false
 }
 
 ## Identity variables
