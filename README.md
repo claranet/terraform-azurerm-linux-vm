@@ -163,7 +163,6 @@ module "vm" {
   stack               = var.stack
   resource_group_name = module.rg.resource_group_name
 
-
   subnet_id      = module.azure_network_subnet.subnet_id
   vm_size        = "Standard_B2s"
   admin_username = var.vm_administrator_login
@@ -188,6 +187,10 @@ module "vm" {
     sku       = "10"
     version   = "latest"
   }
+
+  # The feature must be activated upstream:
+  # az feature register --namespace Microsoft.Compute --name EncryptionAtHost --subscription <subscription_id_or_name>
+  encryption_at_host_enabled = true
 
   storage_data_disk_config = {
     appli_data_disk = {
@@ -285,6 +288,7 @@ module "vm" {
 | default\_tags\_enabled | Option to enable or disable default tags. | `bool` | `true` | no |
 | diagnostics\_storage\_account\_name | Name of the Storage Account in which store boot diagnostics and for legacy monitoring agent. | `string` | n/a | yes |
 | diagnostics\_storage\_account\_sas\_token | SAS token of the Storage Account in which store vm diagnostics. Used only with legacy monitoring agent, set to `null` if not needed. | `string` | `null` | no |
+| encryption\_at\_host\_enabled | Should all disks (including the temporary disk) attached to the Virtual Machine be encrypted by enabling Encryption at Host? List of compatible VM sizes: https://learn.microsoft.com/en-us/azure/virtual-machines/linux/disks-enable-host-based-encryption-cli#finding-supported-vm-sizes. | `bool` | `false` | no |
 | environment | Project environment. | `string` | n/a | yes |
 | extensions\_extra\_tags | Extra tags to set on the VM extensions. | `map(string)` | `{}` | no |
 | extra\_tags | Extra tags to set on each created resource. | `map(string)` | `{}` | no |
