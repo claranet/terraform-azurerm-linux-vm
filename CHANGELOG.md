@@ -1,3 +1,34 @@
+## 7.11.2 (2024-06-21)
+
+
+### ⚠ BREAKING CHANGES
+
+* changes introduced with AzureRM provider `v3.108.0`
+
+### Code Refactoring
+
+* rename `nic_enable_accelerated_networking` to `nic_accelerated_networking_enabled` e5ac9ec
+
+
+### Miscellaneous Chores
+
+* **deps:** update dependency opentofu to v1.7.0 25158a6
+* **deps:** update dependency opentofu to v1.7.1 e28f269
+* **deps:** update dependency opentofu to v1.7.2 f73573a
+* **deps:** update dependency pre-commit to v3.7.1 13af187
+* **deps:** update dependency terraform-docs to v0.18.0 76e480a
+* **deps:** update dependency tflint to v0.51.0 2153a3b
+* **deps:** update dependency tflint to v0.51.1 66e97e8
+* **deps:** update dependency trivy to v0.50.4 66c5d63
+* **deps:** update dependency trivy to v0.51.0 f34b499
+* **deps:** update dependency trivy to v0.51.1 db20141
+* **deps:** update dependency trivy to v0.51.2 6b5add5
+* **deps:** update dependency trivy to v0.51.4 6c59592
+* **deps:** update dependency trivy to v0.52.0 655f4f9
+* **deps:** update dependency trivy to v0.52.1 f263027
+* **deps:** update dependency trivy to v0.52.2 63ec743
+* **deps:** update pre-commit hook antonbabenko/pre-commit-terraform to v1.92.0 014eba5
+
 ## 7.11.1 (2024-04-26)
 
 
