@@ -1,3 +1,44 @@
+## 7.12.0 (2024-10-03)
+
+### Features
+
+* use Claranet "azurecaf" provider b2aa1bf
+
+### Documentation
+
+* update README badge to use OpenTofu registry 8676b51
+* update README with `terraform-docs` v0.19.0 f29b61c
+
+### Miscellaneous Chores
+
+* **deps:** update dependency opentofu to v1.7.3 deac061
+* **deps:** update dependency opentofu to v1.8.0 13c9af7
+* **deps:** update dependency opentofu to v1.8.1 7a3b7ad
+* **deps:** update dependency opentofu to v1.8.2 5364ce0
+* **deps:** update dependency pre-commit to v3.8.0 a6049f8
+* **deps:** update dependency tflint to v0.51.2 be1d227
+* **deps:** update dependency tflint to v0.52.0 3a8ff08
+* **deps:** update dependency tflint to v0.53.0 1a54790
+* **deps:** update dependency trivy to v0.53.0 06c4108
+* **deps:** update dependency trivy to v0.54.1 7a73385
+* **deps:** update dependency trivy to v0.55.0 be286a4
+* **deps:** update dependency trivy to v0.55.1 d1fcaf8
+* **deps:** update dependency trivy to v0.55.2 b0a78cb
+* **deps:** update pre-commit hook alessandrojcm/commitlint-pre-commit-hook to v9.17.0 9c2ed5b
+* **deps:** update pre-commit hook alessandrojcm/commitlint-pre-commit-hook to v9.18.0 9c48eb5
+* **deps:** update pre-commit hook antonbabenko/pre-commit-terraform to v1.92.1 22384b7
+* **deps:** update pre-commit hook antonbabenko/pre-commit-terraform to v1.92.2 2aff41d
+* **deps:** update pre-commit hook antonbabenko/pre-commit-terraform to v1.92.3 2eb2b50
+* **deps:** update pre-commit hook antonbabenko/pre-commit-terraform to v1.93.0 7f25e1f
+* **deps:** update pre-commit hook antonbabenko/pre-commit-terraform to v1.94.0 c93a09e
+* **deps:** update pre-commit hook antonbabenko/pre-commit-terraform to v1.94.1 5adbfba
+* **deps:** update pre-commit hook antonbabenko/pre-commit-terraform to v1.94.2 5f41807
+* **deps:** update pre-commit hook antonbabenko/pre-commit-terraform to v1.94.3 4408391
+* **deps:** update pre-commit hook antonbabenko/pre-commit-terraform to v1.95.0 816b949
+* **deps:** update pre-commit hook antonbabenko/pre-commit-terraform to v1.96.0 71ce53a
+* **deps:** update terraform claranet/regions/azurerm to ~> 7.2.0 9c41e83
+* **deps:** update tools 16cd182
+
 ## 7.11.2 (2024-06-21)
 
 
