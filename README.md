@@ -229,7 +229,7 @@ module "vm" {
 |------|--------|---------|
 | azure\_region | claranet/regions/azurerm | ~> 7.2.0 |
 | vm\_logs | claranet/vm-logs/azurerm | 4.2.0 |
-| vm\_os\_disk\_tagging | claranet/tagging/azurerm | 6.0.1 |
+| vm\_os\_disk\_tagging | claranet/tagging/azurerm | 6.0.2 |
 
 ## Resources
 
