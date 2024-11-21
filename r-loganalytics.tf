@@ -1,14 +1,14 @@
 resource "azurerm_virtual_machine_extension" "log_extension" {
-  for_each = toset(var.log_analytics_agent_enabled ? ["enabled"] : [])
+  count = var.log_analytics_agent_enabled ? 1 : 0
 
-  name = "${azurerm_linux_virtual_machine.vm.name}-logextension"
+  name = "${azurerm_linux_virtual_machine.main.name}-logextension"
 
   publisher                  = "Microsoft.EnterpriseCloud.Monitoring"
   type                       = "OMSAgentforLinux"
   type_handler_version       = var.log_analytics_agent_version
   auto_upgrade_minor_version = true
 
-  virtual_machine_id = azurerm_linux_virtual_machine.vm.id
+  virtual_machine_id = azurerm_linux_virtual_machine.main.id
 
   settings = <<SETTINGS
   {
@@ -30,4 +30,9 @@ SETTINGS
       error_message = "Variables log_analytics_workspace_guid and log_analytics_workspace_key must be set when Log Analytics agent is enabled."
     }
   }
+}
+
+moved {
+  from = azurerm_virtual_machine_extension.log_extension["enabled"]
+  to   = azurerm_virtual_machine_extension.log_extension[0]
 }

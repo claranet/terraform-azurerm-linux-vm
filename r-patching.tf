@@ -1,8 +1,8 @@
-resource "azurerm_maintenance_assignment_virtual_machine" "maintenance_configurations" {
+resource "azurerm_maintenance_assignment_virtual_machine" "main" {
   for_each                     = toset(var.maintenance_configuration_ids)
-  location                     = azurerm_linux_virtual_machine.vm.location
+  location                     = azurerm_linux_virtual_machine.main.location
   maintenance_configuration_id = each.value
-  virtual_machine_id           = azurerm_linux_virtual_machine.vm.id
+  virtual_machine_id           = azurerm_linux_virtual_machine.main.id
 
   lifecycle {
     precondition {
@@ -12,8 +12,7 @@ resource "azurerm_maintenance_assignment_virtual_machine" "maintenance_configura
   }
 }
 
-# Fix typo
 moved {
-  from = azurerm_maintenance_assignment_virtual_machine.maintenace_configurations
-  to   = azurerm_maintenance_assignment_virtual_machine.maintenance_configurations
+  from = azurerm_maintenance_assignment_virtual_machine.maintenance_configurations
+  to   = azurerm_maintenance_assignment_virtual_machine.main
 }
