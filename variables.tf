@@ -273,3 +273,10 @@ variable "patching_reboot_setting" {
   default     = "IfRequired"
   nullable    = false
 }
+
+## Disable password authentication
+variable "disable_password_authentication" {
+  description = "Option to disable or enable password authentication if admin password is not set"
+  type        = bool
+  default     = true
+}
