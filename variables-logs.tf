@@ -5,7 +5,7 @@ variable "diagnostics_storage_account_name" {
 
 ## Logs & monitoring variables
 variable "monitoring_agent_enabled" {
-  description = "True to use and deploy the Azure Monitor Agent."
+  description = "`true` to use and deploy the Azure Monitor Agent."
   type        = bool
   default     = true
   nullable    = false
@@ -43,7 +43,7 @@ variable "azure_monitor_agent_auto_upgrade_enabled" {
 }
 
 variable "log_analytics_agent_enabled" {
-  description = "Deploy Log Analytics VM extension - depending of OS [compatibility list](https://docs.microsoft.com/fr-fr/azure/azure-monitor/agents/agents-overview#linux)."
+  description = "Deploy Log Analytics Virtual Machine extension - depending of OS [compatibility list](https://docs.microsoft.com/fr-fr/azure/azure-monitor/agents/agents-overview#linux)."
   type        = bool
   default     = false
 }

@@ -25,7 +25,7 @@ variable "custom_computer_name" {
 }
 
 variable "custom_public_ip_name" {
-  description = "Custom name for public IP. Generated if not set."
+  description = "Custom name for Public IP. Generated if not set."
   type        = string
   default     = null
 }

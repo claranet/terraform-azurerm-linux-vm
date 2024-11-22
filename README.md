@@ -150,8 +150,8 @@ module "vm" {
 | [azurerm_role_assignment.rbac_admin_login](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
 | [azurerm_role_assignment.rbac_user_login](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
 | [azurerm_virtual_machine_data_disk_attachment.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_machine_data_disk_attachment) | resource |
-| [azurerm_virtual_machine_extension.aad_ssh_login](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_machine_extension) | resource |
 | [azurerm_virtual_machine_extension.azure_monitor_agent](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_machine_extension) | resource |
+| [azurerm_virtual_machine_extension.entra_ssh_login](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_machine_extension) | resource |
 | [azurerm_virtual_machine_extension.log_extension](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_machine_extension) | resource |
 | [azurecaf_name.disk](https://registry.terraform.io/providers/claranet/azurecaf/latest/docs/data-sources/name) | data source |
 | [azurecaf_name.nic](https://registry.terraform.io/providers/claranet/azurecaf/latest/docs/data-sources/name) | data source |
@@ -175,19 +175,19 @@ module "vm" {
 | custom\_computer\_name | Custom name for the Virtual Machine Hostname. `vm_name` if not set. | `string` | `""` | no |
 | custom\_data | The Base64-Encoded Custom Data which should be used for this Virtual Machine. Changing this forces a new resource to be created. | `string` | `null` | no |
 | custom\_dcr\_name | Custom name for Data collection rule association. | `string` | `null` | no |
-| custom\_dns\_label | The DNS label to use for public access. VM name if not set. DNS will be <label>.westeurope.cloudapp.azure.com. | `string` | `""` | no |
+| custom\_dns\_label | The DNS label to use for public access. Virtual Machine name if not set. DNS will be `<label>.<region>.cloudapp.azure.com`. | `string` | `""` | no |
 | custom\_ipconfig\_name | Custom name for the IP config of the NIC. Generated if not set. | `string` | `null` | no |
 | custom\_name | Custom name for the Virtual Machine. Generated if not set. | `string` | `""` | no |
 | custom\_nic\_name | Custom name for the NIC interface. Generated if not set. | `string` | `null` | no |
-| custom\_public\_ip\_name | Custom name for public IP. Generated if not set. | `string` | `null` | no |
+| custom\_public\_ip\_name | Custom name for Public IP. Generated if not set. | `string` | `null` | no |
 | default\_tags\_enabled | Option to enable or disable default tags. | `bool` | `true` | no |
 | diagnostics\_storage\_account\_name | Name of the Storage Account in which store boot diagnostics. | `string` | n/a | yes |
 | disable\_password\_authentication | Option to disable or enable password authentication if admin password is not set. | `bool` | `true` | no |
-| encryption\_at\_host\_enabled | Should all disks (including the temporary disk) attached to the Virtual Machine be encrypted by enabling Encryption at Host? [List of compatible VM sizes](https://learn.microsoft.com/en-us/azure/virtual-machines/linux/disks-enable-host-based-encryption-cli#finding-supported-vm-sizes). | `bool` | `false` | no |
-| entra\_ssh\_login\_admin\_objects\_ids | Entra ID (aka AAD) objects IDs allowed to connect as administrator on the VM. | `list(string)` | `[]` | no |
+| encryption\_at\_host\_enabled | Should all disks (including the temporary disk) attached to the Virtual Machine be encrypted by enabling Encryption at Host? [List of compatible Virtual Machine sizes](https://learn.microsoft.com/en-us/azure/virtual-machines/linux/disks-enable-host-based-encryption-cli#finding-supported-vm-sizes). | `bool` | `true` | no |
+| entra\_ssh\_login\_admin\_objects\_ids | Entra ID (aka AAD) objects IDs allowed to connect as administrator on the Virtual Machine. | `list(string)` | `[]` | no |
 | entra\_ssh\_login\_enabled | Enable SSH logins with Entra ID (aka AAD). | `bool` | `false` | no |
-| entra\_ssh\_login\_extension\_version | VM Extension version for Entra ID (aka AAD) SSH Login extension. | `string` | `"1.0"` | no |
-| entra\_ssh\_login\_user\_objects\_ids | Entra ID (aka AAD) objects IDs allowed to connect as standard user on the VM. | `list(string)` | `[]` | no |
+| entra\_ssh\_login\_extension\_version | Virtual Machine extension version for Entra ID (aka AAD) SSH Login extension. | `string` | `"1.0"` | no |
+| entra\_ssh\_login\_user\_objects\_ids | Entra ID (aka AAD) objects IDs allowed to connect as standard user on the Virtual Machine. | `list(string)` | `[]` | no |
 | environment | Project environment. | `string` | n/a | yes |
 | extensions\_extra\_tags | Extra tags to set on the VM extensions. | `map(string)` | `{}` | no |
 | extra\_tags | Extra tags to set on each created resource. | `map(string)` | `{}` | no |
@@ -195,17 +195,17 @@ module "vm" {
 | load\_balancer\_attachment | ID of the Load Balancer Backend Pool to attach the Virtual Machine to. | <pre>object({<br/>    id = string<br/>  })</pre> | `null` | no |
 | location | Azure location. | `string` | n/a | yes |
 | location\_short | Short string for Azure location. | `string` | n/a | yes |
-| log\_analytics\_agent\_enabled | Deploy Log Analytics VM extension - depending of OS [compatibility list](https://docs.microsoft.com/fr-fr/azure/azure-monitor/agents/agents-overview#linux). | `bool` | `false` | no |
+| log\_analytics\_agent\_enabled | Deploy Log Analytics Virtual Machine extension - depending of OS [compatibility list](https://docs.microsoft.com/fr-fr/azure/azure-monitor/agents/agents-overview#linux). | `bool` | `false` | no |
 | log\_analytics\_agent\_version | Azure Log Analytics extension version. | `string` | `"1.14"` | no |
 | log\_analytics\_workspace\_guid | GUID of the Log Analytics Workspace to link with. | `string` | `null` | no |
 | log\_analytics\_workspace\_key | Access key of the Log Analytics Workspace to link with. | `string` | `null` | no |
 | maintenance\_configuration\_ids | List of maintenance configurations to attach to this VM. | `list(string)` | `[]` | no |
-| monitoring\_agent\_enabled | True to use and deploy the Azure Monitor Agent. | `bool` | `true` | no |
+| monitoring\_agent\_enabled | `true` to use and deploy the Azure Monitor Agent. | `bool` | `true` | no |
 | name\_prefix | Optional prefix for the generated name. | `string` | `""` | no |
 | name\_suffix | Optional suffix for the generated name. | `string` | `""` | no |
-| nic\_accelerated\_networking\_enabled | Should Accelerated Networking be enabled? Defaults to `false`. | `bool` | `false` | no |
+| nic\_accelerated\_networking\_enabled | Should Accelerated Networking be enabled? | `bool` | `true` | no |
 | nic\_extra\_tags | Extra tags to set on the network interface. | `map(string)` | `{}` | no |
-| nic\_nsg | NSG ID to associate on the Network Interface. No association if null. | <pre>object({<br/>    id = string<br/>  })</pre> | `null` | no |
+| nic\_nsg | Network Security Group ID to associate on the Network Interface. No association if `null`. | <pre>object({<br/>    id = string<br/>  })</pre> | `null` | no |
 | os\_disk\_caching | Specifies the caching requirements for the OS Disk. | `string` | `"ReadWrite"` | no |
 | os\_disk\_custom\_name | Custom name for OS disk. Generated if not set. | `string` | `null` | no |
 | os\_disk\_extra\_tags | Extra tags to set on the OS disk. | `map(string)` | `{}` | no |
@@ -216,12 +216,12 @@ module "vm" {
 | patch\_mode | Specifies the mode of in-guest patching to this Linux Virtual Machine. Possible values are `AutomaticByPlatform` and `ImageDefault`. [Compatibility list is available here](https://learn.microsoft.com/en-us/azure/virtual-machines/automatic-vm-guest-patching#supported-os-images). | `string` | `"ImageDefault"` | no |
 | patching\_reboot\_setting | Specifies the reboot setting for platform scheduled patching. Possible values are `Always`, `IfRequired` and `Never`. | `string` | `"IfRequired"` | no |
 | public\_ip\_extra\_tags | Extra tags to set on the public IP resource. | `map(string)` | `{}` | no |
-| public\_ip\_sku | SKU for the public IP attached to the VM. Can be `null` if no public IP needed. | `string` | `null` | no |
-| public\_ip\_zones | Zones for public IP attached to the VM. Can be `null` if no zone distpatch. | `list(number)` | <pre>[<br/>  1,<br/>  2,<br/>  3<br/>]</pre> | no |
+| public\_ip\_sku | SKU for the public IP attached to the Virtual Machine. Can be `null` if no public IP needed. | `string` | `null` | no |
+| public\_ip\_zones | Zones for public IP attached to the Virtual Machine. Can be `null` if no zone distpatch. | `list(number)` | <pre>[<br/>  1,<br/>  2,<br/>  3<br/>]</pre> | no |
 | resource\_group\_name | Resource group name. | `string` | n/a | yes |
-| spot\_instance | True to deploy VM as a Spot Instance. | `bool` | `false` | no |
+| spot\_instance | `true` to deploy Virtual Machine as a Spot Instance. | `bool` | `false` | no |
 | spot\_instance\_eviction\_policy | Specifies what should happen when the Virtual Machine is evicted for price reasons when using a Spot instance. At this time the only supported value is `Deallocate`. Changing this forces a new resource to be created. | `string` | `"Deallocate"` | no |
-| spot\_instance\_max\_bid\_price | The maximum price you're willing to pay for this VM in US Dollars; must be greater than the current spot price. `-1` If you don't want the VM to be evicted for price reasons. | `number` | `-1` | no |
+| spot\_instance\_max\_bid\_price | The maximum price you're willing to pay for this Virtual Machine in US Dollars; must be greater than the current spot price. `-1` If you don't want the Virtual Machine to be evicted for price reasons. | `number` | `-1` | no |
 | ssh\_private\_key | SSH private key. | `string` | `null` | no |
 | ssh\_public\_key | SSH public key. | `string` | `null` | no |
 | stack | Project stack name. | `string` | n/a | yes |
@@ -230,7 +230,7 @@ module "vm" {
 | subnet | ID of the Subnet where the Virtual Machine is created. | <pre>object({<br/>    id = string<br/>  })</pre> | n/a | yes |
 | user\_data | The Base64-Encoded User Data which should be used for this Virtual Machine. | `string` | `null` | no |
 | vm\_image | Virtual Machine source image information. See https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html#storage_image_reference. This variable cannot be used if `vm_image_id` is already defined. | <pre>object({<br/>    publisher = string<br/>    offer     = string<br/>    sku       = string<br/>    version   = string<br/>  })</pre> | <pre>{<br/>  "offer": "debian-10",<br/>  "publisher": "Debian",<br/>  "sku": "10",<br/>  "version": "latest"<br/>}</pre> | no |
-| vm\_image\_id | The ID of the Image which this Virtual Machine should be created from. This variable supersedes the `vm_image` variable if not null. | `string` | `null` | no |
+| vm\_image\_id | The ID of the image which this Virtual Machine should be created from. This variable supersedes the `vm_image` variable if not `null`. | `string` | `null` | no |
 | vm\_plan | Virtual Machine plan image information. See [documentation](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine#plan. This variable has to be used for BYOS image. Before using BYOS image, you need to accept legal plan terms. See https://docs.microsoft.com/en-us/cli/azure/vm/image?view=azure-cli-latest#az_vm_image_accept_terms). | <pre>object({<br/>    name      = string<br/>    product   = string<br/>    publisher = string<br/>  })</pre> | `null` | no |
 | vm\_size | Size (SKU) of the Virtual Machine to create. | `string` | n/a | yes |
 | zone\_id | Index of the Availability Zone which the Virtual Machine should be allocated in. | `number` | `null` | no |
@@ -246,16 +246,16 @@ module "vm" {
 | hostname | Hostname of the Virtual Machine. |
 | id | ID of the Virtual Machine. |
 | identity\_principal\_id | Linux Virtual Machine system identity principal ID. |
-| maintenance\_configurations\_assignments | Maintenance configurations assignments configurations. |
 | name | Name of the Virtual Machine. |
 | nic\_id | ID of the Network Interface Configuration attached to the Virtual Machine. |
 | nic\_ip\_configuration\_name | Name of the IP Configuration for the Network Interface Configuration attached to the Virtual Machine. |
 | nic\_name | Name of the Network Interface Configuration attached to the Virtual Machine. |
 | private\_ip\_address | Private IP address of the Virtual Machine. |
-| public\_domain\_name\_label | Public DNS of the Virtual machine. |
+| public\_domain\_name\_label | Public DNS of the Virtual Machine. |
 | public\_ip\_address | Public IP address of the Virtual Machine. |
 | public\_ip\_id | Public IP ID of the Virtual Machine. |
 | resource | Linux Virtual Machine  resource object. |
+| resource\_maintenance\_configuration\_assignment | Maintenance configuration assignment resource object. |
 | resource\_os\_disk | Virtual Machine OS disk resource object. |
 | resource\_public\_ip | VM Public IP resource object. |
 | terraform\_module | Information about this Terraform module |

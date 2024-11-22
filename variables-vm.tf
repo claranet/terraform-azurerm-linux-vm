@@ -32,13 +32,13 @@ variable "subnet" {
 }
 
 variable "nic_accelerated_networking_enabled" {
-  description = "Should Accelerated Networking be enabled? Defaults to `false`."
+  description = "Should Accelerated Networking be enabled?"
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "nic_nsg" {
-  description = "NSG ID to associate on the Network Interface. No association if null."
+  description = "Network Security Group ID to associate on the Network Interface. No association if `null`."
   type = object({
     id = string
   })
@@ -100,7 +100,7 @@ variable "vm_image" {
 }
 
 variable "vm_image_id" {
-  description = "The ID of the Image which this Virtual Machine should be created from. This variable supersedes the `vm_image` variable if not null."
+  description = "The ID of the image which this Virtual Machine should be created from. This variable supersedes the `vm_image` variable if not `null`."
   type        = string
   default     = null
 }
@@ -132,13 +132,13 @@ variable "storage_data_disk_config" {
 }
 
 variable "custom_dns_label" {
-  description = "The DNS label to use for public access. VM name if not set. DNS will be <label>.westeurope.cloudapp.azure.com."
+  description = "The DNS label to use for public access. Virtual Machine name if not set. DNS will be `<label>.<region>.cloudapp.azure.com`."
   type        = string
   default     = ""
 }
 
 variable "public_ip_sku" {
-  description = "SKU for the public IP attached to the VM. Can be `null` if no public IP needed."
+  description = "SKU for the public IP attached to the Virtual Machine. Can be `null` if no public IP needed."
   type        = string
   default     = null
 
@@ -149,7 +149,7 @@ variable "public_ip_sku" {
 }
 
 variable "public_ip_zones" {
-  description = "Zones for public IP attached to the VM. Can be `null` if no zone distpatch."
+  description = "Zones for public IP attached to the Virtual Machine. Can be `null` if no zone distpatch."
   type        = list(number)
   default     = [1, 2, 3]
 }
@@ -194,9 +194,9 @@ variable "os_disk_caching" {
 }
 
 variable "encryption_at_host_enabled" {
-  description = "Should all disks (including the temporary disk) attached to the Virtual Machine be encrypted by enabling Encryption at Host? [List of compatible VM sizes](https://learn.microsoft.com/en-us/azure/virtual-machines/linux/disks-enable-host-based-encryption-cli#finding-supported-vm-sizes)."
+  description = "Should all disks (including the temporary disk) attached to the Virtual Machine be encrypted by enabling Encryption at Host? [List of compatible Virtual Machine sizes](https://learn.microsoft.com/en-us/azure/virtual-machines/linux/disks-enable-host-based-encryption-cli#finding-supported-vm-sizes)."
   type        = bool
-  default     = false
+  default     = true
 }
 
 ## Identity variables
@@ -214,14 +214,14 @@ variable "identity" {
 
 ## Spot variables
 variable "spot_instance" {
-  description = "True to deploy VM as a Spot Instance."
+  description = "`true` to deploy Virtual Machine as a Spot Instance."
   type        = bool
   default     = false
   nullable    = false
 }
 
 variable "spot_instance_max_bid_price" {
-  description = "The maximum price you're willing to pay for this VM in US Dollars; must be greater than the current spot price. `-1` If you don't want the VM to be evicted for price reasons."
+  description = "The maximum price you're willing to pay for this Virtual Machine in US Dollars; must be greater than the current spot price. `-1` If you don't want the Virtual Machine to be evicted for price reasons."
   type        = number
   default     = -1
   nullable    = false

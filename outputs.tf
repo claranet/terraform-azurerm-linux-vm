@@ -34,7 +34,7 @@ output "public_ip_id" {
 }
 
 output "public_domain_name_label" {
-  description = "Public DNS of the Virtual machine."
+  description = "Public DNS of the Virtual Machine."
   value       = one(azurerm_public_ip.main[*].domain_name_label)
 }
 
@@ -91,7 +91,7 @@ output "resource_os_disk" {
   value       = data.azurerm_managed_disk.vm_os_disk
 }
 
-output "maintenance_configurations_assignments" {
-  description = "Maintenance configurations assignments configurations."
+output "resource_maintenance_configuration_assignment" {
+  description = "Maintenance configuration assignment resource object."
   value       = azurerm_maintenance_assignment_virtual_machine.main
 }

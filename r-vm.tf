@@ -26,7 +26,7 @@ resource "azurerm_linux_virtual_machine" "main" {
   }
 
   dynamic "plan" {
-    for_each = toset(var.vm_plan != null ? [1] : [])
+    for_each = var.vm_plan[*]
     content {
       name      = var.vm_plan.name
       product   = var.vm_plan.product
@@ -52,7 +52,7 @@ resource "azurerm_linux_virtual_machine" "main" {
   encryption_at_host_enabled = var.encryption_at_host_enabled
 
   dynamic "identity" {
-    for_each = var.identity != null ? [1] : []
+    for_each = var.identity[*]
     content {
       type         = var.identity.type
       identity_ids = var.identity.identity_ids

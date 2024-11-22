@@ -1,4 +1,4 @@
-resource "azurerm_virtual_machine_extension" "aad_ssh_login" {
+resource "azurerm_virtual_machine_extension" "entra_ssh_login" {
   count = var.entra_ssh_login_enabled ? 1 : 0
 
   name                       = "${azurerm_linux_virtual_machine.main.name}-AADSSHLoginForLinux"
@@ -13,7 +13,7 @@ resource "azurerm_virtual_machine_extension" "aad_ssh_login" {
 
 moved {
   from = azurerm_virtual_machine_extension.aad_ssh_login["enabled"]
-  to   = azurerm_virtual_machine_extension.aad_ssh_login[0]
+  to   = azurerm_virtual_machine_extension.entra_ssh_login[0]
 }
 
 resource "azurerm_role_assignment" "rbac_user_login" {
