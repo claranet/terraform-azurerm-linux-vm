@@ -1,3 +1,27 @@
+## 7.13.0 (2024-11-22)
+
+### Features
+
+* **AZ-1484:** add `disable_password_authentication` variable de90ad5
+
+### Miscellaneous Chores
+
+* **deps:** update dependency opentofu to v1.8.3 a971b99
+* **deps:** update dependency opentofu to v1.8.4 5311eb4
+* **deps:** update dependency pre-commit to v4 70c534d
+* **deps:** update dependency pre-commit to v4.0.1 4995561
+* **deps:** update dependency tflint to v0.54.0 5d9ae3e
+* **deps:** update dependency trivy to v0.56.0 add328c
+* **deps:** update dependency trivy to v0.56.1 880927e
+* **deps:** update dependency trivy to v0.56.2 11d580c
+* **deps:** update dependency trivy to v0.57.1 0045797
+* **deps:** update pre-commit hook pre-commit/pre-commit-hooks to v5 86a08a5
+* **deps:** update pre-commit hook tofuutils/pre-commit-opentofu to v2.1.0 995ab1d
+* **deps:** update terraform claranet/tagging/azurerm to v6.0.2 50bf166
+* **deps:** update tools 9c9896f
+* prepare for new examples structure ad6ceed
+* update examples structure fa75738
+
 ## 7.12.0 (2024-10-03)
 
 ### Features
