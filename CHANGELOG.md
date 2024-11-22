@@ -50,7 +50,6 @@
 
 * rename `nic_enable_accelerated_networking` to `nic_accelerated_networking_enabled` e5ac9ec
 
-
 ### Miscellaneous Chores
 
 * **deps:** update dependency opentofu to v1.7.0 25158a6
