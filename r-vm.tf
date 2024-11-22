@@ -61,7 +61,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   custom_data = var.custom_data
   user_data   = var.user_data
 
-  disable_password_authentication = var.admin_password != null ? false : true
+  disable_password_authentication = var.admin_password != null ? false : var.disable_password_authentication
 
   dynamic "admin_ssh_key" {
     for_each = var.ssh_public_key != null ? ["fake"] : []
