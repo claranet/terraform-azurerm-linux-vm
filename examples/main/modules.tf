@@ -16,9 +16,7 @@ module "vm" {
   stack               = var.stack
   resource_group_name = module.rg.name
 
-  subnet = {
-    id = module.subnet.id
-  }
+  subnet         = module.subnet
   vm_size        = "Standard_B2s"
   admin_username = var.vm_administrator_login
   ssh_public_key = var.ssh_public_key
@@ -36,17 +34,14 @@ module "vm" {
   patch_mode                    = "AutomaticByPlatform"
   maintenance_configuration_ids = [module.run.maintenance_configurations["Donald"].id, module.run.maintenance_configurations["Hammer"].id]
 
-  availability_set = {
-    id = azurerm_availability_set.main.id
-  }
+  availability_set = azurerm_availability_set.main
   # or use Availability Zone
   # zone_id = 1
 
   vm_image = {
-    publisher = "Debian"
-    offer     = "debian-10"
-    sku       = "10"
-    version   = "latest"
+    publisher = "Canonical"
+    offer     = "Ubuntu"
+    sku       = "24_04-lts"
   }
 
   # The feature must be activated upstream:

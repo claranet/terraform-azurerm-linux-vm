@@ -29,6 +29,7 @@ variable "subnet" {
   type = object({
     id = string
   })
+  nullable = false
 }
 
 variable "nic_accelerated_networking_enabled" {
@@ -89,12 +90,12 @@ variable "vm_image" {
     publisher = string
     offer     = string
     sku       = string
-    version   = string
+    version   = optional(string, "latest")
   })
   default = {
-    publisher = "Debian"
-    offer     = "debian-10"
-    sku       = "10"
+    publisher = "Canonical"
+    offer     = "Ubuntu"
+    sku       = "22_04-lts"
     version   = "latest"
   }
 }
@@ -106,7 +107,7 @@ variable "vm_image_id" {
 }
 
 variable "vm_plan" {
-  description = "Virtual Machine plan image information. See [documentation](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine#plan. This variable has to be used for BYOS image. Before using BYOS image, you need to accept legal plan terms. See https://docs.microsoft.com/en-us/cli/azure/vm/image?view=azure-cli-latest#az_vm_image_accept_terms)."
+  description = "Virtual Machine plan image information. See [documentation](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine#plan. This variable has to be used for BYOS image. Before using BYOS image, you need to accept legal plan [terms](https://docs.microsoft.com/en-us/cli/azure/vm/image?view=azure-cli-latest#az_vm_image_accept_terms)."
   type = object({
     name      = string
     product   = string
@@ -138,14 +139,22 @@ variable "custom_dns_label" {
 }
 
 variable "public_ip_sku" {
-  description = "SKU for the public IP attached to the Virtual Machine. Can be `null` if no public IP needed."
+  description = "SKU for the public IP attached to the Virtual Machine."
   type        = string
-  default     = null
+  default     = "Standard"
+  nullable    = false
 
   validation {
-    condition     = var.public_ip_sku == null || can(regex("^(Basic|Standard)$", var.public_ip_sku))
+    condition     = can(regex("^(Basic|Standard)$", var.public_ip_sku))
     error_message = "`public_ip_sku` must be either `Basic` or `Standard`."
   }
+}
+
+variable "public_ip_enabled" {
+  description = "Should a Public IP be attached to the Virtual Machine?"
+  type        = bool
+  default     = false
+  nullable    = false
 }
 
 variable "public_ip_zones" {
@@ -246,7 +255,7 @@ variable "backup_policy" {
 variable "patch_mode" {
   description = "Specifies the mode of in-guest patching to this Linux Virtual Machine. Possible values are `AutomaticByPlatform` and `ImageDefault`. [Compatibility list is available here](https://learn.microsoft.com/en-us/azure/virtual-machines/automatic-vm-guest-patching#supported-os-images)."
   type        = string
-  default     = "ImageDefault"
+  default     = "AutomaticByPlatform"
   nullable    = false
   validation {
     condition     = can(index(["AutomaticByPlatform", "ImageDefault"], var.patch_mode))

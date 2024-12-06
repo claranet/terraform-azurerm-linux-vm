@@ -6,9 +6,18 @@ This module creates a [Linux Virtual Machine](https://docs.microsoft.com/en-us/a
 
 Following tags are automatically set with default values: `env`, `stack`, `os_family`, `os_distribution`, `os_version`.
 
+This module will also enforce some standard by default:
+ - Azure Monitor agent extension is deployed
+ - A backup policy attached to the VM
+ - Patch management in place with Update Center
+
 ## Requirements
 
-* [Microsoft.Compute/InGuestAutoAssessmentVMPreview](https://learn.microsoft.com/en-us/azure/update-center/enable-machines?tabs=portal-periodic) must be activated on the subscription to use `patch_mode = "AutomaticByPlatform"` patching option.
+EncryptionAtHost feature must be enabled for disk security.
+
+```bash
+$ az feature register --namespace Microsoft.Compute --name EncryptionAtHost
+```
 
 <!-- BEGIN_TF_DOCS -->
 ## Global versioning rule for Claranet Azure modules
@@ -59,9 +68,7 @@ module "vm" {
   stack               = var.stack
   resource_group_name = module.rg.name
 
-  subnet = {
-    id = module.subnet.id
-  }
+  subnet         = module.subnet
   vm_size        = "Standard_B2s"
   admin_username = var.vm_administrator_login
   ssh_public_key = var.ssh_public_key
@@ -79,17 +86,14 @@ module "vm" {
   patch_mode                    = "AutomaticByPlatform"
   maintenance_configuration_ids = [module.run.maintenance_configurations["Donald"].id, module.run.maintenance_configurations["Hammer"].id]
 
-  availability_set = {
-    id = azurerm_availability_set.main.id
-  }
+  availability_set = azurerm_availability_set.main
   # or use Availability Zone
   # zone_id = 1
 
   vm_image = {
-    publisher = "Debian"
-    offer     = "debian-10"
-    sku       = "10"
-    version   = "latest"
+    publisher = "Canonical"
+    offer     = "Ubuntu"
+    sku       = "24_04-lts"
   }
 
   # The feature must be activated upstream:
@@ -152,7 +156,6 @@ module "vm" {
 | [azurerm_virtual_machine_data_disk_attachment.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_machine_data_disk_attachment) | resource |
 | [azurerm_virtual_machine_extension.azure_monitor_agent](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_machine_extension) | resource |
 | [azurerm_virtual_machine_extension.entra_ssh_login](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_machine_extension) | resource |
-| [azurerm_virtual_machine_extension.log_extension](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_machine_extension) | resource |
 | [azurecaf_name.disk](https://registry.terraform.io/providers/claranet/azurecaf/latest/docs/data-sources/name) | data source |
 | [azurecaf_name.nic](https://registry.terraform.io/providers/claranet/azurecaf/latest/docs/data-sources/name) | data source |
 | [azurecaf_name.pub_ip](https://registry.terraform.io/providers/claranet/azurecaf/latest/docs/data-sources/name) | data source |
@@ -195,10 +198,6 @@ module "vm" {
 | load\_balancer\_attachment | ID of the Load Balancer Backend Pool to attach the Virtual Machine to. | <pre>object({<br/>    id = string<br/>  })</pre> | `null` | no |
 | location | Azure location. | `string` | n/a | yes |
 | location\_short | Short string for Azure location. | `string` | n/a | yes |
-| log\_analytics\_agent\_enabled | Deploy Log Analytics Virtual Machine extension - depending of OS [compatibility list](https://docs.microsoft.com/fr-fr/azure/azure-monitor/agents/agents-overview#linux). | `bool` | `false` | no |
-| log\_analytics\_agent\_version | Azure Log Analytics extension version. | `string` | `"1.14"` | no |
-| log\_analytics\_workspace\_guid | GUID of the Log Analytics Workspace to link with. | `string` | `null` | no |
-| log\_analytics\_workspace\_key | Access key of the Log Analytics Workspace to link with. | `string` | `null` | no |
 | maintenance\_configuration\_ids | List of maintenance configurations to attach to this VM. | `list(string)` | `[]` | no |
 | monitoring\_agent\_enabled | `true` to use and deploy the Azure Monitor Agent. | `bool` | `true` | no |
 | name\_prefix | Optional prefix for the generated name. | `string` | `""` | no |
@@ -213,10 +212,11 @@ module "vm" {
 | os\_disk\_size\_gb | Specifies the size of the OS disk in gigabytes. | `string` | `null` | no |
 | os\_disk\_storage\_account\_type | The Type of Storage Account which should back this the Internal OS Disk. Possible values are `Standard_LRS`, `StandardSSD_LRS`, `Premium_LRS`, `StandardSSD_ZRS` and `Premium_ZRS`. | `string` | `"Premium_ZRS"` | no |
 | os\_disk\_tagging\_enabled | Should OS disk tagging be enabled? Defaults to `true`. | `bool` | `true` | no |
-| patch\_mode | Specifies the mode of in-guest patching to this Linux Virtual Machine. Possible values are `AutomaticByPlatform` and `ImageDefault`. [Compatibility list is available here](https://learn.microsoft.com/en-us/azure/virtual-machines/automatic-vm-guest-patching#supported-os-images). | `string` | `"ImageDefault"` | no |
+| patch\_mode | Specifies the mode of in-guest patching to this Linux Virtual Machine. Possible values are `AutomaticByPlatform` and `ImageDefault`. [Compatibility list is available here](https://learn.microsoft.com/en-us/azure/virtual-machines/automatic-vm-guest-patching#supported-os-images). | `string` | `"AutomaticByPlatform"` | no |
 | patching\_reboot\_setting | Specifies the reboot setting for platform scheduled patching. Possible values are `Always`, `IfRequired` and `Never`. | `string` | `"IfRequired"` | no |
+| public\_ip\_enabled | Should a Public IP be attached to the Virtual Machine? | `bool` | `false` | no |
 | public\_ip\_extra\_tags | Extra tags to set on the public IP resource. | `map(string)` | `{}` | no |
-| public\_ip\_sku | SKU for the public IP attached to the Virtual Machine. Can be `null` if no public IP needed. | `string` | `null` | no |
+| public\_ip\_sku | SKU for the public IP attached to the Virtual Machine. | `string` | `"Standard"` | no |
 | public\_ip\_zones | Zones for public IP attached to the Virtual Machine. Can be `null` if no zone distpatch. | `list(number)` | <pre>[<br/>  1,<br/>  2,<br/>  3<br/>]</pre> | no |
 | resource\_group\_name | Resource group name. | `string` | n/a | yes |
 | spot\_instance | `true` to deploy Virtual Machine as a Spot Instance. | `bool` | `false` | no |
@@ -229,9 +229,9 @@ module "vm" {
 | storage\_data\_disk\_config | Map of objects to configure storage data disk(s). | <pre>map(object({<br/>    name                 = optional(string)<br/>    create_option        = optional(string, "Empty")<br/>    disk_size_gb         = number<br/>    lun                  = optional(number)<br/>    caching              = optional(string, "ReadWrite")<br/>    storage_account_type = optional(string, "StandardSSD_ZRS")<br/>    source_resource_id   = optional(string)<br/>    extra_tags           = optional(map(string), {})<br/>  }))</pre> | `{}` | no |
 | subnet | ID of the Subnet where the Virtual Machine is created. | <pre>object({<br/>    id = string<br/>  })</pre> | n/a | yes |
 | user\_data | The Base64-Encoded User Data which should be used for this Virtual Machine. | `string` | `null` | no |
-| vm\_image | Virtual Machine source image information. See https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html#storage_image_reference. This variable cannot be used if `vm_image_id` is already defined. | <pre>object({<br/>    publisher = string<br/>    offer     = string<br/>    sku       = string<br/>    version   = string<br/>  })</pre> | <pre>{<br/>  "offer": "debian-10",<br/>  "publisher": "Debian",<br/>  "sku": "10",<br/>  "version": "latest"<br/>}</pre> | no |
+| vm\_image | Virtual Machine source image information. See https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html#storage_image_reference. This variable cannot be used if `vm_image_id` is already defined. | <pre>object({<br/>    publisher = string<br/>    offer     = string<br/>    sku       = string<br/>    version   = optional(string, "latest")<br/>  })</pre> | <pre>{<br/>  "offer": "Ubuntu",<br/>  "publisher": "Canonical",<br/>  "sku": "22_04-lts",<br/>  "version": "latest"<br/>}</pre> | no |
 | vm\_image\_id | The ID of the image which this Virtual Machine should be created from. This variable supersedes the `vm_image` variable if not `null`. | `string` | `null` | no |
-| vm\_plan | Virtual Machine plan image information. See [documentation](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine#plan. This variable has to be used for BYOS image. Before using BYOS image, you need to accept legal plan terms. See https://docs.microsoft.com/en-us/cli/azure/vm/image?view=azure-cli-latest#az_vm_image_accept_terms). | <pre>object({<br/>    name      = string<br/>    product   = string<br/>    publisher = string<br/>  })</pre> | `null` | no |
+| vm\_plan | Virtual Machine plan image information. See [documentation](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine#plan. This variable has to be used for BYOS image. Before using BYOS image, you need to accept legal plan [terms](https://docs.microsoft.com/en-us/cli/azure/vm/image?view=azure-cli-latest#az_vm_image_accept_terms). | <pre>object({<br/>    name      = string<br/>    product   = string<br/>    publisher = string<br/>  })</pre> | `null` | no |
 | vm\_size | Size (SKU) of the Virtual Machine to create. | `string` | n/a | yes |
 | zone\_id | Index of the Availability Zone which the Virtual Machine should be allocated in. | `number` | `null` | no |
 
