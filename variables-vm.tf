@@ -38,14 +38,6 @@ variable "nic_accelerated_networking_enabled" {
   default     = true
 }
 
-variable "nic_nsg" {
-  description = "Network Security Group ID to associate on the Network Interface. No association if `null`."
-  type = object({
-    id = string
-  })
-  default = null
-}
-
 variable "static_private_ip" {
   description = "Static private IP. Private IP is dynamic if not set."
   type        = string

@@ -149,7 +149,6 @@ module "vm" {
 | [azurerm_network_interface.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_interface) | resource |
 | [azurerm_network_interface_application_gateway_backend_address_pool_association.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_interface_application_gateway_backend_address_pool_association) | resource |
 | [azurerm_network_interface_backend_address_pool_association.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_interface_backend_address_pool_association) | resource |
-| [azurerm_network_interface_security_group_association.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_interface_security_group_association) | resource |
 | [azurerm_public_ip.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/public_ip) | resource |
 | [azurerm_role_assignment.rbac_admin_login](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
 | [azurerm_role_assignment.rbac_user_login](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
@@ -204,7 +203,6 @@ module "vm" {
 | name\_suffix | Optional suffix for the generated name. | `string` | `""` | no |
 | nic\_accelerated\_networking\_enabled | Should Accelerated Networking be enabled? | `bool` | `true` | no |
 | nic\_extra\_tags | Extra tags to set on the network interface. | `map(string)` | `{}` | no |
-| nic\_nsg | Network Security Group ID to associate on the Network Interface. No association if `null`. | <pre>object({<br/>    id = string<br/>  })</pre> | `null` | no |
 | os\_disk\_caching | Specifies the caching requirements for the OS Disk. | `string` | `"ReadWrite"` | no |
 | os\_disk\_custom\_name | Custom name for OS disk. Generated if not set. | `string` | `null` | no |
 | os\_disk\_extra\_tags | Extra tags to set on the OS disk. | `map(string)` | `{}` | no |

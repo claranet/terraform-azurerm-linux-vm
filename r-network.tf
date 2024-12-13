@@ -40,18 +40,6 @@ moved {
   to   = azurerm_network_interface.main
 }
 
-resource "azurerm_network_interface_security_group_association" "main" {
-  count = var.nic_nsg == null ? 0 : 1
-
-  network_interface_id      = azurerm_network_interface.main.id
-  network_security_group_id = var.nic_nsg.id
-}
-
-moved {
-  from = azurerm_network_interface_security_group_association.nic_nsg
-  to   = azurerm_network_interface_security_group_association.main
-}
-
 resource "azurerm_network_interface_backend_address_pool_association" "main" {
   count = var.load_balancer_attachment != null ? 1 : 0
 
