@@ -86,15 +86,16 @@ resource "azurerm_linux_virtual_machine" "main" {
   reboot_setting                                         = var.patch_mode == "AutomaticByPlatform" ? var.patching_reboot_setting : null
 }
 
-module "vm_os_disk_tagging" {
-  source  = "claranet/tagging/azurerm"
-  version = "6.0.2"
+resource "azapi_resource_action" "main" {
+  count = var.os_disk_tagging_enabled ? 1 : 0
 
-  nb_resources = var.os_disk_tagging_enabled ? 1 : 0
-  resource_ids = [data.azurerm_managed_disk.vm_os_disk.id]
-  behavior     = var.os_disk_overwrite_tags ? "overwrite" : "merge"
+  type        = "Microsoft.Compute/disks@2022-03-02"
+  resource_id = data.azurerm_managed_disk.vm_os_disk.id
+  method      = "PATCH"
 
-  tags = merge(local.default_tags, var.extra_tags, var.os_disk_extra_tags)
+  body = jsonencode({
+    tags = merge(local.default_tags, var.extra_tags, var.os_disk_extra_tags)
+  })
 }
 
 resource "azurerm_managed_disk" "main" {
