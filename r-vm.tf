@@ -93,9 +93,9 @@ resource "azapi_resource_action" "main" {
   resource_id = data.azurerm_managed_disk.vm_os_disk.id
   method      = "PATCH"
 
-  body = jsonencode({
+  body = {
     tags = merge(local.default_tags, var.extra_tags, var.os_disk_extra_tags)
-  })
+  }
 }
 
 resource "azurerm_managed_disk" "main" {
