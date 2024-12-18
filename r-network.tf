@@ -1,7 +1,7 @@
 resource "azurerm_public_ip" "main" {
   count = var.public_ip_enabled ? 1 : 0
 
-  name                = local.pub_ip_name
+  name                = local.public_ip_name
   location            = var.location
   resource_group_name = var.resource_group_name
   allocation_method   = "Static"

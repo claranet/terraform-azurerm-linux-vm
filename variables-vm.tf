@@ -214,7 +214,7 @@ variable "identity" {
 }
 
 ## Spot variables
-variable "spot_instance" {
+variable "spot_instance_enabled" {
   description = "`true` to deploy Virtual Machine as a Spot Instance."
   type        = bool
   default     = false
@@ -255,7 +255,7 @@ variable "patch_mode" {
   }
 }
 
-variable "maintenance_configuration_ids" {
+variable "maintenance_configurations_ids" {
   description = "List of maintenance configurations to attach to this VM."
   type        = list(string)
   default     = []

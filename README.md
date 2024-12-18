@@ -83,8 +83,8 @@ module "vm" {
     id = module.run.vm_backup_policy_id
   }
 
-  patch_mode                    = "AutomaticByPlatform"
-  maintenance_configuration_ids = [module.run.maintenance_configurations["Donald"].id, module.run.maintenance_configurations["Hammer"].id]
+  patch_mode                     = "AutomaticByPlatform"
+  maintenance_configurations_ids = [module.run.maintenance_configurations["Donald"].id, module.run.maintenance_configurations["Hammer"].id]
 
   availability_set = azurerm_availability_set.main
   # or use Availability Zone
@@ -175,14 +175,11 @@ module "vm" {
 | azure\_monitor\_data\_collection\_rule | Data Collection Rule ID from Azure Monitor for metrics and logs collection. Used with new monitoring agent, set to `null` to disable. | <pre>object({<br/>    id = string<br/>  })</pre> | n/a | yes |
 | backup\_policy | Backup policy ID from the Recovery Vault to attach the Virtual Machine to (value to `null` to disable backup). | <pre>object({<br/>    id = string<br/>  })</pre> | n/a | yes |
 | client\_name | Client name/account used in naming. | `string` | n/a | yes |
-| custom\_computer\_name | Custom name for the Virtual Machine Hostname. `vm_name` if not set. | `string` | `""` | no |
+| computer\_name | Custom name for the Virtual Machine Hostname. `vm_name` if not set. | `string` | `""` | no |
 | custom\_data | The Base64-Encoded Custom Data which should be used for this Virtual Machine. Changing this forces a new resource to be created. | `string` | `null` | no |
-| custom\_dcr\_name | Custom name for Data collection rule association. | `string` | `null` | no |
 | custom\_dns\_label | The DNS label to use for public access. Virtual Machine name if not set. DNS will be `<label>.<region>.cloudapp.azure.com`. | `string` | `""` | no |
-| custom\_ipconfig\_name | Custom name for the IP config of the NIC. Generated if not set. | `string` | `null` | no |
 | custom\_name | Custom name for the Virtual Machine. Generated if not set. | `string` | `""` | no |
-| custom\_nic\_name | Custom name for the NIC interface. Generated if not set. | `string` | `null` | no |
-| custom\_public\_ip\_name | Custom name for Public IP. Generated if not set. | `string` | `null` | no |
+| dcr\_custom\_name | Custom name for Data collection rule association. | `string` | `null` | no |
 | default\_tags\_enabled | Option to enable or disable default tags. | `bool` | `true` | no |
 | diagnostics\_storage\_account\_name | Name of the Storage Account in which store boot diagnostics. | `string` | n/a | yes |
 | disable\_password\_authentication | Option to disable or enable password authentication if admin password is not set. | `bool` | `true` | no |
@@ -195,14 +192,16 @@ module "vm" {
 | extensions\_extra\_tags | Extra tags to set on the VM extensions. | `map(string)` | `{}` | no |
 | extra\_tags | Extra tags to set on each created resource. | `map(string)` | `{}` | no |
 | identity | Map with identity block informations as described [here](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine#identity). | <pre>object({<br/>    type         = string<br/>    identity_ids = list(string)<br/>  })</pre> | <pre>{<br/>  "identity_ids": [],<br/>  "type": "SystemAssigned"<br/>}</pre> | no |
+| ip\_configuration\_custom\_name | Custom name for the IP config of the NIC. Generated if not set. | `string` | `null` | no |
 | load\_balancer\_attachment | ID of the Load Balancer Backend Pool to attach the Virtual Machine to. | <pre>object({<br/>    id = string<br/>  })</pre> | `null` | no |
 | location | Azure location. | `string` | n/a | yes |
 | location\_short | Short string for Azure location. | `string` | n/a | yes |
-| maintenance\_configuration\_ids | List of maintenance configurations to attach to this VM. | `list(string)` | `[]` | no |
+| maintenance\_configurations\_ids | List of maintenance configurations to attach to this VM. | `list(string)` | `[]` | no |
 | monitoring\_agent\_enabled | `true` to use and deploy the Azure Monitor Agent. | `bool` | `true` | no |
 | name\_prefix | Optional prefix for the generated name. | `string` | `""` | no |
 | name\_suffix | Optional suffix for the generated name. | `string` | `""` | no |
 | nic\_accelerated\_networking\_enabled | Should Accelerated Networking be enabled? | `bool` | `true` | no |
+| nic\_custom\_name | Custom name for the NIC interface. Generated if not set. | `string` | `null` | no |
 | nic\_extra\_tags | Extra tags to set on the network interface. | `map(string)` | `{}` | no |
 | os\_disk\_caching | Specifies the caching requirements for the OS Disk. | `string` | `"ReadWrite"` | no |
 | os\_disk\_custom\_name | Custom name for OS disk. Generated if not set. | `string` | `null` | no |
@@ -212,12 +211,13 @@ module "vm" {
 | os\_disk\_tagging\_enabled | Should OS disk tagging be enabled? Defaults to `true`. | `bool` | `true` | no |
 | patch\_mode | Specifies the mode of in-guest patching to this Linux Virtual Machine. Possible values are `AutomaticByPlatform` and `ImageDefault`. [Compatibility list is available here](https://learn.microsoft.com/en-us/azure/virtual-machines/automatic-vm-guest-patching#supported-os-images). | `string` | `"AutomaticByPlatform"` | no |
 | patching\_reboot\_setting | Specifies the reboot setting for platform scheduled patching. Possible values are `Always`, `IfRequired` and `Never`. | `string` | `"IfRequired"` | no |
+| public\_ip\_custom\_name | Custom name for Public IP. Generated if not set. | `string` | `null` | no |
 | public\_ip\_enabled | Should a Public IP be attached to the Virtual Machine? | `bool` | `false` | no |
 | public\_ip\_extra\_tags | Extra tags to set on the public IP resource. | `map(string)` | `{}` | no |
 | public\_ip\_sku | SKU for the public IP attached to the Virtual Machine. | `string` | `"Standard"` | no |
 | public\_ip\_zones | Zones for public IP attached to the Virtual Machine. Can be `null` if no zone distpatch. | `list(number)` | <pre>[<br/>  1,<br/>  2,<br/>  3<br/>]</pre> | no |
 | resource\_group\_name | Resource group name. | `string` | n/a | yes |
-| spot\_instance | `true` to deploy Virtual Machine as a Spot Instance. | `bool` | `false` | no |
+| spot\_instance\_enabled | `true` to deploy Virtual Machine as a Spot Instance. | `bool` | `false` | no |
 | spot\_instance\_eviction\_policy | Specifies what should happen when the Virtual Machine is evicted for price reasons when using a Spot instance. At this time the only supported value is `Deallocate`. Changing this forces a new resource to be created. | `string` | `"Deallocate"` | no |
 | spot\_instance\_max\_bid\_price | The maximum price you're willing to pay for this Virtual Machine in US Dollars; must be greater than the current spot price. `-1` If you don't want the Virtual Machine to be evicted for price reasons. | `number` | `-1` | no |
 | ssh\_private\_key | SSH private key. | `string` | `null` | no |

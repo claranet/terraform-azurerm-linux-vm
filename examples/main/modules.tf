@@ -31,8 +31,8 @@ module "vm" {
     id = module.run.vm_backup_policy_id
   }
 
-  patch_mode                    = "AutomaticByPlatform"
-  maintenance_configuration_ids = [module.run.maintenance_configurations["Donald"].id, module.run.maintenance_configurations["Hammer"].id]
+  patch_mode                     = "AutomaticByPlatform"
+  maintenance_configurations_ids = [module.run.maintenance_configurations["Donald"].id, module.run.maintenance_configurations["Hammer"].id]
 
   availability_set = azurerm_availability_set.main
   # or use Availability Zone
