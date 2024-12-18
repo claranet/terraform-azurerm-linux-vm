@@ -200,6 +200,30 @@ variable "encryption_at_host_enabled" {
   default     = true
 }
 
+variable "vm_agent_platform_updates_enabled" {
+  description = "Specifies whether VMAgent Platform Updates is enabled. Defaults to `false`."
+  type        = bool
+  default     = false
+}
+
+variable "vtpm_enabled" {
+  description = "Specifies whether Virtual Trusted Platform Module (vTPM) is enabled."
+  type        = bool
+  default     = null
+}
+
+variable "ultra_ssd_enabled" {
+  description = "Specifies whether Ultra Disk is enabled (`UltraSSD_LRS` storage type for Data Disks)."
+  type        = bool
+  default     = null
+}
+
+variable "disk_controller_type" {
+  description = "Specifies the Disk Controller Type used for this Virtual Machine. Possible values are `SCSI` and `NVMe`."
+  type        = string
+  default     = null
+}
+
 ## Identity variables
 variable "identity" {
   description = "Map with identity block informations as described [here](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine#identity)."

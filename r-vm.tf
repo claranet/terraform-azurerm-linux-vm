@@ -49,7 +49,17 @@ resource "azurerm_linux_virtual_machine" "main" {
     disk_size_gb         = var.os_disk_size_gb
   }
 
-  encryption_at_host_enabled = var.encryption_at_host_enabled
+  encryption_at_host_enabled        = var.encryption_at_host_enabled
+  vm_agent_platform_updates_enabled = var.vm_agent_platform_updates_enabled
+  vtpm_enabled                      = var.vtpm_enabled
+  disk_controller_type              = var.disk_controller_type
+
+  dynamic "additional_capabilities" {
+    for_each = var.ultra_ssd_enabled[*]
+    content {
+      ultra_ssd_enabled = var.ultra_ssd_enabled
+    }
+  }
 
   dynamic "identity" {
     for_each = var.identity[*]
