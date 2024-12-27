@@ -207,13 +207,13 @@ variable "vm_agent_platform_updates_enabled" {
 }
 
 variable "vtpm_enabled" {
-  description = "Specifies whether Virtual Trusted Platform Module (vTPM) is enabled."
+  description = "Specifies if vTPM (virtual Trusted Platform Module) and Trusted Launch is enabled for the Virtual Machine. Defaults to `true`. Changing this forces a new resource to be created."
   type        = bool
-  default     = null
+  default     = true
 }
 
 variable "ultra_ssd_enabled" {
-  description = "Specifies whether Ultra Disk is enabled (`UltraSSD_LRS` storage type for Data Disks)."
+  description = "Specifies whether Ultra Disks is enabled (`UltraSSD_LRS` storage type for data disks)."
   type        = bool
   default     = null
 }
