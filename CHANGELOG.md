@@ -1,3 +1,42 @@
+## 8.0.0 (2025-01-03)
+
+### ⚠ BREAKING CHANGES
+
+* **AZ-1088:** AzureRM Provider v4+ and OpenTofu 1.8+
+
+### Features
+
+* **AZ-1088:** add missing `linux-vm` parameters e39224f
+* **AZ-1088:** apply suggestions bb0c862
+* **AZ-1088:** apply suggestions 560a893
+* **AZ-1088:** module v8 structure and updates 10457e6
+* use `azapi` to apply tag on OS Disk 1861916
+
+### Bug Fixes
+
+* body for AzAPI v2+ c22fa19
+
+### Documentation
+
+* update examples 444f7ca
+
+### Code Refactoring
+
+* **AZ-1088:** apply suggestions acbf51d
+* **AZ-1088:** apply updates suggestions 38b7e0c
+* **AZ-1088:** apply variable naming suggestions 971297c
+
+### Miscellaneous Chores
+
+* **deps:** update dependency opentofu to v1.8.6 5008d78
+* **deps:** update dependency opentofu to v1.8.8 dc15b73
+* **deps:** update dependency trivy to v0.58.1 260f602
+* **deps:** update pre-commit hook alessandrojcm/commitlint-pre-commit-hook to v9.19.0 10fbda5
+* **deps:** update pre-commit hook alessandrojcm/commitlint-pre-commit-hook to v9.20.0 d9bf3b9
+* **deps:** update tools cf6b721
+* drop `nic_nsg`, should be handled out of this module 105b34a
+* **trivy:** add ignore file 6f66c86
+
 ## 7.13.0 (2024-11-22)
 
 ### Features
