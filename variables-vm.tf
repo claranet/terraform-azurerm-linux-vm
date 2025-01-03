@@ -130,18 +130,6 @@ variable "custom_dns_label" {
   default     = ""
 }
 
-variable "public_ip_sku" {
-  description = "SKU for the public IP attached to the Virtual Machine."
-  type        = string
-  default     = "Standard"
-  nullable    = false
-
-  validation {
-    condition     = can(regex("^(Basic|Standard)$", var.public_ip_sku))
-    error_message = "`public_ip_sku` must be either `Basic` or `Standard`."
-  }
-}
-
 variable "public_ip_enabled" {
   description = "Should a Public IP be attached to the Virtual Machine?"
   type        = bool
@@ -182,9 +170,10 @@ variable "os_disk_storage_account_type" {
   type        = string
   default     = "Premium_ZRS"
   nullable    = false
+
   validation {
-    condition     = can(index(["Standard_LRS", "StandardSSD_LRS", "Premium_LRS", "StandardSSD_ZRS", "Premium_ZRS"], var.os_disk_storage_account_type))
-    error_message = "`os_disk_storage_account_type` must be one of `Standard_LRS`, `StandardSSD_LRS`, `Premium_LRS`, `StandardSSD_ZRS` or `Premium_ZRS`."
+    condition     = contains(["Standard_LRS", "StandardSSD_LRS", "Premium_LRS", "StandardSSD_ZRS", "Premium_ZRS"], var.os_disk_storage_account_type)
+    error_message = "`var.os_disk_storage_account_type` must be one of `Standard_LRS`, `StandardSSD_LRS`, `Premium_LRS`, `StandardSSD_ZRS` or `Premium_ZRS`."
   }
 }
 
@@ -273,9 +262,10 @@ variable "patch_mode" {
   type        = string
   default     = "AutomaticByPlatform"
   nullable    = false
+
   validation {
-    condition     = can(index(["AutomaticByPlatform", "ImageDefault"], var.patch_mode))
-    error_message = "`patch_mode` must be either `AutomaticByPlatform` or `ImageDefault`."
+    condition     = contains(["AutomaticByPlatform", "ImageDefault"], var.patch_mode)
+    error_message = "`var.patch_mode` must be either `AutomaticByPlatform` or `ImageDefault`."
   }
 }
 
@@ -290,9 +280,10 @@ variable "patching_reboot_setting" {
   type        = string
   default     = "IfRequired"
   nullable    = false
+
   validation {
-    condition     = can(index(["Always", "IfRequired", "Never"], var.patching_reboot_setting))
-    error_message = "`patching_reboot_setting` must be either `Always`, `IfRequired` or `Never`."
+    condition     = contains(["Always", "IfRequired", "Never"], var.patching_reboot_setting)
+    error_message = "`var.patching_reboot_setting` must be either `Always`, `IfRequired` or `Never`."
   }
 }
 

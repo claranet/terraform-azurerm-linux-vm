@@ -1,13 +1,15 @@
 resource "azurerm_public_ip" "main" {
   count = var.public_ip_enabled ? 1 : 0
 
-  name                = local.public_ip_name
-  location            = var.location
+  name     = local.public_ip_name
+  location = var.location
+
   resource_group_name = var.resource_group_name
-  allocation_method   = "Static"
-  domain_name_label   = coalesce(var.custom_dns_label, local.name)
-  sku                 = var.public_ip_sku
-  zones               = var.public_ip_zones
+
+  sku               = "Standard"
+  allocation_method = "Static"
+  domain_name_label = coalesce(var.custom_dns_label, local.name)
+  zones             = var.public_ip_zones
 
   tags = merge(local.default_tags, var.extra_tags, var.public_ip_extra_tags)
 }

@@ -215,7 +215,6 @@ module "vm" {
 | public\_ip\_custom\_name | Custom name for Public IP. Generated if not set. | `string` | `null` | no |
 | public\_ip\_enabled | Should a Public IP be attached to the Virtual Machine? | `bool` | `false` | no |
 | public\_ip\_extra\_tags | Extra tags to set on the public IP resource. | `map(string)` | `{}` | no |
-| public\_ip\_sku | SKU for the public IP attached to the Virtual Machine. | `string` | `"Standard"` | no |
 | public\_ip\_zones | Zones for public IP attached to the Virtual Machine. Can be `null` if no zone distpatch. | `list(number)` | <pre>[<br/>  1,<br/>  2,<br/>  3<br/>]</pre> | no |
 | resource\_group\_name | Resource group name. | `string` | n/a | yes |
 | spot\_instance\_enabled | `true` to deploy Virtual Machine as a Spot Instance. | `bool` | `false` | no |
