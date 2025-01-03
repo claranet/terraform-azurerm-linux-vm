@@ -1,0 +1,3 @@
+# AVD-AZU-0039 (HIGH): Linux virtual machine allows password authentication.
+# This one is ignored because it depends on how people uses our module.
+AVD-AZU-0039

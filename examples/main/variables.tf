@@ -4,26 +4,26 @@ variable "azure_region" {
 }
 
 variable "client_name" {
-  description = "Client name/account used in naming"
+  description = "Client name/account used in naming."
   type        = string
 }
 
 variable "environment" {
-  description = "Project environment"
+  description = "Project environment."
   type        = string
 }
 
 variable "stack" {
-  description = "Project stack name"
+  description = "Project stack name."
   type        = string
 }
 
 variable "vm_administrator_login" {
-  description = "Administrator login for Virtual Machine"
+  description = "Administrator login for Virtual Machine."
   type        = string
 }
 
 variable "ssh_public_key" {
-  description = "SSH Public key to authorize on Virtual Machine"
+  description = "SSH Public key to authorize on Virtual Machine."
   type        = string
 }

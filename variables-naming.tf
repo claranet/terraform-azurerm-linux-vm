@@ -11,12 +11,6 @@ variable "name_suffix" {
   default     = ""
 }
 
-variable "use_caf_naming" {
-  description = "Use the Azure CAF naming provider to generate default resource name. `custom_name` override this if set. Legacy default name is used if this is set to `false`."
-  type        = bool
-  default     = true
-}
-
 # Custom naming override
 variable "custom_name" {
   description = "Custom name for the Virtual Machine. Generated if not set."
@@ -24,25 +18,25 @@ variable "custom_name" {
   default     = ""
 }
 
-variable "custom_computer_name" {
+variable "computer_name" {
   description = "Custom name for the Virtual Machine Hostname. `vm_name` if not set."
   type        = string
   default     = ""
 }
 
-variable "custom_public_ip_name" {
-  description = "Custom name for public IP. Generated if not set."
+variable "public_ip_custom_name" {
+  description = "Custom name for Public IP. Generated if not set."
   type        = string
   default     = null
 }
 
-variable "custom_nic_name" {
+variable "nic_custom_name" {
   description = "Custom name for the NIC interface. Generated if not set."
   type        = string
   default     = null
 }
 
-variable "custom_ipconfig_name" {
+variable "ip_configuration_custom_name" {
   description = "Custom name for the IP config of the NIC. Generated if not set."
   type        = string
   default     = null
@@ -54,8 +48,8 @@ variable "os_disk_custom_name" {
   default     = null
 }
 
-variable "custom_dcr_name" {
-  description = "Custom name for Data collection rule association"
+variable "dcr_custom_name" {
+  description = "Custom name for Data collection rule association."
   type        = string
   default     = null
 }

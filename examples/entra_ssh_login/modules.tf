@@ -1,8 +1,9 @@
-resource "azurerm_availability_set" "main" {
-  name                = "${var.stack}-${var.client_name}-${module.azure_region.location_short}-${var.environment}-as"
-  location            = module.azure_region.location
-  resource_group_name = module.rg.name
-  managed             = true
+data "azuread_group" "vm_admins_group" {
+  display_name = "Virtual Machines Admins"
+}
+
+data "azuread_group" "vm_users_group" {
+  display_name = "Virtual Machines Users"
 }
 
 module "vm" {
@@ -16,7 +17,9 @@ module "vm" {
   stack               = var.stack
   resource_group_name = module.rg.name
 
-  subnet         = module.subnet
+  subnet = {
+    id = module.subnet.id
+  }
   vm_size        = "Standard_B2s"
   admin_username = var.vm_administrator_login
   ssh_public_key = var.ssh_public_key
@@ -34,14 +37,15 @@ module "vm" {
   patch_mode                     = "AutomaticByPlatform"
   maintenance_configurations_ids = [module.run.maintenance_configurations["Donald"].id, module.run.maintenance_configurations["Hammer"].id]
 
-  availability_set = azurerm_availability_set.main
+  # availability_set_id = azurerm_availability_set.main.id
   # or use Availability Zone
-  # zone_id = 1
+  zone_id = 1
 
   vm_image = {
-    publisher = "Canonical"
-    offer     = "Ubuntu"
-    sku       = "24_04-lts"
+    publisher = "Debian"
+    offer     = "debian-10"
+    sku       = "10"
+    version   = "latest"
   }
 
   # The feature must be activated upstream:
@@ -68,4 +72,8 @@ module "vm" {
       }
     }
   }
+
+  entra_ssh_login_enabled           = true
+  entra_ssh_login_admin_objects_ids = [data.azuread_group.vm_admins_group.object_id]
+  entra_ssh_login_user_objects_ids  = [data.azuread_group.vm_users_group.object_id]
 }
