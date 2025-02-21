@@ -1,3 +1,21 @@
+## 8.1.0 (2025-02-21)
+
+### Features
+
+* **AZ-1518:** add security boot option c4ce539
+
+### Miscellaneous Chores
+
+* **deps:** update dependency opentofu to v1.9.0 df09ddd
+* **deps:** update dependency pre-commit to v4.1.0 8893ca4
+* **deps:** update dependency tflint to v0.55.0 d367a03
+* **deps:** update dependency trivy to v0.58.2 3fea51c
+* **deps:** update dependency trivy to v0.59.1 1076f09
+* **deps:** update pre-commit hook alessandrojcm/commitlint-pre-commit-hook to v9.21.0 b8f5b0c
+* **deps:** update tools e2c3bf3
+* update Github templates 2709e73
+* update tflint config for v0.55.0 cc71c45
+
 ## 8.0.0 (2025-01-03)
 
 ### ⚠ BREAKING CHANGES
