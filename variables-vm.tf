@@ -219,6 +219,12 @@ variable "disk_controller_type" {
   default     = null
 }
 
+variable "disk_encryption_set_id" {
+  description = "ID of the disk encryption set to use to encrypt VM disks."
+  type        = string
+  default     = null
+}
+
 ## Identity variables
 variable "identity" {
   description = "Map with identity block informations as described [here](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine#identity)."
