@@ -1,3 +1,13 @@
+## 8.2.0 (2025-03-07)
+
+### Features
+
+* **AZ-1533:** add `disk_encryption_set_id` option 36ca5d8
+
+### Miscellaneous Chores
+
+* **deps:** update dependency trivy to v0.60.0 6f17740
+
 ## 8.1.0 (2025-02-21)
 
 ### Features
