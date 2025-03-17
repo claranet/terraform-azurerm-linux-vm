@@ -185,6 +185,7 @@ module "vm" {
 | disable\_password\_authentication | Option to disable or enable password authentication if admin password is not set. | `bool` | `true` | no |
 | disk\_controller\_type | Specifies the Disk Controller Type used for this Virtual Machine. Possible values are `SCSI` and `NVMe`. | `string` | `null` | no |
 | disk\_encryption\_set\_id | ID of the disk encryption set to use to encrypt VM disks. | `string` | `null` | no |
+| dns\_servers | A list of IP Addresses defining the DNS Servers which should be used for this Network Interface. | `list(string)` | `null` | no |
 | encryption\_at\_host\_enabled | Should all disks (including the temporary disk) attached to the Virtual Machine be encrypted by enabling Encryption at Host? [List of compatible Virtual Machine sizes](https://learn.microsoft.com/en-us/azure/virtual-machines/linux/disks-enable-host-based-encryption-cli#finding-supported-vm-sizes). | `bool` | `true` | no |
 | entra\_ssh\_login\_admin\_objects\_ids | Entra ID (aka AAD) objects IDs allowed to connect as administrator on the Virtual Machine. | `list(string)` | `[]` | no |
 | entra\_ssh\_login\_enabled | Enable SSH logins with Entra ID (aka AAD). | `bool` | `false` | no |
