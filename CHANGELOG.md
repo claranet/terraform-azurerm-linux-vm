@@ -1,3 +1,14 @@
+## 8.3.0 (2025-03-21)
+
+### Features
+
+* **AZ-1539:** adding dns-servers option for nic da4ae6e
+
+### Miscellaneous Chores
+
+* **deps:** update dependency pre-commit to v4.2.0 1a27711
+* **deps:** update pre-commit hook alessandrojcm/commitlint-pre-commit-hook to v9.22.0 00cc87d
+
 ## 8.2.0 (2025-03-07)
 
 ### Features
