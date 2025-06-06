@@ -1,3 +1,22 @@
+## 8.4.0 (2025-06-06)
+
+### Features
+
+* ✨ remove `vm_agent_platform_updates_enabled` variable 35600c7
+
+### Miscellaneous Chores
+
+* **deps:** update dependency opentofu to v1.9.1 88b2da7
+* **deps:** update dependency terraform-docs to v0.20.0 bc2a018
+* **deps:** update dependency tflint to v0.57.0 7811db7
+* **deps:** update dependency tflint to v0.58.0 9afcd82
+* **deps:** update dependency trivy to v0.61.1 79de588
+* **deps:** update dependency trivy to v0.62.0 e4c7c7f
+* **deps:** update dependency trivy to v0.62.1 a77c500
+* **deps:** update dependency trivy to v0.63.0 8f2ca73
+* **deps:** update pre-commit hook tofuutils/pre-commit-opentofu to v2.2.0 eeaed45
+* **deps:** update tools a7a3cce
+
 ## 8.3.0 (2025-03-21)
 
 ### Features
