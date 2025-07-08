@@ -173,7 +173,7 @@ module "vm" {
 | azure\_monitor\_agent\_auto\_upgrade\_enabled | Automatically update agent when publisher releases a new version of the agent. | `bool` | `false` | no |
 | azure\_monitor\_agent\_version | Azure Monitor Agent extension version | `string` | `"1.21"` | no |
 | azure\_monitor\_data\_collection\_rule | Data Collection Rule ID from Azure Monitor for metrics and logs collection. Used with new monitoring agent, set to `null` to disable. | <pre>object({<br/>    id = string<br/>  })</pre> | n/a | yes |
-| backup\_policy | Backup policy ID from the Recovery Vault to attach the Virtual Machine to (value to `null` to disable backup). | <pre>object({<br/>    id = string<br/>  })</pre> | n/a | yes |
+| backup\_policy | Backup policy parameters from the Recovery Vault to attach the Virtual Machine to (value to `null` to disable backup). | <pre>object({<br/>    id                = string<br/>    exclude_disk_luns = optional(list(number), [])<br/>  })</pre> | n/a | yes |
 | client\_name | Client name/account used in naming. | `string` | n/a | yes |
 | computer\_name | Custom name for the Virtual Machine Hostname. `vm_name` if not set. | `string` | `""` | no |
 | custom\_data | The Base64-Encoded Custom Data which should be used for this Virtual Machine. Changing this forces a new resource to be created. | `string` | `null` | no |
