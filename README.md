@@ -69,7 +69,7 @@ module "vm" {
   resource_group_name = module.rg.name
 
   subnet         = module.subnet
-  vm_size        = "Standard_B2s"
+  vm_size        = "Standard_B2als_v2"
   admin_username = var.vm_administrator_login
   ssh_public_key = var.ssh_public_key
 
@@ -92,8 +92,9 @@ module "vm" {
 
   vm_image = {
     publisher = "Canonical"
-    offer     = "Ubuntu"
-    sku       = "24_04-lts"
+    offer     = "ubuntu-24_04-lts"
+    sku       = "server"
+    version   = "latest"
   }
 
   # The feature must be activated upstream:
