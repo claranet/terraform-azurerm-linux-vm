@@ -1,3 +1,18 @@
+## 8.5.1 (2025-08-29)
+
+### Documentation
+
+* 📚 update example 7cc572c
+
+### Miscellaneous Chores
+
+* **deps:** 🔗 bump AzureRM provider version to v4.31+ 67e1528
+* **deps:** update dependency opentofu to v1.10.3 07d89c6
+* **deps:** update dependency tflint to v0.58.1 c90aa92
+* **deps:** update pre-commit hook pre-commit/pre-commit-hooks to v6 60ff6a1
+* **deps:** update tools 721f101
+* **deps:** update tools 9e6305c
+
 ## 8.5.0 (2025-07-11)
 
 ### Features
