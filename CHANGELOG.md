@@ -1,3 +1,16 @@
+## 8.5.2 (2025-09-30)
+
+### Code Refactoring
+
+* **deps:** 🔗 update claranet/azurecaf to ~> 1.3.0 🔧 c43a704
+
+### Miscellaneous Chores
+
+* **deps:** update dependency opentofu to v1.10.6 7b797c3
+* **deps:** update dependency tflint to v0.59.1 f4c1aea
+* **deps:** update dependency trivy to v0.66.0 a470352
+* **deps:** update dependency trivy to v0.67.0 ee2453c
+
 ## 8.5.1 (2025-08-29)
 
 ### Documentation
