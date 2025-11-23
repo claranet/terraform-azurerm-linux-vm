@@ -162,6 +162,7 @@ module "vm" {
 | [azurecaf_name.pub_ip](https://registry.terraform.io/providers/claranet/azurecaf/latest/docs/data-sources/name) | data source |
 | [azurecaf_name.vm](https://registry.terraform.io/providers/claranet/azurecaf/latest/docs/data-sources/name) | data source |
 | [azurerm_managed_disk.vm_os_disk](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/managed_disk) | data source |
+| [azurerm_public_ip.public_ip](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/public_ip) | data source |
 
 ## Inputs
 
@@ -218,6 +219,7 @@ module "vm" {
 | public\_ip\_custom\_name | Custom name for Public IP. Generated if not set. | `string` | `null` | no |
 | public\_ip\_enabled | Should a Public IP be attached to the Virtual Machine? | `bool` | `false` | no |
 | public\_ip\_extra\_tags | Extra tags to set on the public IP resource. | `map(string)` | `{}` | no |
+| public\_ip\_id | ID of the Public IP to attach to the Virtual Machine. if not provided, a new Public IP will be created. | `string` | `null` | no |
 | public\_ip\_zones | Zones for public IP attached to the Virtual Machine. Can be `null` if no zone distpatch. | `list(number)` | <pre>[<br/>  1,<br/>  2,<br/>  3<br/>]</pre> | no |
 | resource\_group\_name | Resource group name. | `string` | n/a | yes |
 | secure\_boot\_enabled | Specifies if Secure Boot is enabled for the Virtual Machine. Defaults to `true`. Changing this forces a new resource to be created. | `bool` | `true` | no |
