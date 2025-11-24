@@ -181,6 +181,7 @@ module "vm" {
 | custom\_data | The Base64-Encoded Custom Data which should be used for this Virtual Machine. Changing this forces a new resource to be created. | `string` | `null` | no |
 | custom\_dns\_label | The DNS label to use for public access. Virtual Machine name if not set. DNS will be `<label>.<region>.cloudapp.azure.com`. | `string` | `""` | no |
 | custom\_name | Custom name for the Virtual Machine. Generated if not set. | `string` | `""` | no |
+| custom\_public\_ip\_address\_id | ID of the Public IP to attach to the Virtual Machine. if not provided, a new Public IP will be created. | `string` | `null` | no |
 | dcr\_custom\_name | Custom name for Data collection rule association. | `string` | `null` | no |
 | default\_tags\_enabled | Option to enable or disable default tags. | `bool` | `true` | no |
 | diagnostics\_storage\_account\_name | Name of the Storage Account in which store boot diagnostics. | `string` | n/a | yes |
@@ -219,7 +220,6 @@ module "vm" {
 | public\_ip\_custom\_name | Custom name for Public IP. Generated if not set. | `string` | `null` | no |
 | public\_ip\_enabled | Should a Public IP be attached to the Virtual Machine? | `bool` | `false` | no |
 | public\_ip\_extra\_tags | Extra tags to set on the public IP resource. | `map(string)` | `{}` | no |
-| public\_ip\_id | ID of the Public IP to attach to the Virtual Machine. if not provided, a new Public IP will be created. | `string` | `null` | no |
 | public\_ip\_zones | Zones for public IP attached to the Virtual Machine. Can be `null` if no zone distpatch. | `list(number)` | <pre>[<br/>  1,<br/>  2,<br/>  3<br/>]</pre> | no |
 | resource\_group\_name | Resource group name. | `string` | n/a | yes |
 | secure\_boot\_enabled | Specifies if Secure Boot is enabled for the Virtual Machine. Defaults to `true`. Changing this forces a new resource to be created. | `bool` | `true` | no |
@@ -249,6 +249,7 @@ module "vm" {
 | admin\_ssh\_private\_key | Virtual Machine admin SSH private key. |
 | admin\_ssh\_public\_key | Virtual Machine admin SSH public key. |
 | admin\_username | Virtual Machine admin username. |
+| custom\_public\_ip\_address\_id | Public IP ID of the Virtual Machine. |
 | hostname | Hostname of the Virtual Machine. |
 | id | ID of the Virtual Machine. |
 | identity\_principal\_id | Linux Virtual Machine system identity principal ID. |
@@ -259,7 +260,6 @@ module "vm" {
 | private\_ip\_address | Private IP address of the Virtual Machine. |
 | public\_domain\_name\_label | Public DNS of the Virtual Machine. |
 | public\_ip\_address | Public IP address of the Virtual Machine. |
-| public\_ip\_id | Public IP ID of the Virtual Machine. |
 | resource | Linux Virtual Machine  resource object. |
 | resource\_maintenance\_configuration\_assignment | Maintenance configuration assignment resource object. |
 | resource\_os\_disk | Virtual Machine OS disk resource object. |
