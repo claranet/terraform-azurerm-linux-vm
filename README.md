@@ -249,10 +249,10 @@ module "vm" {
 | admin\_ssh\_private\_key | Virtual Machine admin SSH private key. |
 | admin\_ssh\_public\_key | Virtual Machine admin SSH public key. |
 | admin\_username | Virtual Machine admin username. |
-| custom\_public\_ip\_address\_id | Public IP ID of the Virtual Machine. |
 | hostname | Hostname of the Virtual Machine. |
 | id | ID of the Virtual Machine. |
 | identity\_principal\_id | Linux Virtual Machine system identity principal ID. |
+| ip\_address\_id | Public IP ID of the Virtual Machine. |
 | name | Name of the Virtual Machine. |
 | nic\_id | ID of the Network Interface Configuration attached to the Virtual Machine. |
 | nic\_ip\_configuration\_name | Name of the IP Configuration for the Network Interface Configuration attached to the Virtual Machine. |

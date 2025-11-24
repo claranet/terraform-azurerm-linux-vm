@@ -1,9 +1,3 @@
-locals {
-  custom_public_ip_adress_id_parsed = provider::azurerm::parse_resource_id(var.custom_public_ip_address_id)
-  public_ip                         = concat(azurerm_public_ip.main[*], data.azurerm_public_ip.public_ip[*])
-}
-
-
 data "azurerm_public_ip" "public_ip" {
   count = var.custom_public_ip_address_id == null ? 0 : 1
 

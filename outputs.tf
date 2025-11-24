@@ -28,7 +28,7 @@ output "public_ip_address" {
   value       = one(local.public_ip[*].ip_address)
 }
 
-output "custom_public_ip_address_id" {
+output "ip_address_id" {
   description = "Public IP ID of the Virtual Machine."
   value       = one(local.public_ip[*].id)
 }
