@@ -147,10 +147,12 @@ variable "public_ip_enabled" {
   nullable    = false
 }
 
-variable "custom_public_ip_address_id" {
-  description = "ID of the Public IP to attach to the Virtual Machine. if not provided, a new Public IP will be created."
-  type        = string
-  default     = null
+variable "custom_public_ip_address" {
+  description = "Public IP to attach to the Virtual Machine. if not provided, a new Public IP will be created."
+  type = object({
+    id = string
+  })
+  default = null
 }
 
 variable "public_ip_zones" {

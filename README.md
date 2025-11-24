@@ -181,7 +181,7 @@ module "vm" {
 | custom\_data | The Base64-Encoded Custom Data which should be used for this Virtual Machine. Changing this forces a new resource to be created. | `string` | `null` | no |
 | custom\_dns\_label | The DNS label to use for public access. Virtual Machine name if not set. DNS will be `<label>.<region>.cloudapp.azure.com`. | `string` | `""` | no |
 | custom\_name | Custom name for the Virtual Machine. Generated if not set. | `string` | `""` | no |
-| custom\_public\_ip\_address\_id | ID of the Public IP to attach to the Virtual Machine. if not provided, a new Public IP will be created. | `string` | `null` | no |
+| custom\_public\_ip\_address | Public IP to attach to the Virtual Machine. if not provided, a new Public IP will be created. | <pre>object({<br/>    id = string<br/>  })</pre> | `null` | no |
 | dcr\_custom\_name | Custom name for Data collection rule association. | `string` | `null` | no |
 | default\_tags\_enabled | Option to enable or disable default tags. | `bool` | `true` | no |
 | diagnostics\_storage\_account\_name | Name of the Storage Account in which store boot diagnostics. | `string` | n/a | yes |

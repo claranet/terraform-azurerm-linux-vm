@@ -1,12 +1,12 @@
 data "azurerm_public_ip" "public_ip" {
-  count = var.custom_public_ip_address_id == null ? 0 : 1
+  count = var.custom_public_ip_address == null ? 0 : 1
 
-  name                = local.custom_public_ip_adress_id_parsed.resource_name
-  resource_group_name = local.custom_public_ip_adress_id_parsed.resource_group_name
+  name                = local.custom_public_ip_adress_parsed.resource_name
+  resource_group_name = local.custom_public_ip_adress_parsed.resource_group_name
 }
 
 resource "azurerm_public_ip" "main" {
-  count = var.public_ip_enabled && var.custom_public_ip_address_id == null ? 1 : 0
+  count = var.public_ip_enabled && var.custom_public_ip_address == null ? 1 : 0
 
   name     = local.public_ip_name
   location = var.location
