@@ -1,3 +1,26 @@
+## 8.6.0 (2025-11-25)
+
+### Features
+
+* **vm:** allow attaching existing public IP to VM 82c1166
+
+### Code Refactoring
+
+* make custom_public_ip_address parsing safe 8072c49
+* rename custom_public_ip_address_id to custom_public_ip_address dff2bdf
+* rename custom_public_ip_address_id to ip_address_id 4bfffe0
+* rename public_ip_id to custom_public_ip_address_id 46d77b1
+
+### Miscellaneous Chores
+
+* **deps:** update dependency opentofu to v1.10.7 4cdfd54
+* **deps:** update dependency pre-commit to v4.4.0 8ce8f41
+* **deps:** update dependency tflint to v0.60.0 2ca0650
+* **deps:** update dependency trivy to v0.67.1 58fac46
+* **deps:** update dependency trivy to v0.67.2 81dc6f4
+* **deps:** update pre-commit hook crate-ci/committed to v1.1.8 8b78c68
+* **deps:** update pre-commit hook tofuutils/pre-commit-opentofu to v2.2.2 2c3bb72
+
 ## 8.5.2 (2025-09-30)
 
 ### Code Refactoring
