@@ -147,6 +147,14 @@ variable "public_ip_enabled" {
   nullable    = false
 }
 
+variable "custom_public_ip_address" {
+  description = "Public IP to attach to the Virtual Machine. if not provided, a new Public IP will be created."
+  type = object({
+    id = string
+  })
+  default = null
+}
+
 variable "public_ip_zones" {
   description = "Zones for public IP attached to the Virtual Machine. Can be `null` if no zone distpatch."
   type        = list(number)

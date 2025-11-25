@@ -20,22 +20,22 @@ output "hostname" {
 
 output "resource_public_ip" {
   description = "VM Public IP resource object."
-  value       = one(azurerm_public_ip.main[*])
+  value       = one(local.public_ip[*])
 }
 
 output "public_ip_address" {
   description = "Public IP address of the Virtual Machine."
-  value       = one(azurerm_public_ip.main[*].ip_address)
+  value       = one(local.public_ip[*].ip_address)
 }
 
-output "public_ip_id" {
+output "ip_address_id" {
   description = "Public IP ID of the Virtual Machine."
-  value       = one(azurerm_public_ip.main[*].id)
+  value       = one(local.public_ip[*].id)
 }
 
 output "public_domain_name_label" {
   description = "Public DNS of the Virtual Machine."
-  value       = one(azurerm_public_ip.main[*].domain_name_label)
+  value       = one(local.public_ip[*].domain_name_label)
 }
 
 output "private_ip_address" {

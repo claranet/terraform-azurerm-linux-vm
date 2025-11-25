@@ -162,6 +162,7 @@ module "vm" {
 | [azurecaf_name.pub_ip](https://registry.terraform.io/providers/claranet/azurecaf/latest/docs/data-sources/name) | data source |
 | [azurecaf_name.vm](https://registry.terraform.io/providers/claranet/azurecaf/latest/docs/data-sources/name) | data source |
 | [azurerm_managed_disk.vm_os_disk](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/managed_disk) | data source |
+| [azurerm_public_ip.public_ip](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/public_ip) | data source |
 
 ## Inputs
 
@@ -180,6 +181,7 @@ module "vm" {
 | custom\_data | The Base64-Encoded Custom Data which should be used for this Virtual Machine. Changing this forces a new resource to be created. | `string` | `null` | no |
 | custom\_dns\_label | The DNS label to use for public access. Virtual Machine name if not set. DNS will be `<label>.<region>.cloudapp.azure.com`. | `string` | `""` | no |
 | custom\_name | Custom name for the Virtual Machine. Generated if not set. | `string` | `""` | no |
+| custom\_public\_ip\_address | Public IP to attach to the Virtual Machine. if not provided, a new Public IP will be created. | <pre>object({<br/>    id = string<br/>  })</pre> | `null` | no |
 | dcr\_custom\_name | Custom name for Data collection rule association. | `string` | `null` | no |
 | default\_tags\_enabled | Option to enable or disable default tags. | `bool` | `true` | no |
 | diagnostics\_storage\_account\_name | Name of the Storage Account in which store boot diagnostics. | `string` | n/a | yes |
@@ -250,6 +252,7 @@ module "vm" {
 | hostname | Hostname of the Virtual Machine. |
 | id | ID of the Virtual Machine. |
 | identity\_principal\_id | Linux Virtual Machine system identity principal ID. |
+| ip\_address\_id | Public IP ID of the Virtual Machine. |
 | name | Name of the Virtual Machine. |
 | nic\_id | ID of the Network Interface Configuration attached to the Virtual Machine. |
 | nic\_ip\_configuration\_name | Name of the IP Configuration for the Network Interface Configuration attached to the Virtual Machine. |
@@ -257,7 +260,6 @@ module "vm" {
 | private\_ip\_address | Private IP address of the Virtual Machine. |
 | public\_domain\_name\_label | Public DNS of the Virtual Machine. |
 | public\_ip\_address | Public IP address of the Virtual Machine. |
-| public\_ip\_id | Public IP ID of the Virtual Machine. |
 | resource | Linux Virtual Machine  resource object. |
 | resource\_maintenance\_configuration\_assignment | Maintenance configuration assignment resource object. |
 | resource\_os\_disk | Virtual Machine OS disk resource object. |
