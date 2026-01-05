@@ -39,7 +39,7 @@ variable "nic_accelerated_networking_enabled" {
 }
 
 variable "nic_ip_forwarding_enabled" {
-  description = "Whether IP Forwarding should be enabled on the Network Interface."
+  description = "Whether IP Forwarding is enabled on the Network Interface."
   type        = bool
   default     = false
 }
