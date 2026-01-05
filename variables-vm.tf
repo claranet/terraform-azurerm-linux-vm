@@ -38,6 +38,12 @@ variable "nic_accelerated_networking_enabled" {
   default     = true
 }
 
+variable "nic_ip_forwarding_enabled" {
+  description = "Whether IP Forwarding should be enabled on the Network Interface."
+  type        = bool
+  default     = false
+}
+
 variable "static_private_ip" {
   description = "Static private IP. Private IP is dynamic if not set."
   type        = string

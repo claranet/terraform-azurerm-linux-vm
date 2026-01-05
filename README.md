@@ -209,6 +209,7 @@ module "vm" {
 | nic\_accelerated\_networking\_enabled | Should Accelerated Networking be enabled? | `bool` | `true` | no |
 | nic\_custom\_name | Custom name for the NIC interface. Generated if not set. | `string` | `null` | no |
 | nic\_extra\_tags | Extra tags to set on the network interface. | `map(string)` | `{}` | no |
+| nic\_ip\_forwarding\_enabled | Whether IP Forwarding should be enabled on the Network Interface. | `bool` | `false` | no |
 | os\_disk\_caching | Specifies the caching requirements for the OS Disk. | `string` | `"ReadWrite"` | no |
 | os\_disk\_custom\_name | Custom name for OS disk. Generated if not set. | `string` | `null` | no |
 | os\_disk\_extra\_tags | Extra tags to set on the OS disk. | `map(string)` | `{}` | no |
