@@ -1,3 +1,20 @@
+## 8.7.0 (2026-01-09)
+
+### Features
+
+* **AZ-1628:** ✨ add IP forwarding option for network interface be62c0d
+
+### Miscellaneous Chores
+
+* **AZ-1628:** apply suggestion 7f3897e
+* **deps:** update dependency opentofu to v1.11.2 98b52a2
+* **deps:** update dependency pre-commit to v4.5.0 412b6e8
+* **deps:** update dependency pre-commit to v4.5.1 7eaef81
+* **deps:** update dependency trivy to v0.68.1 df0cf90
+* **deps:** update dependency trivy to v0.68.2 ae6487e
+* **deps:** update pre-commit hook crate-ci/committed to v1.1.9 2e6a409
+* **deps:** update tools 3d83f16
+
 ## 8.6.0 (2025-11-25)
 
 ### Features
