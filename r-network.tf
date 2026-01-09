@@ -32,6 +32,7 @@ resource "azurerm_network_interface" "main" {
   resource_group_name = var.resource_group_name
 
   accelerated_networking_enabled = var.nic_accelerated_networking_enabled
+  ip_forwarding_enabled          = var.nic_ip_forwarding_enabled
 
   ip_configuration {
     name                          = local.ip_configuration_name
