@@ -1,6 +1,7 @@
 output "resource" {
   description = "Linux Virtual Machine  resource object."
   value       = azurerm_linux_virtual_machine.main
+  sensitive   = true
 }
 
 output "id" {
@@ -94,4 +95,5 @@ output "resource_os_disk" {
 output "resource_maintenance_configuration_assignment" {
   description = "Maintenance configuration assignment resource object."
   value       = azurerm_maintenance_assignment_virtual_machine.main
+  sensitive   = true
 }
