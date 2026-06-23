@@ -323,3 +323,13 @@ variable "disable_password_authentication" {
   type        = bool
   default     = true
 }
+
+variable "key_vault" {
+  description = "Key Vault configuration for Virtual Machine identity access. Set to `null` to disable Key Vault integration. Set `scopes` to assign the `Key Vault Secrets User` role to additional resource scopes."
+  type = object({
+    id                         = string
+    rbac_authorization_enabled = optional(bool, true)
+    scopes                     = optional(map(string), {})
+  })
+  default = null
+}

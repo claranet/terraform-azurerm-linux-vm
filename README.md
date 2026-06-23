@@ -144,6 +144,7 @@ module "vm" {
 | ---- | ---- |
 | [azapi_resource_action.main](https://registry.terraform.io/providers/azure/azapi/latest/docs/resources/resource_action) | resource |
 | [azurerm_backup_protected_vm.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/backup_protected_vm) | resource |
+| [azurerm_key_vault_access_policy.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/key_vault_access_policy) | resource |
 | [azurerm_linux_virtual_machine.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine) | resource |
 | [azurerm_maintenance_assignment_virtual_machine.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/maintenance_assignment_virtual_machine) | resource |
 | [azurerm_managed_disk.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/managed_disk) | resource |
@@ -152,8 +153,10 @@ module "vm" {
 | [azurerm_network_interface_application_gateway_backend_address_pool_association.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_interface_application_gateway_backend_address_pool_association) | resource |
 | [azurerm_network_interface_backend_address_pool_association.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_interface_backend_address_pool_association) | resource |
 | [azurerm_public_ip.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/public_ip) | resource |
+| [azurerm_role_assignment.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
 | [azurerm_role_assignment.rbac_admin_login](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
 | [azurerm_role_assignment.rbac_user_login](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
+| [azurerm_role_assignment.scopes](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
 | [azurerm_virtual_machine_data_disk_attachment.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_machine_data_disk_attachment) | resource |
 | [azurerm_virtual_machine_extension.azure_monitor_agent](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_machine_extension) | resource |
 | [azurerm_virtual_machine_extension.entra_ssh_login](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_machine_extension) | resource |
@@ -161,6 +164,7 @@ module "vm" {
 | [azurecaf_name.nic](https://registry.terraform.io/providers/claranet/azurecaf/latest/docs/data-sources/name) | data source |
 | [azurecaf_name.pub_ip](https://registry.terraform.io/providers/claranet/azurecaf/latest/docs/data-sources/name) | data source |
 | [azurecaf_name.vm](https://registry.terraform.io/providers/claranet/azurecaf/latest/docs/data-sources/name) | data source |
+| [azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config) | data source |
 | [azurerm_managed_disk.vm_os_disk](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/managed_disk) | data source |
 | [azurerm_public_ip.public_ip](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/public_ip) | data source |
 
@@ -199,6 +203,7 @@ module "vm" {
 | extra\_tags | Extra tags to set on each created resource. | `map(string)` | `{}` | no |
 | identity | Map with identity block informations as described [here](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine#identity). | <pre>object({<br/>    type         = string<br/>    identity_ids = list(string)<br/>  })</pre> | <pre>{<br/>  "identity_ids": [],<br/>  "type": "SystemAssigned"<br/>}</pre> | no |
 | ip\_configuration\_custom\_name | Custom name for the IP config of the NIC. Generated if not set. | `string` | `null` | no |
+| key\_vault | Key Vault configuration for Virtual Machine identity access. Set to `null` to disable Key Vault integration. Set `scopes` to assign the `Key Vault Secrets User` role to additional resource scopes. | <pre>object({<br/>    id                         = string<br/>    rbac_authorization_enabled = optional(bool, true)<br/>    scopes                     = optional(map(string), {})<br/>  })</pre> | `null` | no |
 | load\_balancer\_attachment | ID of the Load Balancer Backend Pool to attach the Virtual Machine to. | <pre>object({<br/>    id = string<br/>  })</pre> | `null` | no |
 | location | Azure location. | `string` | n/a | yes |
 | location\_short | Short string for Azure location. | `string` | n/a | yes |
