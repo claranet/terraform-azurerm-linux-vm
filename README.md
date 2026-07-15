@@ -255,6 +255,7 @@ module "vm" {
 | admin\_ssh\_private\_key | Virtual Machine admin SSH private key. |
 | admin\_ssh\_public\_key | Virtual Machine admin SSH public key. |
 | admin\_username | Virtual Machine admin username. |
+| data\_disks | Map of managed data disks with id and name. |
 | hostname | Hostname of the Virtual Machine. |
 | id | ID of the Virtual Machine. |
 | identity\_principal\_id | Linux Virtual Machine system identity principal ID. |
@@ -267,6 +268,7 @@ module "vm" {
 | public\_domain\_name\_label | Public DNS of the Virtual Machine. |
 | public\_ip\_address | Public IP address of the Virtual Machine. |
 | resource | Linux Virtual Machine  resource object. |
+| resource\_data\_disks | Map of Managed data disk resource objects. |
 | resource\_maintenance\_configuration\_assignment | Maintenance configuration assignment resource object. |
 | resource\_os\_disk | Virtual Machine OS disk resource object. |
 | resource\_public\_ip | VM Public IP resource object. |
