@@ -130,6 +130,9 @@ resource "azurerm_managed_disk" "main" {
   disk_iops_read_only  = each.value.disk_iops_read_only
   disk_mbps_read_only  = each.value.disk_mbps_read_only
 
+  network_access_policy         = each.value.network_access_policy
+  public_network_access_enabled = each.value.public_network_access_enabled
+
   tags = merge(local.default_tags, var.extra_tags, each.value.extra_tags)
 
   lifecycle {
