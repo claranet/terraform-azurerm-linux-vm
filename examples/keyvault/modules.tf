@@ -2,15 +2,17 @@ resource "azurerm_key_vault_secret" "cert" {
   name         = format("%s-cert", local.name)
   value        = var.certificate
   key_vault_id = module.run.key_vault_id
+
+  lifecycle { prevent_destroy = true }
 }
 
 resource "azurerm_key_vault_secret" "private_key" {
   name         = format("%s-private-key", local.name)
   value        = var.private_key
   key_vault_id = module.run.key_vault_id
-}
 
-data "azurerm_client_config" "current" {}
+  lifecycle { prevent_destroy = true }
+}
 
 module "vm" {
   source  = "claranet/linux-vm/azurerm"
