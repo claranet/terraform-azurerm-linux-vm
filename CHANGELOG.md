@@ -1,3 +1,33 @@
+## 8.8.0 (2026-07-17)
+
+### Features
+
+* **GH-7:** ✨ add `data_disks` and `resource_data_disks` outputs 34a7e80, closes #7
+* **GH-8:** ✨ expose `network_access_policy` and `public_network_access_enabled` on managed disks f906bb4
+* **kv:** add `key_vault` variable and fix r-kv-vm.tf for Linux VM 🔑 486c1a5
+
+### Bug Fixes
+
+* **example:** 🐛 tflint 2105ffd
+* **tflint:** 🐛 bump Azure rules version, fix signature bug 841d8ff
+
+### Documentation
+
+* 📚️ add KeyVault example 0815d9d
+
+### Miscellaneous Chores
+
+* apply 3 suggestion(s) to 1 file(s) db0801c
+* **ci:** 🔧 👷 fix default CI validate values 290095b
+* **deps:** update dependency opentofu to v1.12.1 e4463bc
+* **deps:** update dependency opentofu to v1.12.2 71ba2b3
+* **deps:** update dependency tflint to v0.63.1 a508a8e
+* **deps:** update pre-commit hook tofuutils/pre-commit-opentofu to v2.4.0 2a04a6c
+* **deps:** update pre-commit hook tofuutils/pre-commit-opentofu to v2.4.1 f3004ff
+* **deps:** update pre-commit hook tofuutils/pre-commit-opentofu to v2.4.2 99b7b72
+* **deps:** update tools 6611a90
+* merge branch 'fix/default_vm_size' into 'feat/linux_kv_vm' 58739d0
+
 ## 8.7.3 (2026-06-02)
 
 ### Bug Fixes
