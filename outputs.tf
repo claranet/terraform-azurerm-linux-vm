@@ -97,3 +97,19 @@ output "resource_maintenance_configuration_assignment" {
   value       = azurerm_maintenance_assignment_virtual_machine.main
   sensitive   = true
 }
+
+output "resource_data_disks" {
+  description = "Map of managed data disks resource objects."
+  value       = azurerm_managed_disk.main
+  sensitive   = true
+}
+
+output "data_disks" {
+  description = "Map of managed data disks with ID and name."
+  value = try({
+    for k, v in azurerm_managed_disk.main : k => {
+      id   = v.id
+      name = v.name
+    }
+  }, null)
+}
