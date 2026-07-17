@@ -10,7 +10,7 @@ resource "azurerm_key_vault_access_policy" "main" {
 }
 
 resource "azurerm_role_assignment" "main" {
-  count = var.key_vault != null && var.key_vault.rbac_authorization_enabled ? 1 : 0
+  count = var.key_vault != null && var.key_vault.rbac_authorization_enabled && var.key_vault.scopes != {} ? 1 : 0
 
   scope                = var.key_vault.id
   role_definition_name = "Key Vault Secrets User"
