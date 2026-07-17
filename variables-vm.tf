@@ -123,18 +123,20 @@ variable "vm_plan" {
 variable "storage_data_disk_config" {
   description = "Map of objects to configure storage data disk(s)."
   type = map(object({
-    name                 = optional(string)
-    create_option        = optional(string, "Empty")
-    disk_iops_read_only  = optional(number)
-    disk_mbps_read_only  = optional(number)
-    disk_iops_read_write = optional(number)
-    disk_mbps_read_write = optional(number)
-    disk_size_gb         = number
-    lun                  = optional(number)
-    caching              = optional(string, "ReadWrite")
-    storage_account_type = optional(string, "StandardSSD_ZRS")
-    source_resource_id   = optional(string)
-    extra_tags           = optional(map(string), {})
+    name                          = optional(string)
+    create_option                 = optional(string, "Empty")
+    disk_iops_read_only           = optional(number)
+    disk_mbps_read_only           = optional(number)
+    disk_iops_read_write          = optional(number)
+    disk_mbps_read_write          = optional(number)
+    disk_size_gb                  = number
+    lun                           = optional(number)
+    caching                       = optional(string, "ReadWrite")
+    storage_account_type          = optional(string, "StandardSSD_ZRS")
+    source_resource_id            = optional(string)
+    network_access_policy         = optional(string)
+    public_network_access_enabled = optional(bool, true)
+    extra_tags                    = optional(map(string), {})
   }))
   default  = {}
   nullable = false
